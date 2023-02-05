@@ -26,5 +26,9 @@
     "undici": "^5.15.1",
     "vite": "^3.2.5",
     "vitest": "^0.26.3"
+  },
+  "dependencies": {
+    "@suid/icons-material": "^0.5.8",
+    "@suid/material": "^0.10.1"
   }
 }
