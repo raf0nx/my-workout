@@ -4,6 +4,8 @@ import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
 
+import './index.scss'
+
 export default function Root() {
   return (
     <Html lang="en">
