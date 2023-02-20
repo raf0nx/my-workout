@@ -4,6 +4,8 @@ import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
 
+import Navbar from '~/components/navbar/Navbar'
+
 import './index.scss'
 
 export default function Root() {
@@ -17,6 +19,7 @@ export default function Root() {
       <Body>
         <Suspense>
           <ErrorBoundary>
+            <Navbar />
             <Routes>
               <FileRoutes />
             </Routes>
