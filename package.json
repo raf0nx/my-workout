@@ -1,5 +1,6 @@
 {
   "name": "my-workout",
+  "version": "0.1.0",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
@@ -31,6 +32,5 @@
   "dependencies": {
     "@suid/icons-material": "^0.5.8",
     "@suid/material": "^0.10.1"
-  },
-  "version": "0.1.0"
+  }
 }
