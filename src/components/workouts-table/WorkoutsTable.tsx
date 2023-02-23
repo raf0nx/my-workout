@@ -6,9 +6,11 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
+import { For } from 'solid-js'
 
 import Card from '~/components/card'
 import TableHeaderCell from '~/components/table-header-cell'
+import { workouts } from '~/mockedData'
 
 export default function WorkoutsTable() {
   return (
@@ -26,19 +28,23 @@ export default function WorkoutsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow
-              hover
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                Push Up Monday
-              </TableCell>
-              <TableCell>low on energy</TableCell>
-              <TableCell align="right">120</TableCell>
-              <TableCell align="right">4</TableCell>
-              <TableCell align="right">01.01.2023</TableCell>
-              <TableCell align="right">01:00</TableCell>
-            </TableRow>
+            <For each={workouts}>
+              {workout => (
+                <TableRow
+                  hover
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {workout.name}
+                  </TableCell>
+                  <TableCell>{workout.description}</TableCell>
+                  <TableCell align="right">{workout.totalReps}</TableCell>
+                  <TableCell align="right">{workout.week}</TableCell>
+                  <TableCell align="right">{workout.date}</TableCell>
+                  <TableCell align="right">{workout.duration}</TableCell>
+                </TableRow>
+              )}
+            </For>
           </TableBody>
         </Table>
       </TableContainer>
