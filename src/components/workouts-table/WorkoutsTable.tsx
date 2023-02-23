@@ -6,11 +6,20 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { For } from 'solid-js'
+import { For, Index } from 'solid-js'
 
 import Card from '~/components/card'
 import TableHeaderCell from '~/components/table-header-cell'
 import { workouts } from '~/mockedData'
+
+const WORKOUTS_TABLE_HEADERS = [
+  'Workout name',
+  'Description',
+  'Total reps',
+  'Week',
+  'Date',
+  'Duration',
+] as const
 
 export default function WorkoutsTable() {
   return (
@@ -19,12 +28,13 @@ export default function WorkoutsTable() {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>Workout&nbsp;name</TableHeaderCell>
-              <TableHeaderCell>Description</TableHeaderCell>
-              <TableHeaderCell align="right">Total reps</TableHeaderCell>
-              <TableHeaderCell align="right">Week</TableHeaderCell>
-              <TableHeaderCell align="right">Date</TableHeaderCell>
-              <TableHeaderCell align="right">Duration</TableHeaderCell>
+              <Index each={WORKOUTS_TABLE_HEADERS}>
+                {(headerValue, i) => (
+                  <TableHeaderCell align={i > 1 ? 'right' : 'left'}>
+                    {headerValue()}
+                  </TableHeaderCell>
+                )}
+              </Index>
             </TableRow>
           </TableHead>
           <TableBody>
