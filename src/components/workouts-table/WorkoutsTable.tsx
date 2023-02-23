@@ -19,10 +19,10 @@ export default function WorkoutsTable() {
             <TableRow>
               <TableHeaderCell>Workout&nbsp;name</TableHeaderCell>
               <TableHeaderCell>Description</TableHeaderCell>
-              <TableHeaderCell>Workout&nbsp;volume</TableHeaderCell>
-              <TableHeaderCell>Time</TableHeaderCell>
-              <TableHeaderCell>Week</TableHeaderCell>
-              <TableHeaderCell>Date</TableHeaderCell>
+              <TableHeaderCell align="right">Total reps</TableHeaderCell>
+              <TableHeaderCell align="right">Week</TableHeaderCell>
+              <TableHeaderCell align="right">Date</TableHeaderCell>
+              <TableHeaderCell align="right">Duration</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -34,10 +34,10 @@ export default function WorkoutsTable() {
                 Push Up Monday
               </TableCell>
               <TableCell>low on energy</TableCell>
-              <TableCell>120</TableCell>
-              <TableCell>01:00</TableCell>
-              <TableCell>4</TableCell>
-              <TableCell>01.01.2023</TableCell>
+              <TableCell align="right">120</TableCell>
+              <TableCell align="right">4</TableCell>
+              <TableCell align="right">01.01.2023</TableCell>
+              <TableCell align="right">01:00</TableCell>
             </TableRow>
           </TableBody>
         </Table>
