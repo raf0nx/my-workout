@@ -1,3 +1,9 @@
+import WorkoutsTable from '~/components/workouts-table'
+
 export default function Home() {
-  return <main />
+  return (
+    <main>
+      <WorkoutsTable />
+    </main>
+  )
 }
