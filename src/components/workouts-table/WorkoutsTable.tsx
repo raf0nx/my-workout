@@ -1,5 +1,4 @@
 import {
-  styled,
   Table,
   TableBody,
   TableCell,
@@ -7,17 +6,9 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { tableCellClasses } from '@suid/material/TableCell'
 
 import Card from '~/components/card'
-
-const TableHeaderCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    fontWeight: 600,
-  },
-}))
+import TableHeaderCell from '~/components/table-header-cell'
 
 export default function WorkoutsTable() {
   return (
