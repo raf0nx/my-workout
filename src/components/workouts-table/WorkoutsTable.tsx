@@ -12,6 +12,8 @@ import Card from '~/components/card'
 import TableHeaderCell from '~/components/table-header-cell'
 import { workouts } from '~/mockedData'
 
+import WorkoutsTableToolbar from './workouts-table-toolbar'
+
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',
   'Description',
@@ -24,6 +26,7 @@ const WORKOUTS_TABLE_HEADERS = [
 export default function WorkoutsTable() {
   return (
     <Card>
+      <WorkoutsTableToolbar />
       <TableContainer sx={{ borderRadius: 1 }}>
         <Table stickyHeader>
           <TableHead>
