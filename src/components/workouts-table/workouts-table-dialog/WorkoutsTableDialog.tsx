@@ -3,22 +3,13 @@ import {
   Button,
   Dialog,
   IconButton,
-  Slide,
   Toolbar,
   Typography,
 } from '@suid/material'
-import { JSXElement, Setter } from 'solid-js'
+import { Setter } from 'solid-js'
 import { Close } from '@suid/icons-material'
-import { TransitionProps } from '@suid/material/transitions/transition'
 
-// TODO: Extract this to a separate file
-const Transition = function Transition(
-  props: TransitionProps & {
-    children: JSXElement
-  }
-) {
-  return <Slide direction="up" {...props} />
-}
+import TransitionSlideUp from '~/utils/transition-slide-up'
 
 interface WorkoutsTableDialogProps {
   isOpen: boolean
@@ -27,7 +18,11 @@ interface WorkoutsTableDialogProps {
 
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   return (
-    <Dialog fullScreen open={props.isOpen} TransitionComponent={Transition}>
+    <Dialog
+      fullScreen
+      open={props.isOpen}
+      TransitionComponent={TransitionSlideUp}
+    >
       <AppBar sx={{ position: 'relative' }}>
         <Toolbar>
           <IconButton
