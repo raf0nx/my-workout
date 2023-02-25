@@ -20,6 +20,8 @@ export default function WorkoutsTableToolbar() {
         onClick={[setIsDialogOpen, true]}
         color="secondary"
         aria-label="add new workout"
+        aria-haspopup="true"
+        aria-expanded={isDialogOpen()}
       >
         <AddCircle />
       </IconButton>

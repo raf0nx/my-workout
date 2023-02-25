@@ -22,6 +22,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       open={props.isOpen}
       TransitionComponent={TransitionSlideUp}
       onClose={props.onClose}
+      aria-labelledby="workouts-table-dialog-title"
     >
       <AppBar sx={{ position: 'relative' }}>
         <Toolbar>
@@ -40,6 +41,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
             }}
             variant="h6"
             component="div"
+            id="workouts-table-dialog-title"
           >
             New Workout
           </Typography>
