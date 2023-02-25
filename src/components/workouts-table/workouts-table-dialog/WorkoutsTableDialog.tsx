@@ -6,14 +6,13 @@ import {
   Toolbar,
   Typography,
 } from '@suid/material'
-import { Setter } from 'solid-js'
 import { Close } from '@suid/icons-material'
 
 import TransitionSlideUp from '~/utils/transition-slide-up'
 
 interface WorkoutsTableDialogProps {
   isOpen: boolean
-  onClose: [Setter<boolean>, boolean]
+  onClose: () => void
 }
 
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
@@ -22,6 +21,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       fullScreen
       open={props.isOpen}
       TransitionComponent={TransitionSlideUp}
+      onClose={props.onClose}
     >
       <AppBar sx={{ position: 'relative' }}>
         <Toolbar>

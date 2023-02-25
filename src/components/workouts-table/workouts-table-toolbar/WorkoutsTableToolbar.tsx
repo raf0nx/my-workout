@@ -7,6 +7,10 @@ import WorkoutsTableDialog from '~/components/workouts-table/workouts-table-dial
 export default function WorkoutsTableToolbar() {
   const [isDialogOpen, setIsDialogOpen] = createSignal(false)
 
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+  }
+
   return (
     <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
       <Typography variant="h6" component="h1" sx={{ pl: 1 }}>
@@ -21,7 +25,7 @@ export default function WorkoutsTableToolbar() {
       </IconButton>
       <WorkoutsTableDialog
         isOpen={isDialogOpen()}
-        onClose={[setIsDialogOpen, false]}
+        onClose={handleCloseDialog}
       />
     </Toolbar>
   )
