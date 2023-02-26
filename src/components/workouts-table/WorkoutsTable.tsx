@@ -23,6 +23,7 @@ const WORKOUTS_TABLE_HEADERS = [
   'Duration',
 ] as const
 
+// TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
   return (
     <Card>

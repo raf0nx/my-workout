@@ -18,6 +18,7 @@ interface WorkoutsTableDialogProps {
   onClose: () => void
 }
 
+// TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   return (
     <Dialog
