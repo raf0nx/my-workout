@@ -1,8 +1,11 @@
 import {
   AppBar,
+  Box,
   Button,
   Dialog,
+  Grid,
   IconButton,
+  TextField,
   Toolbar,
   Typography,
 } from '@suid/material'
@@ -43,13 +46,70 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
             component="div"
             id="workouts-table-dialog-title"
           >
-            New Workout
+            New&nbsp;Workout
           </Typography>
           <Button autofocus color="inherit" onClick={props.onClose}>
-            save
+            Save
           </Button>
         </Toolbar>
       </AppBar>
+      <Box p={3} component="form" noValidate autocomplete="off">
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Workout name"
+              margin="normal"
+              placeholder="Push Pull Monday"
+              fullWidth
+            />
+            <TextField
+              label="Description"
+              margin="normal"
+              placeholder="e.g. Today the weather was beautiful so the quality of the training was excellent."
+              fullWidth
+            />
+            <Box sx={{ display: 'flex', gap: 3 }}>
+              <TextField
+                label="Total reps"
+                type="number"
+                margin="normal"
+                placeholder="90"
+                sx={{ flex: 1 }}
+              />
+              <TextField
+                label="Week"
+                type="number"
+                margin="normal"
+                placeholder="4"
+                sx={{ flex: 1 }}
+              />
+            </Box>
+            <TextField
+              label="Date"
+              margin="normal"
+              placeholder="DD.MM.YYYY"
+              fullWidth
+            />
+            <TextField
+              label="Duration"
+              type="number"
+              margin="normal"
+              placeholder="60"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <Typography variant="body2" sx={{ ml: 1 }}>
+                    mins
+                  </Typography>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            {/* TODO: Exercises table */}
+          </Grid>
+        </Grid>
+      </Box>
     </Dialog>
   )
 }
