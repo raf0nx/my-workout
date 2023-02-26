@@ -43,7 +43,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
               flex: 1,
             }}
             variant="h6"
-            component="div"
+            component="h2"
             id="workouts-table-dialog-title"
           >
             New&nbsp;Workout
