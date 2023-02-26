@@ -58,12 +58,14 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
           <Grid item xs={12} sm={4}>
             <TextField
               label="Workout name"
+              name="Workout name"
               margin="normal"
               placeholder="Push Pull Monday"
               fullWidth
             />
             <TextField
               label="Description"
+              name="Description"
               margin="normal"
               placeholder="e.g. Today the weather was beautiful so the quality of the training was excellent."
               fullWidth
@@ -71,6 +73,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
             <Box sx={{ display: 'flex', gap: 3 }}>
               <TextField
                 label="Total reps"
+                name="Total reps"
                 type="number"
                 margin="normal"
                 placeholder="90"
@@ -78,6 +81,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
               />
               <TextField
                 label="Week"
+                name="Week"
                 type="number"
                 margin="normal"
                 placeholder="4"
@@ -86,12 +90,14 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
             </Box>
             <TextField
               label="Date"
+              name="Date"
               margin="normal"
               placeholder="DD.MM.YYYY"
               fullWidth
             />
             <TextField
               label="Duration"
+              name="Duration"
               type="number"
               margin="normal"
               placeholder="60"
