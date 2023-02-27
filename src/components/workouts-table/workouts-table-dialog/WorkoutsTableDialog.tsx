@@ -15,28 +15,11 @@ import { createStore, produce } from 'solid-js/store'
 
 import TransitionSlideUp from '~/utils/transition-slide-up'
 
-interface WorkoutsTableDialogProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
-interface WorkoutDetailsInitialStateProps {
-  name: string
-  description: string
-  totalReps: string
-  week: string
-  date: string
-  duration: string
-}
-
-const workoutDetailsInitialState: WorkoutDetailsInitialStateProps = {
-  name: '',
-  description: '',
-  totalReps: '',
-  week: '',
-  date: '',
-  duration: '',
-}
+import {
+  workoutDetailsInitialState,
+  type WorkoutProps,
+  type WorkoutsTableDialogProps,
+} from './workouts-table-dialog-types'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
@@ -48,8 +31,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     value: string
   ) => {
-    const fieldToUpdate = event.target
-      .name as keyof WorkoutDetailsInitialStateProps
+    const fieldToUpdate = event.target.name as WorkoutProps
 
     setWorkoutDetails(
       produce(state => {
