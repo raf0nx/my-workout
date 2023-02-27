@@ -7,10 +7,11 @@ import {
   TableRow,
 } from '@suid/material'
 import { For, Index } from 'solid-js'
+import { createStore } from 'solid-js/store'
 
 import Card from '~/components/card'
 import TableHeaderCell from '~/components/table-header-cell'
-import { workouts } from '~/mockedData'
+import { workouts as mockedWorkouts } from '~/mockedData'
 
 import WorkoutsTableToolbar from './workouts-table-toolbar'
 
@@ -25,9 +26,11 @@ const WORKOUTS_TABLE_HEADERS = [
 
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
+  const [workouts, setWorkouts] = createStore(mockedWorkouts)
+
   return (
     <Card>
-      <WorkoutsTableToolbar />
+      <WorkoutsTableToolbar setWorkouts={setWorkouts} />
       <TableContainer sx={{ borderRadius: 1 }}>
         <Table stickyHeader>
           <TableHead>

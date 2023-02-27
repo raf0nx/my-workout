@@ -23,9 +23,9 @@ import {
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
-  const [workoutDetails, setWorkoutDetails] = createStore(
-    workoutDetailsInitialState
-  )
+  const [workoutDetails, setWorkoutDetails] = createStore({
+    ...workoutDetailsInitialState,
+  })
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -38,6 +38,20 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
         state[fieldToUpdate] = value
       })
     )
+  }
+
+  const clearStore = () => {
+    setWorkoutDetails(workoutDetailsInitialState)
+  }
+
+  const handleSave = () => {
+    props.setWorkouts(
+      produce(workouts => {
+        workouts.push({ ...workoutDetails })
+      })
+    )
+    clearStore()
+    props.onClose()
   }
 
   return (
@@ -69,7 +83,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
           >
             New&nbsp;Workout
           </Typography>
-          <Button autofocus color="inherit" onClick={props.onClose}>
+          <Button autofocus color="inherit" onClick={handleSave}>
             Save
           </Button>
         </Toolbar>
