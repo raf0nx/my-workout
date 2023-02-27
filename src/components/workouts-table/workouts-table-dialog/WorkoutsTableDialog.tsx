@@ -14,10 +14,10 @@ import { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
 
 import TransitionSlideUp from '~/utils/transition-slide-up'
+import { WorkoutProps } from '~/components/workouts-table/workouts-table-types'
 
 import {
   workoutDetailsInitialState,
-  type WorkoutProps,
   type WorkoutsTableDialogProps,
 } from './workouts-table-dialog-types'
 

@@ -1,4 +1,4 @@
-import { Workout } from '../workouts-table-types'
+import type { Workout } from '../workouts-table-types'
 
 export interface WorkoutsTableDialogProps {
   isOpen: boolean
@@ -13,5 +13,3 @@ export const workoutDetailsInitialState: Workout = {
   date: '',
   duration: '',
 }
-
-export type WorkoutProps = keyof Workout

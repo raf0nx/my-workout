@@ -6,3 +6,5 @@ export interface Workout {
   date: string
   duration: string
 }
+
+export type WorkoutProps = keyof Workout
