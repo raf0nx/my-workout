@@ -1,10 +1,15 @@
 import { AddCircle } from '@suid/icons-material'
 import { IconButton, Toolbar, Typography } from '@suid/material'
 import { createSignal } from 'solid-js'
+import { SetStoreFunction } from 'solid-js/store'
 
 import WorkoutsTableDialog from '~/components/workouts-table/workouts-table-dialog'
 
-export default function WorkoutsTableToolbar() {
+import type { Workout } from '~/components/workouts-table/workouts-table-types'
+
+export default function WorkoutsTableToolbar(props: {
+  setWorkouts: SetStoreFunction<Workout[]>
+}) {
   const [isDialogOpen, setIsDialogOpen] = createSignal(false)
 
   const handleCloseDialog = () => {
@@ -28,6 +33,7 @@ export default function WorkoutsTableToolbar() {
       <WorkoutsTableDialog
         isOpen={isDialogOpen()}
         onClose={handleCloseDialog}
+        setWorkouts={props.setWorkouts}
       />
     </Toolbar>
   )
