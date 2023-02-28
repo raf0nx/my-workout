@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it, beforeEach } from 'vitest'
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 
@@ -15,7 +16,7 @@ describe('WorkoutsTable', () => {
     unmountComponent()
   })
 
-  test("should open the workout creation dialog when clicking 'add new workout' button", async () => {
+  it("should open the workout creation dialog when clicking 'add new workout' button", async () => {
     // Given
     const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
@@ -26,7 +27,7 @@ describe('WorkoutsTable', () => {
     expect(screen.getByText(/new workout/i)).toBeInTheDocument()
   })
 
-  test('should close the workout creation dialog when clicking the close button', async () => {
+  it('should close the workout creation dialog when clicking the close button', async () => {
     // Given
     const closeBtn = screen.getByLabelText(/close/i)
 
@@ -37,7 +38,7 @@ describe('WorkoutsTable', () => {
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
   })
 
-  test("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
+  it("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
     // When
     await userEvent.tab()
     await userEvent.keyboard('[Enter]')
@@ -46,7 +47,7 @@ describe('WorkoutsTable', () => {
     expect(screen.getByText(/new workout/i)).toBeInTheDocument()
   })
 
-  test('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
+  it('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
     // When
     await userEvent.tab()
     await userEvent.keyboard('[Enter]')
@@ -55,7 +56,7 @@ describe('WorkoutsTable', () => {
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
   })
 
-  test('should close the workout creation dialog when pressing [Escape] keydown', async () => {
+  it('should close the workout creation dialog when pressing [Escape] keydown', async () => {
     // Given
     const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
@@ -68,7 +69,7 @@ describe('WorkoutsTable', () => {
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
   })
 
-  test('should save the newly created workout', async () => {
+  it('should save the newly created workout', async () => {
     // Given
     const mockedWorkoutName = 'Test workout'
     const mockedDescription = 'Test description'
