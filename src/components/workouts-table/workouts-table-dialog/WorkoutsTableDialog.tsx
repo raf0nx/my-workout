@@ -40,17 +40,12 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
     )
   }
 
-  const clearStore = () => {
-    setWorkoutDetails(workoutDetailsInitialState)
-  }
-
   const handleSave = () => {
     props.setWorkouts(
       produce(workouts => {
         workouts.push({ ...workoutDetails })
       })
     )
-    clearStore()
     props.onClose()
   }
 
