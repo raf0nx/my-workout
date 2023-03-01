@@ -1,1 +1,1 @@
-export { default } from './TransitionSlideUp'
+export { default as TransitionSlideUp } from './TransitionSlideUp'

@@ -9,11 +9,11 @@ import {
 import { For, Index } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-import Card from '~/components/card'
-import TableHeaderCell from '~/components/table-header-cell'
+import { Card } from '~/components/card'
+import { TableHeaderCell } from '~/components/table-header-cell'
 import { workouts as mockedWorkouts } from '~/mockedData'
 
-import WorkoutsTableToolbar from './workouts-table-toolbar'
+import { WorkoutsTableToolbar } from '.'
 
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',

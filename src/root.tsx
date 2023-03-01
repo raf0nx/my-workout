@@ -4,7 +4,7 @@ import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
 
-import Navbar from '~/components/navbar'
+import { Navbar } from '~/components/navbar'
 
 import './index.scss'
 

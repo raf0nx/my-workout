@@ -1,10 +1,6 @@
 import { Slide } from '@suid/material'
-import { TransitionProps } from '@suid/material/transitions/transition'
-import { JSXElement } from 'solid-js'
 
-interface TransitionSlideUpProps extends TransitionProps {
-  children: JSXElement
-}
+import type { TransitionSlideUpProps } from './types'
 
 export default function TransitionSlideUp(props: TransitionSlideUpProps) {
   return <Slide direction="up" {...props} />
