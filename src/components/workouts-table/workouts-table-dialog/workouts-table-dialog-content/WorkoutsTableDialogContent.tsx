@@ -1,6 +1,6 @@
 import { Box, Grid, TextField, Typography } from '@suid/material'
 
-import type { WorkoutsTableDialogContentProps } from './workouts-table-dialog-content-types'
+import type { WorkoutsTableDialogContentProps } from './types'
 
 export default function WorkoutsTableDialogContent(
   props: WorkoutsTableDialogContentProps
