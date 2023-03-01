@@ -3,7 +3,7 @@ import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
-import type { WorkoutProps } from '~/components/workouts-table/workouts-table-types'
+import type { WorkoutProps } from '~/components/workouts-table/types'
 
 import {
   workoutDetailsInitialState,

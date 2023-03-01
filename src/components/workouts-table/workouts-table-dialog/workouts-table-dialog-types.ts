@@ -1,6 +1,6 @@
 import { SetStoreFunction } from 'solid-js/store'
 
-import type { Workout } from '~/components/workouts-table/workouts-table-types'
+import type { Workout } from '~/components/workouts-table/types'
 
 export interface WorkoutsTableDialogProps {
   isOpen: boolean

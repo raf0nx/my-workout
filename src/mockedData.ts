@@ -1,4 +1,4 @@
-import type { Workout } from './components/workouts-table/workouts-table-types'
+import type { Workout } from './components/workouts-table/types'
 
 export const workouts: Workout[] = [
   {
