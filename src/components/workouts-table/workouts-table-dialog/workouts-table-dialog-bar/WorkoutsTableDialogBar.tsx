@@ -1,7 +1,7 @@
 import { Close } from '@suid/icons-material'
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@suid/material'
 
-import type { WorkoutsTableDialogBarProps } from './workouts-table-dialog-bar-types'
+import type { WorkoutsTableDialogBarProps } from './types'
 
 export default function WorkoutsTableDialogBar(
   props: WorkoutsTableDialogBarProps
