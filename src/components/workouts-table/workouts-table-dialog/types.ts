@@ -1,4 +1,4 @@
-import { SetStoreFunction } from 'solid-js/store'
+import type { SetStoreFunction } from 'solid-js/store'
 
 import type { Workout } from '~/components/workouts-table/types'
 
