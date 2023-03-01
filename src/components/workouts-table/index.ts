@@ -1,1 +1,1 @@
-export { default } from './WorkoutsTable'
+export { default as WorkoutsTable } from './WorkoutsTable'

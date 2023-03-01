@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, beforeEach } from 'vitest'
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 
-import WorkoutsTable from './WorkoutsTable'
+import { WorkoutsTable } from '.'
 
 describe('WorkoutsTable', () => {
   let unmountComponent: () => void

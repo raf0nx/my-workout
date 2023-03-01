@@ -9,8 +9,8 @@ import {
   workoutDetailsInitialState,
   type WorkoutsTableDialogProps,
 } from './workouts-table-dialog-types'
-import WorkoutsTableDialogBar from './workouts-table-dialog-bar'
-import WorkoutsTableDialogContent from './workouts-table-dialog-content'
+import { WorkoutsTableDialogBar } from './workouts-table-dialog-bar'
+import { WorkoutsTableDialogContent } from './workouts-table-dialog-content'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {

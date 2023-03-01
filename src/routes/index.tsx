@@ -1,4 +1,4 @@
-import WorkoutsTable from '~/components/workouts-table'
+import { WorkoutsTable } from '~/components/workouts-table'
 
 export default function Home() {
   return (

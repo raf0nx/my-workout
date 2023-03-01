@@ -1,1 +1,1 @@
-export { default } from './WorkoutsTableDialog'
+export { default as WorkoutsTableDialog } from './WorkoutsTableDialog'
