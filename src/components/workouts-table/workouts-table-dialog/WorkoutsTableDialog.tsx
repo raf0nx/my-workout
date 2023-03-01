@@ -8,7 +8,7 @@ import type { WorkoutProps } from '~/components/workouts-table/types'
 import {
   workoutDetailsInitialState,
   type WorkoutsTableDialogProps,
-} from './workouts-table-dialog-types'
+} from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
