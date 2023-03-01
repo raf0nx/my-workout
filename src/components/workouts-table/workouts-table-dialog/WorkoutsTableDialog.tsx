@@ -2,15 +2,14 @@ import { Dialog } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
 
-import TransitionSlideUp from '~/utils/transition-slide-up'
+import { TransitionSlideUp } from '~/utils/transition-slide-up'
 import type { WorkoutProps } from '~/components/workouts-table/workouts-table-types'
 
 import {
   workoutDetailsInitialState,
   type WorkoutsTableDialogProps,
 } from './workouts-table-dialog-types'
-import { WorkoutsTableDialogBar } from './workouts-table-dialog-bar'
-import { WorkoutsTableDialogContent } from './workouts-table-dialog-content'
+import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {

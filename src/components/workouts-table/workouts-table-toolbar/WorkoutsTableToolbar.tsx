@@ -3,7 +3,7 @@ import { IconButton, Toolbar, Typography } from '@suid/material'
 import { createSignal } from 'solid-js'
 import { SetStoreFunction } from 'solid-js/store'
 
-import { WorkoutsTableDialog } from '~/components/workouts-table/workouts-table-dialog'
+import { WorkoutsTableDialog } from '~/components/workouts-table'
 
 import type { Workout } from '~/components/workouts-table/workouts-table-types'
 
