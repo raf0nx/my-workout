@@ -8,7 +8,7 @@ export const workouts: Workout[] = [
     totalReps: '97',
     week: '3',
     date: '15.01.2023',
-    duration: '01:00',
+    duration: '60',
   },
   {
     id: '1',
@@ -17,7 +17,7 @@ export const workouts: Workout[] = [
     totalReps: '67',
     week: '2',
     date: '11.01.2023',
-    duration: '01:15',
+    duration: '75',
   },
   {
     id: '2',
@@ -26,7 +26,7 @@ export const workouts: Workout[] = [
     totalReps: '105',
     week: '2',
     date: '09.01.2023',
-    duration: '00:45',
+    duration: '45',
   },
   {
     id: '3',
@@ -35,7 +35,7 @@ export const workouts: Workout[] = [
     totalReps: '80',
     week: '2',
     date: '08.01.2023',
-    duration: '01:00',
+    duration: '60',
   },
   {
     id: '4',
@@ -44,7 +44,7 @@ export const workouts: Workout[] = [
     totalReps: '97',
     week: '1',
     date: '06.01.2023',
-    duration: '01:00',
+    duration: '60',
   },
   {
     id: '5',
@@ -53,7 +53,7 @@ export const workouts: Workout[] = [
     totalReps: '67',
     week: '1',
     date: '04.01.2023',
-    duration: '01:15',
+    duration: '75',
   },
   {
     id: '6',
@@ -62,7 +62,7 @@ export const workouts: Workout[] = [
     totalReps: '105',
     week: '1',
     date: '02.01.2023',
-    duration: '00:45',
+    duration: '45',
   },
   {
     id: '7',
@@ -71,6 +71,6 @@ export const workouts: Workout[] = [
     totalReps: '80',
     week: '1',
     date: '01.01.2023',
-    duration: '01:00',
+    duration: '60',
   },
 ]
