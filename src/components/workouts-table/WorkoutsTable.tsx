@@ -49,7 +49,10 @@ export default function WorkoutsTable() {
               {workout => (
                 <TableRow
                   hover
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    cursor: 'pointer',
+                  }}
                 >
                   <TableCell component="th" scope="row">
                     {workout.name}
