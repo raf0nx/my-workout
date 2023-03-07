@@ -49,8 +49,15 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       onClose={props.onClose}
       aria-labelledby="workouts-table-dialog-title"
     >
-      <WorkoutsTableDialogBar onClose={props.onClose} onSave={handleSave} />
-      <WorkoutsTableDialogContent onInputChange={handleInputChange} />
+      <WorkoutsTableDialogBar
+        onClose={props.onClose}
+        onSave={handleSave}
+        state={props.state}
+      />
+      <WorkoutsTableDialogContent
+        onInputChange={handleInputChange}
+        state={props.state}
+      />
     </Dialog>
   )
 }
