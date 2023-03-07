@@ -21,7 +21,7 @@ const WORKOUTS_TABLE_HEADERS = [
   'Total reps',
   'Week',
   'Date',
-  'Duration',
+  'Duration (mins)',
 ] as const
 
 // TODO: Improve Table accessibility (e.g. add caption)
