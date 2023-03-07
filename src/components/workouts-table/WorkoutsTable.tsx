@@ -78,6 +78,7 @@ export default function WorkoutsTable() {
                       workout={workout}
                       onClose={closeWorkoutDetails}
                       setWorkouts={setWorkouts}
+                      state="show"
                     />
                   </Show>
                 </>
