@@ -13,9 +13,11 @@ import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
-  const [workoutDetails, setWorkoutDetails] = createStore({
-    ...workoutDetailsInitialState,
-  })
+  const [workoutDetails, setWorkoutDetails] = createStore(
+    props.workout || {
+      ...workoutDetailsInitialState,
+    }
+  )
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

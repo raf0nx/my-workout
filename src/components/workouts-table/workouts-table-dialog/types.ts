@@ -4,6 +4,7 @@ import type { Workout } from '~/components/workouts-table/types'
 
 export interface WorkoutsTableDialogProps {
   isOpen: boolean
+  workout?: Workout
   onClose: () => void
   setWorkouts: SetStoreFunction<Workout[]>
 }
