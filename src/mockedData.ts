@@ -2,6 +2,7 @@ import type { Workout } from './components/workouts-table/types'
 
 export const workouts: Workout[] = [
   {
+    id: '0',
     name: 'Push Up Monday',
     description: 'good weather, good workout',
     totalReps: '97',
@@ -10,6 +11,7 @@ export const workouts: Workout[] = [
     duration: '01:00',
   },
   {
+    id: '1',
     name: 'FBW Thursday',
     description: 'muscle pains, bad weather',
     totalReps: '67',
@@ -18,6 +20,7 @@ export const workouts: Workout[] = [
     duration: '01:15',
   },
   {
+    id: '2',
     name: 'Pull Up Tuesday',
     description: 'record broken!!!',
     totalReps: '105',
@@ -26,6 +29,7 @@ export const workouts: Workout[] = [
     duration: '00:45',
   },
   {
+    id: '3',
     name: 'Push Up Monday',
     description: 'overall very good workout',
     totalReps: '80',
@@ -34,6 +38,7 @@ export const workouts: Workout[] = [
     duration: '01:00',
   },
   {
+    id: '4',
     name: 'Back + Arms',
     description: 'good weather, good workout',
     totalReps: '97',
@@ -42,6 +47,7 @@ export const workouts: Workout[] = [
     duration: '01:00',
   },
   {
+    id: '5',
     name: 'FBW Thursday',
     description: 'muscle pains, bad weather',
     totalReps: '67',
@@ -50,6 +56,7 @@ export const workouts: Workout[] = [
     duration: '01:15',
   },
   {
+    id: '6',
     name: 'Pull Up Tuesday',
     description: 'record broken!!!',
     totalReps: '105',
@@ -58,6 +65,7 @@ export const workouts: Workout[] = [
     duration: '00:45',
   },
   {
+    id: '7',
     name: 'Push Up Monday',
     description: 'overall very good workout',
     totalReps: '80',
