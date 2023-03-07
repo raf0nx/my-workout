@@ -56,6 +56,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       />
       <WorkoutsTableDialogContent
         onInputChange={handleInputChange}
+        workoutDetails={workoutDetails}
         state={props.state}
       />
     </Dialog>
