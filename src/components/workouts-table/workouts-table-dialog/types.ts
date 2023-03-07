@@ -13,7 +13,7 @@ export interface WorkoutsTableDialogProps {
 }
 
 export const workoutDetailsInitialState: Workout = {
-  id: Date.now().toString(),
+  id: '',
   name: '',
   description: '',
   totalReps: '',

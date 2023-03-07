@@ -35,10 +35,15 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const handleSave = () => {
     props.setWorkouts(
       produce(workouts => {
-        workouts.push({ ...workoutDetails })
+        workouts.push({ ...workoutDetails, id: Date.now().toString() })
       })
     )
     props.onClose()
+    clearStore()
+  }
+
+  const clearStore = () => {
+    setWorkoutDetails(workoutDetailsInitialState)
   }
 
   return (
