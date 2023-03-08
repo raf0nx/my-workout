@@ -73,10 +73,10 @@ describe('WorkoutsTable', () => {
     // Given
     const mockedWorkoutName = 'Test workout'
     const mockedDescription = 'Test description'
-    const mockedTotalReps = '100'
-    const mockedWeek = '4'
+    const mockedTotalReps = '999'
+    const mockedWeek = '888'
     const mockedDate = '01.01.2020'
-    const mockedDuration = '60'
+    const mockedDuration = '777'
     const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
     // When
