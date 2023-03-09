@@ -31,6 +31,7 @@ export default function WorkoutsTableToolbar(props: WorkoutsTableToolbarProps) {
         isOpen={isDialogOpen()}
         onClose={handleCloseDialog}
         setWorkouts={props.setWorkouts}
+        state="create"
       />
     </Toolbar>
   )

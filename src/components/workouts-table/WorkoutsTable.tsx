@@ -6,14 +6,14 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { For, Index } from 'solid-js'
+import { createSignal, For, Index, Show } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { workouts as mockedWorkouts } from '~/mockedData'
 
-import { WorkoutsTableToolbar } from '.'
+import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',
@@ -21,12 +21,19 @@ const WORKOUTS_TABLE_HEADERS = [
   'Total reps',
   'Week',
   'Date',
-  'Duration',
+  'Duration (mins)',
 ] as const
 
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
   const [workouts, setWorkouts] = createStore(mockedWorkouts)
+  const [selectedWorkoutId, setSelectedWorkoutId] = createSignal<string | null>(
+    null
+  )
+
+  const closeWorkoutDetails = () => {
+    setSelectedWorkoutId(null)
+  }
 
   return (
     <Card>
@@ -47,19 +54,34 @@ export default function WorkoutsTable() {
           <TableBody>
             <For each={workouts}>
               {workout => (
-                <TableRow
-                  hover
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {workout.name}
-                  </TableCell>
-                  <TableCell>{workout.description}</TableCell>
-                  <TableCell align="right">{workout.totalReps}</TableCell>
-                  <TableCell align="right">{workout.week}</TableCell>
-                  <TableCell align="right">{workout.date}</TableCell>
-                  <TableCell align="right">{workout.duration}</TableCell>
-                </TableRow>
+                <>
+                  <TableRow
+                    hover
+                    sx={{
+                      '&:last-child td, &:last-child th': { border: 0 },
+                      cursor: 'pointer',
+                    }}
+                    onClick={[setSelectedWorkoutId, workout.id]}
+                  >
+                    <TableCell component="th" scope="row">
+                      {workout.name}
+                    </TableCell>
+                    <TableCell>{workout.description}</TableCell>
+                    <TableCell align="right">{workout.totalReps}</TableCell>
+                    <TableCell align="right">{workout.week}</TableCell>
+                    <TableCell align="right">{workout.date}</TableCell>
+                    <TableCell align="right">{workout.duration}</TableCell>
+                  </TableRow>
+                  <Show when={selectedWorkoutId() === workout.id}>
+                    <WorkoutsTableDialog
+                      isOpen
+                      workout={workout}
+                      onClose={closeWorkoutDetails}
+                      setWorkouts={setWorkouts}
+                      state="show"
+                    />
+                  </Show>
+                </>
               )}
             </For>
           </TableBody>

@@ -1,10 +1,16 @@
 import { Box, Grid, TextField, Typography } from '@suid/material'
 
 import type { WorkoutsTableDialogContentProps } from './types'
+import {
+  getInputProps,
+  getInputVariant,
+} from './workouts-table-dialog-content-helpers'
 
 export default function WorkoutsTableDialogContent(
   props: WorkoutsTableDialogContentProps
 ) {
+  const isInputReadOnly = props.state === 'show'
+
   return (
     <Box p={3} component="form" noValidate autocomplete="off">
       <Grid container spacing={4}>
@@ -16,6 +22,9 @@ export default function WorkoutsTableDialogContent(
             placeholder="Push Pull Monday"
             fullWidth
             onChange={props.onInputChange}
+            value={props.workoutDetails.name}
+            InputProps={getInputProps(isInputReadOnly)}
+            variant={getInputVariant(isInputReadOnly)}
           />
           <TextField
             label="Description"
@@ -24,6 +33,9 @@ export default function WorkoutsTableDialogContent(
             placeholder="e.g. Today the weather was beautiful so the quality of the training was excellent."
             fullWidth
             onChange={props.onInputChange}
+            value={props.workoutDetails.description}
+            InputProps={getInputProps(isInputReadOnly)}
+            variant={getInputVariant(isInputReadOnly)}
           />
           <Box sx={{ display: 'flex', gap: 3 }}>
             <TextField
@@ -34,6 +46,9 @@ export default function WorkoutsTableDialogContent(
               placeholder="90"
               sx={{ flex: 1 }}
               onChange={props.onInputChange}
+              value={props.workoutDetails.totalReps}
+              InputProps={getInputProps(isInputReadOnly)}
+              variant={getInputVariant(isInputReadOnly)}
             />
             <TextField
               label="Week"
@@ -43,6 +58,9 @@ export default function WorkoutsTableDialogContent(
               placeholder="4"
               sx={{ flex: 1 }}
               onChange={props.onInputChange}
+              value={props.workoutDetails.week}
+              InputProps={getInputProps(isInputReadOnly)}
+              variant={getInputVariant(isInputReadOnly)}
             />
           </Box>
           <TextField
@@ -52,6 +70,9 @@ export default function WorkoutsTableDialogContent(
             placeholder="DD.MM.YYYY"
             fullWidth
             onChange={props.onInputChange}
+            value={props.workoutDetails.date}
+            InputProps={getInputProps(isInputReadOnly)}
+            variant={getInputVariant(isInputReadOnly)}
           />
           <TextField
             label="Duration"
@@ -66,8 +87,11 @@ export default function WorkoutsTableDialogContent(
                   mins
                 </Typography>
               ),
+              ...getInputProps(isInputReadOnly),
             }}
             onChange={props.onInputChange}
+            value={props.workoutDetails.duration}
+            variant={getInputVariant(isInputReadOnly)}
           />
         </Grid>
         <Grid item xs={12} sm={8}>

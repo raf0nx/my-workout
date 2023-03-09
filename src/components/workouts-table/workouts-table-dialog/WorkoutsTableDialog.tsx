@@ -13,9 +13,11 @@ import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
-  const [workoutDetails, setWorkoutDetails] = createStore({
-    ...workoutDetailsInitialState,
-  })
+  const [workoutDetails, setWorkoutDetails] = createStore(
+    props.workout || {
+      ...workoutDetailsInitialState,
+    }
+  )
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,10 +35,15 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const handleSave = () => {
     props.setWorkouts(
       produce(workouts => {
-        workouts.push({ ...workoutDetails })
+        workouts.push({ ...workoutDetails, id: Date.now().toString() })
       })
     )
     props.onClose()
+    clearStore()
+  }
+
+  const clearStore = () => {
+    setWorkoutDetails(workoutDetailsInitialState)
   }
 
   return (
@@ -47,8 +54,16 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       onClose={props.onClose}
       aria-labelledby="workouts-table-dialog-title"
     >
-      <WorkoutsTableDialogBar onClose={props.onClose} onSave={handleSave} />
-      <WorkoutsTableDialogContent onInputChange={handleInputChange} />
+      <WorkoutsTableDialogBar
+        onClose={props.onClose}
+        onSave={handleSave}
+        state={props.state}
+      />
+      <WorkoutsTableDialogContent
+        onInputChange={handleInputChange}
+        workoutDetails={workoutDetails}
+        state={props.state}
+      />
     </Dialog>
   )
 }
