@@ -6,7 +6,7 @@ import {
 } from './workouts-table-dialog-content-helpers'
 
 describe('getInputProps', () => {
-  it('Should return proper input properties for readonly input', () => {
+  it('should return proper input properties for readonly input', () => {
     // Given
     const expected = { readOnly: true, disableUnderline: true }
 
@@ -17,7 +17,7 @@ describe('getInputProps', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('Should NOT return any input properties for non-readonly input', () => {
+  it('should NOT return any input properties for non-readonly input', () => {
     // Given
     const expected = {}
 
@@ -30,7 +30,7 @@ describe('getInputProps', () => {
 })
 
 describe('getInputVariant', () => {
-  it("Should return 'filled' input variant for readonly input", () => {
+  it("should return 'filled' input variant for readonly input", () => {
     // Given
     const expected = 'filled'
 
@@ -41,7 +41,7 @@ describe('getInputVariant', () => {
     expect(actual).toEqual(expected)
   })
 
-  it("Should return 'outlined' input variant for non-readonly input", () => {
+  it("should return 'outlined' input variant for non-readonly input", () => {
     // Given
     const expected = 'outlined'
 
