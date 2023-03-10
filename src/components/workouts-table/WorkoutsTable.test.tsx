@@ -80,6 +80,7 @@ describe('WorkoutsTable', () => {
     const mockedDate = '01.01.2020'
     const mockedDuration = '777'
     const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
+    const workoutsNumber = screen.getAllByTestId('workouts-table-row').length
 
     // When
     await userEvent.click(addWorkoutBtn)
@@ -103,6 +104,9 @@ describe('WorkoutsTable', () => {
 
     // Then
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('workouts-table-row').length).toBe(
+      workoutsNumber + 1
+    )
     expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
     expect(screen.getByText(mockedDescription)).toBeInTheDocument()
     expect(screen.getByText(mockedTotalReps)).toBeInTheDocument()
@@ -145,6 +149,7 @@ describe('WorkoutsTable', () => {
   it('should edit the selected workout', async () => {
     // Given
     const workoutToSelect = screen.getAllByText(workouts[0].name)[0]
+    const workoutsNumber = screen.getAllByTestId('workouts-table-row').length
     const mockedWorkoutName = 'Test edit name'
     const mockedDescription = 'Test edit description'
     const mockedTotalReps = '1111'
@@ -187,6 +192,9 @@ describe('WorkoutsTable', () => {
 
     // Then
     expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('workouts-table-row').length).toBe(
+      workoutsNumber
+    )
     expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
     expect(screen.getByText(mockedDescription)).toBeInTheDocument()
     expect(screen.getByText(mockedTotalReps)).toBeInTheDocument()

@@ -62,6 +62,7 @@ export default function WorkoutsTable() {
                       cursor: 'pointer',
                     }}
                     onClick={[setSelectedWorkoutId, workout.id]}
+                    data-testid="workouts-table-row"
                   >
                     <TableCell component="th" scope="row">
                       {workout.name}
