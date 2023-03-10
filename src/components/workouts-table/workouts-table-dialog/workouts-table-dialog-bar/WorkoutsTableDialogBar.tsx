@@ -1,4 +1,4 @@
-import { Close } from '@suid/icons-material'
+import { Close, Edit } from '@suid/icons-material'
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@suid/material'
 import { Show } from 'solid-js'
 
@@ -32,9 +32,16 @@ export default function WorkoutsTableDialogBar(
         >
           {dialogBarHeader}
         </Typography>
-        <Show when={props.state === 'create'}>
-          <Button autofocus color="inherit" onClick={props.onSave}>
-            Save
+        <Show
+          when={props.state === 'show'}
+          fallback={
+            <Button autofocus color="inherit" onClick={props.onSave}>
+              Save
+            </Button>
+          }
+        >
+          <Button autofocus color="inherit" startIcon={<Edit />}>
+            Edit
           </Button>
         </Show>
       </Toolbar>
