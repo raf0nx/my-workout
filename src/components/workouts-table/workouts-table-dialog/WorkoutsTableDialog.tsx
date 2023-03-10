@@ -45,6 +45,14 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
     clearStore()
   }
 
+  const handleEdit = () => {
+    props.setWorkouts(
+      workout => workout.id === workoutDetails.id,
+      () => workoutDetails
+    )
+    props.onClose()
+  }
+
   const clearStore = () => {
     setWorkoutDetails(workoutDetailsInitialState)
   }
@@ -62,6 +70,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
         onSave={handleSave}
         state={dialogState()}
         onStateChange={setDialogState}
+        onEdit={handleEdit}
       />
       <WorkoutsTableDialogContent
         onInputChange={handleInputChange}

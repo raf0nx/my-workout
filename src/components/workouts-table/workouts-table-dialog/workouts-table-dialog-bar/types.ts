@@ -7,4 +7,5 @@ export interface WorkoutsTableDialogBarProps {
   onClose: () => void
   onSave: () => void
   onStateChange: Setter<WorkoutsTableDialogState>
+  onEdit: () => void
 }

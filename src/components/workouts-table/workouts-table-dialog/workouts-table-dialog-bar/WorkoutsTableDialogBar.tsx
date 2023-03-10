@@ -7,8 +7,21 @@ import type { WorkoutsTableDialogBarProps } from './types'
 export default function WorkoutsTableDialogBar(
   props: WorkoutsTableDialogBarProps
 ) {
-  const dialogBarHeader =
+  const dialogBarHeader = () =>
     props.state === 'create' ? 'New Workout' : 'Your Workout'
+
+  const handleButtonClick = () => {
+    switch (props.state) {
+      case 'create':
+        props.onSave()
+        break
+      case 'edit':
+        props.onEdit()
+        break
+      case 'show':
+        props.onStateChange('edit')
+    }
+  }
 
   return (
     <AppBar sx={{ position: 'relative' }}>
@@ -30,12 +43,12 @@ export default function WorkoutsTableDialogBar(
           component="h2"
           id="workouts-table-dialog-title"
         >
-          {dialogBarHeader}
+          {dialogBarHeader()}
         </Typography>
         <Show
           when={props.state === 'show'}
           fallback={
-            <Button autofocus color="inherit" onClick={props.onSave}>
+            <Button autofocus color="inherit" onClick={handleButtonClick}>
               Save
             </Button>
           }
@@ -44,7 +57,7 @@ export default function WorkoutsTableDialogBar(
             autofocus
             color="inherit"
             startIcon={<Edit />}
-            onClick={[props.onStateChange, 'edit']}
+            onClick={handleButtonClick}
           >
             Edit
           </Button>
