@@ -40,7 +40,12 @@ export default function WorkoutsTableDialogBar(
             </Button>
           }
         >
-          <Button autofocus color="inherit" startIcon={<Edit />}>
+          <Button
+            autofocus
+            color="inherit"
+            startIcon={<Edit />}
+            onClick={[props.onStateChange, 'edit']}
+          >
             Edit
           </Button>
         </Show>

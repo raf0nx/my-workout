@@ -1,6 +1,7 @@
 import { Dialog } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
+import { createSignal } from 'solid-js'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
 import type { WorkoutProps } from '~/components/workouts-table/types'
@@ -18,6 +19,8 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       ...workoutDetailsInitialState,
     }
   )
+
+  const [dialogState, setDialogState] = createSignal(props.state)
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -57,12 +60,13 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
       <WorkoutsTableDialogBar
         onClose={props.onClose}
         onSave={handleSave}
-        state={props.state}
+        state={dialogState()}
+        onStateChange={setDialogState}
       />
       <WorkoutsTableDialogContent
         onInputChange={handleInputChange}
         workoutDetails={workoutDetails}
-        state={props.state}
+        state={dialogState()}
       />
     </Dialog>
   )
