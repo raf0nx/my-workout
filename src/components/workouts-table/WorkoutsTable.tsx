@@ -62,6 +62,7 @@ export default function WorkoutsTable() {
                       cursor: 'pointer',
                     }}
                     onClick={[setSelectedWorkoutId, workout.id]}
+                    data-testid="workouts-table-row"
                   >
                     <TableCell component="th" scope="row">
                       {workout.name}
@@ -75,7 +76,7 @@ export default function WorkoutsTable() {
                   <Show when={selectedWorkoutId() === workout.id}>
                     <WorkoutsTableDialog
                       isOpen
-                      workout={workout}
+                      workout={{ ...workout }}
                       onClose={closeWorkoutDetails}
                       setWorkouts={setWorkouts}
                       state="show"
