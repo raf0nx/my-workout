@@ -1,0 +1,10 @@
+.text-field {
+  div {
+    &::after {
+      display: none;
+    }
+    &::before {
+      display: none;
+    }
+  }
+}
