@@ -1,9 +1,6 @@
 import { describe, it } from 'vitest'
 
-import {
-  getInputProps,
-  getInputVariant,
-} from './workouts-table-dialog-content-helpers'
+import { getInputProps } from './workouts-table-dialog-content-helpers'
 
 describe('getInputProps', () => {
   it('should return proper input properties for readonly input', () => {
@@ -23,30 +20,6 @@ describe('getInputProps', () => {
 
     // When
     const actual = getInputProps(false)
-
-    // Then
-    expect(actual).toEqual(expected)
-  })
-})
-
-describe('getInputVariant', () => {
-  it("should return 'filled' input variant for readonly input", () => {
-    // Given
-    const expected = 'filled'
-
-    // When
-    const actual = getInputVariant(true)
-
-    // Then
-    expect(actual).toEqual(expected)
-  })
-
-  it("should return 'outlined' input variant for non-readonly input", () => {
-    // Given
-    const expected = 'outlined'
-
-    // When
-    const actual = getInputVariant(false)
 
     // Then
     expect(actual).toEqual(expected)
