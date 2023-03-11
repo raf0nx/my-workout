@@ -1,7 +1,11 @@
+import styles from './workouts-table-dialog-content.module.scss'
+
 export function getInputProps(isReadOnly: boolean) {
-  return isReadOnly ? { readOnly: true, disableUnderline: true } : {}
+  return { readOnly: isReadOnly, disabled: isReadOnly }
 }
 
-export function getInputVariant(isReadOnly: boolean) {
-  return isReadOnly ? 'filled' : 'outlined'
+export function getInputStyle(isReadOnly: boolean) {
+  if (!isReadOnly) return
+
+  return styles['text-field']
 }
