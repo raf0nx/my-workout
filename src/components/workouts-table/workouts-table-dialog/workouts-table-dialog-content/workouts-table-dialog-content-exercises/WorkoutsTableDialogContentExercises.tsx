@@ -32,15 +32,18 @@ export default function WorkoutsTableDialogContentExercises() {
             hover
           >
             <TableCell component="th" scope="row">
-              <FormControl variant="filled" size="small" sx={{ width: '100%' }}>
-                <InputLabel id="exercise-label-1">Exercise</InputLabel>
-                <Select labelId="exercise-label-1" id="exercise-1" value={20}>
+              <FormControl
+                variant="standard"
+                size="small"
+                sx={{ width: '100%' }}
+              >
+                <Select id="exercise-1" value="" displayEmpty>
                   <MenuItem value="">
-                    <em>None</em>
+                    <em>Select&nbsp;exercise</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={1}>Workout 1</MenuItem>
+                  <MenuItem value={2}>Workout 2</MenuItem>
+                  <MenuItem value={3}>Workout 3</MenuItem>
                 </Select>
               </FormControl>
             </TableCell>
