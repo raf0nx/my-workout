@@ -13,7 +13,7 @@ export type Exercises = Record<string, Exercise>
 
 export interface Exercise {
   name: string
-  reps: number[]
+  sets: number[]
 }
 
 export type WorkoutProps = keyof Workout

@@ -5,6 +5,6 @@ export const getNumOfSetsColumns = (exercises: Exercise[]) =>
 
 const getMaxSetsColumnsNumber = (exercises: Exercise[]) =>
   exercises.reduce(
-    (currMax, exercise) => Math.max(currMax, exercise.reps.length),
+    (currMax, exercise) => Math.max(currMax, exercise.sets.length),
     0
   )

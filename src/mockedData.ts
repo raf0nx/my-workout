@@ -9,7 +9,7 @@ export const workouts: Workout[] = [
     week: '3',
     date: '15.01.2023',
     duration: '60',
-    exercises: { exercise1: { name: 'Muscle Up', reps: [1, 2, 3, 4] } },
+    exercises: { exercise1: { name: 'Muscle Up', sets: [1, 2, 3, 4] } },
   },
   {
     id: '1',

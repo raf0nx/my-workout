@@ -60,14 +60,14 @@ export default function WorkoutsTableDialogContentExercises(
                     </Select>
                   </FormControl>
                 </TableCell>
-                <Index each={exercise.reps}>
-                  {rep => (
+                <Index each={exercise.sets}>
+                  {set => (
                     <TableCell align="right" sx={{ width: '80', pr: 0 }}>
                       <TextField
                         variant="standard"
                         size="small"
                         type="number"
-                        value={rep()}
+                        value={set()}
                         inputProps={{
                           style: { 'text-align': 'right' },
                         }}
