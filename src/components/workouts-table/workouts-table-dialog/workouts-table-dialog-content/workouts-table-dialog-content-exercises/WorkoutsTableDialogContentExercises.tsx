@@ -16,11 +16,13 @@ import { For, Index } from 'solid-js'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WorkoutsTableDialogContentExercisesProps } from './types'
+import { getNumOfSetsColumns } from './workouts-table-dialog-content-exercises-helpers'
 
 export default function WorkoutsTableDialogContentExercises(
   props: WorkoutsTableDialogContentExercisesProps
 ) {
   const exercises = () => Object.values(props.exercises)
+  const numOfSetsColumns = () => getNumOfSetsColumns(exercises())
 
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
@@ -28,7 +30,11 @@ export default function WorkoutsTableDialogContentExercises(
         <TableHead>
           <TableRow>
             <TableHeaderCell>Exercise type</TableHeaderCell>
-            <TableHeaderCell align="right">Set 1</TableHeaderCell>
+            <Index each={numOfSetsColumns()}>
+              {set => (
+                <TableHeaderCell align="right">Set {set()}</TableHeaderCell>
+              )}
+            </Index>
           </TableRow>
         </TableHead>
         <TableBody>
