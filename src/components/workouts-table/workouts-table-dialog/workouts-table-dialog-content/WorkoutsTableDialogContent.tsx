@@ -114,7 +114,9 @@ export default function WorkoutsTableDialogContent(
           />
         </Grid>
         <Grid item xs={12} sm={8}>
-            <WorkoutsTableDialogContentExercises />
+          <WorkoutsTableDialogContentExercises
+            exercises={props.workoutDetails.exercises}
+          />
         </Grid>
       </Grid>
     </Box>
