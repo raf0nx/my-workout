@@ -9,6 +9,7 @@ export const workouts: Workout[] = [
     week: '3',
     date: '15.01.2023',
     duration: '60',
+    exercises: { exercise1: { name: 'Muscle Up', reps: [1, 2, 3, 4] } },
   },
   {
     id: '1',
@@ -18,6 +19,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '11.01.2023',
     duration: '75',
+    exercises: {},
   },
   {
     id: '2',
@@ -27,6 +29,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '09.01.2023',
     duration: '45',
+    exercises: {},
   },
   {
     id: '3',
@@ -36,6 +39,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '08.01.2023',
     duration: '60',
+    exercises: {},
   },
   {
     id: '4',
@@ -45,6 +49,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '06.01.2023',
     duration: '60',
+    exercises: {},
   },
   {
     id: '5',
@@ -54,6 +59,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '04.01.2023',
     duration: '75',
+    exercises: {},
   },
   {
     id: '6',
@@ -63,6 +69,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '02.01.2023',
     duration: '45',
+    exercises: {},
   },
   {
     id: '7',
@@ -72,5 +79,6 @@ export const workouts: Workout[] = [
     week: '1',
     date: '01.01.2023',
     duration: '60',
+    exercises: {},
   },
 ]
