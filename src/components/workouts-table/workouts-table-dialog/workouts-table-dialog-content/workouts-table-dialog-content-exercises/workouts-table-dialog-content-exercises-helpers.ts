@@ -1,6 +1,6 @@
 import type { Exercise } from '~/components/workouts-table/types'
 
-export const getNumOfSetsColumns = (exercises: Exercise[]) =>
+export const getNumberOfSetsColumns = (exercises: Exercise[]) =>
   Array.from({ length: getMaxSetsColumnsNumber(exercises) }, (_, i) => i + 1)
 
 const getMaxSetsColumnsNumber = (exercises: Exercise[]) =>
