@@ -16,13 +16,17 @@ import { For, Index } from 'solid-js'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WorkoutsTableDialogContentExercisesProps } from './types'
-import { getNumberOfSetsColumns } from './workouts-table-dialog-content-exercises-helpers'
+import {
+  getConsecutiveNumberOfColumns,
+  getMaxColumnNumber,
+} from './workouts-table-dialog-content-exercises-helpers'
 
 export default function WorkoutsTableDialogContentExercises(
   props: WorkoutsTableDialogContentExercisesProps
 ) {
   const exercises = () => Object.values(props.exercises)
-  const numOfSetsColumns = () => getNumberOfSetsColumns(exercises())
+  const consecutiveColumnNumbers = () =>
+    getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
 
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
@@ -30,10 +34,10 @@ export default function WorkoutsTableDialogContentExercises(
         <TableHead>
           <TableRow>
             <TableHeaderCell>Exercise type</TableHeaderCell>
-            <Index each={numOfSetsColumns()}>
-              {setNumber => (
+            <Index each={consecutiveColumnNumbers()}>
+              {columnNumber => (
                 <TableHeaderCell align="right">
-                  Set {setNumber()}
+                  Set {columnNumber()}
                 </TableHeaderCell>
               )}
             </Index>
