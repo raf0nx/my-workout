@@ -1,6 +1,5 @@
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Table,
@@ -11,53 +10,79 @@ import {
   TableRow,
   TextField,
 } from '@suid/material'
+import { For, Index } from 'solid-js'
 
 import { TableHeaderCell } from '~/components/table-header-cell'
 
-export default function WorkoutsTableDialogContentExercises() {
+import type { WorkoutsTableDialogContentExercisesProps } from './types'
+import {
+  getConsecutiveNumberOfColumns,
+  getMaxColumnNumber,
+} from './workouts-table-dialog-content-exercises-helpers'
+
+export default function WorkoutsTableDialogContentExercises(
+  props: WorkoutsTableDialogContentExercisesProps
+) {
+  const exercises = () => Object.values(props.exercises)
+  const consecutiveColumnNumbers = () =>
+    getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
+
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
             <TableHeaderCell>Exercise type</TableHeaderCell>
-            <TableHeaderCell align="right">Set 1</TableHeaderCell>
+            <Index each={consecutiveColumnNumbers()}>
+              {columnNumber => (
+                <TableHeaderCell align="right">
+                  Set {columnNumber()}
+                </TableHeaderCell>
+              )}
+            </Index>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow
-            sx={{
-              '&:last-child td, &:last-child th': { border: 0 },
-            }}
-            hover
-          >
-            <TableCell component="th" scope="row">
-              <FormControl
-                variant="standard"
-                size="small"
-                sx={{ width: '100%' }}
-              >
-                <Select id="exercise-1" value="" displayEmpty>
-                  <MenuItem value="">
-                    <em>Select&nbsp;exercise</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Workout 1</MenuItem>
-                  <MenuItem value={2}>Workout 2</MenuItem>
-                  <MenuItem value={3}>Workout 3</MenuItem>
-                </Select>
-              </FormControl>
-            </TableCell>
-            <TableCell align="right" sx={{ width: '80', pr: 0 }}>
-              <TextField
-                variant="standard"
-                size="small"
-                type="number"
-                inputProps={{
-                  style: { 'text-align': 'right' },
+          <For each={exercises()}>
+            {exercise => (
+              <TableRow
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
                 }}
-              />
-            </TableCell>
-          </TableRow>
+                hover
+              >
+                <TableCell component="th" scope="row">
+                  <FormControl
+                    variant="standard"
+                    size="small"
+                    sx={{ width: '100%' }}
+                  >
+                    <Select id="exercise-1" value={exercise.name} displayEmpty>
+                      <MenuItem value="">
+                        <em>Select&nbsp;exercise</em>
+                      </MenuItem>
+                      <MenuItem value={exercise.name}>{exercise.name}</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <Index each={exercise.sets}>
+                  {set => (
+                    <TableCell align="right" sx={{ width: '80', pr: 0 }}>
+                      <TextField
+                        variant="standard"
+                        size="small"
+                        type="number"
+                        value={set()}
+                        inputProps={{
+                          style: { 'text-align': 'right' },
+                        }}
+                      />
+                    </TableCell>
+                  )}
+                </Index>
+              </TableRow>
+            )}
+          </For>
         </TableBody>
       </Table>
     </TableContainer>
