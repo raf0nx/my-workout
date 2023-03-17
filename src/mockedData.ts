@@ -6,7 +6,7 @@ export const exercises: Exercises = {
   exercise3: { name: 'Bar Dips', sets: [12, 10, 10, 8] },
   exercise4: { name: 'Wide Pull Up', sets: [8, 8, 7, 6] },
   exercise5: { name: 'Triceps Extensions', sets: [12, 10, 10, 8] },
-  exercise6: { name: 'Windshield Wipers', sets: [12, 12, 10, 10] },
+  exercise6: { name: 'Windshield Wipers', sets: [12, 12, 10] },
 }
 
 export const workouts: Workout[] = [
