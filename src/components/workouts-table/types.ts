@@ -16,4 +16,5 @@ export interface Exercise {
   sets: number[]
 }
 
-export type WorkoutProps = keyof Workout
+// TODO: Adjust while handling exercises creation/edition
+export type WorkoutProps = Exclude<keyof Workout, 'exercises'>
