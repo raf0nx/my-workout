@@ -1,4 +1,13 @@
-import type { Workout } from './components/workouts-table/types'
+import type { Exercises, Workout } from './components/workouts-table/types'
+
+export const exercises: Exercises = {
+  exercise1: { name: 'Muscle Up', sets: [5, 4, 4, 3, 2] },
+  exercise2: { name: 'Bulgarian Squats', sets: [8, 8, 8, 8] },
+  exercise3: { name: 'Bar Dips', sets: [12, 10, 10, 8] },
+  exercise4: { name: 'Wide Pull Up', sets: [8, 8, 7, 6] },
+  exercise5: { name: 'Triceps Extensions', sets: [12, 10, 10, 8] },
+  exercise6: { name: 'Windshield Wipers', sets: [12, 12, 10, 10] },
+}
 
 export const workouts: Workout[] = [
   {
@@ -9,7 +18,7 @@ export const workouts: Workout[] = [
     week: '3',
     date: '15.01.2023',
     duration: '60',
-    exercises: { exercise1: { name: 'Muscle Up', sets: [1, 2, 3, 4] } },
+    exercises,
   },
   {
     id: '1',
@@ -19,7 +28,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '11.01.2023',
     duration: '75',
-    exercises: {},
+    exercises,
   },
   {
     id: '2',
@@ -29,7 +38,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '09.01.2023',
     duration: '45',
-    exercises: {},
+    exercises,
   },
   {
     id: '3',
@@ -39,7 +48,7 @@ export const workouts: Workout[] = [
     week: '2',
     date: '08.01.2023',
     duration: '60',
-    exercises: {},
+    exercises,
   },
   {
     id: '4',
@@ -49,7 +58,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '06.01.2023',
     duration: '60',
-    exercises: {},
+    exercises,
   },
   {
     id: '5',
@@ -59,7 +68,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '04.01.2023',
     duration: '75',
-    exercises: {},
+    exercises,
   },
   {
     id: '6',
@@ -69,7 +78,7 @@ export const workouts: Workout[] = [
     week: '1',
     date: '02.01.2023',
     duration: '45',
-    exercises: {},
+    exercises,
   },
   {
     id: '7',
@@ -79,6 +88,6 @@ export const workouts: Workout[] = [
     week: '1',
     date: '01.01.2023',
     duration: '60',
-    exercises: {},
+    exercises,
   },
 ]
