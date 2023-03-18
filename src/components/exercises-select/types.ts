@@ -1,5 +1,5 @@
 export interface ExercisesSelectProps {
-  selectedExercise: AvailableExercises
+  selectedExercise: AvailableExercises | ''
 }
 
 export const AVAILABLE_EXERCISES = [
