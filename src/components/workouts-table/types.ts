@@ -1,3 +1,5 @@
+import type { AvailableExercises } from '../exercises-select/types'
+
 export interface Workout {
   id: string
   name: string
@@ -12,7 +14,7 @@ export interface Workout {
 export type Exercises = Record<string, Exercise>
 
 export interface Exercise {
-  name: string
+  name: AvailableExercises | ''
   sets: number[]
 }
 
