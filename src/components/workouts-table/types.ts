@@ -14,7 +14,7 @@ export interface Workout {
 export type Exercises = Record<string, Exercise>
 
 export interface Exercise {
-  name: AvailableExercises
+  name: AvailableExercises | ''
   sets: number[]
 }
 
