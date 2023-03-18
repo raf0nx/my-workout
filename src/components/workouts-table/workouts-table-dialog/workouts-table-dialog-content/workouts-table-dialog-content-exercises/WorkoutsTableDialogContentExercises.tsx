@@ -1,7 +1,4 @@
 import {
-  FormControl,
-  MenuItem,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +9,7 @@ import {
 } from '@suid/material'
 import { For, Index } from 'solid-js'
 
+import { ExercisesSelect } from '~/components/exercises-select'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WorkoutsTableDialogContentExercisesProps } from './types'
@@ -52,18 +50,7 @@ export default function WorkoutsTableDialogContentExercises(
                 hover
               >
                 <TableCell component="th" scope="row">
-                  <FormControl
-                    variant="standard"
-                    size="small"
-                    sx={{ width: '100%' }}
-                  >
-                    <Select id="exercise-1" value={exercise.name} displayEmpty>
-                      <MenuItem value="">
-                        <em>Select&nbsp;exercise</em>
-                      </MenuItem>
-                      <MenuItem value={exercise.name}>{exercise.name}</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <ExercisesSelect selectedExercise={exercise.name} />
                 </TableCell>
                 <Index each={exercise.sets}>
                   {set => (
