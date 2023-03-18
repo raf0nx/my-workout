@@ -2,10 +2,13 @@ import type { Exercises, Workout } from './components/workouts-table/types'
 
 export const exercises: Exercises = {
   exercise1: { name: 'Muscle Up', sets: [5, 4, 4, 3, 2] },
-  exercise2: { name: 'Bulgarian Squats', sets: [8, 8, 8, 8] },
-  exercise3: { name: 'Bar Dips', sets: [12, 10, 10, 8] },
+  exercise2: { name: 'Bulgarian Squat', sets: [8, 8, 8, 8] },
+  exercise3: { name: 'Bar Dip', sets: [12, 10, 10, 8] },
   exercise4: { name: 'Wide Pull Up', sets: [8, 8, 7, 6] },
-  exercise5: { name: 'Triceps Extensions', sets: [12, 10, 10, 8] },
+  exercise5: {
+    name: 'Resistance Band Triceps Extensions',
+    sets: [12, 10, 10, 8],
+  },
   exercise6: { name: 'Windshield Wipers', sets: [12, 12, 10] },
 }
 
