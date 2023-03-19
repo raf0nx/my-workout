@@ -1,4 +1,6 @@
+import { AddCircle } from '@suid/icons-material'
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -67,9 +69,24 @@ export default function WorkoutsTableDialogContentExercises(
                     </TableCell>
                   )}
                 </Index>
+                <TableCell
+                  sx={{ width: '40', border: 0, background: '#fff' }}
+                  align="right"
+                >
+                  <IconButton color="secondary" aria-label="add next set">
+                    <AddCircle />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             )}
           </For>
+          <TableRow>
+            <TableCell sx={{ border: 0 }}>
+              <IconButton color="secondary" aria-label="add next exercise">
+                <AddCircle />
+              </IconButton>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
