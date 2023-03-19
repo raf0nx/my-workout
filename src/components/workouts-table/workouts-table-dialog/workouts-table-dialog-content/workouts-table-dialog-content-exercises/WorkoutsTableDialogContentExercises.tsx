@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@suid/material'
 import { For, Index } from 'solid-js'
+import { produce } from 'solid-js/store'
 
 import { ExercisesSelect } from '~/components/exercises-select'
 import { TableHeaderCell } from '~/components/table-header-cell'
@@ -26,6 +27,19 @@ export default function WorkoutsTableDialogContentExercises(
   const exercises = () => Object.values(props.exercises)
   const consecutiveColumnNumbers = () =>
     getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
+
+  const handleAddNewExercise = () => {
+    const nextExerciseNumber = Object.keys(props.exercises).length + 1
+
+    props.setWorkoutDetails(
+      produce(state => {
+        state.exercises[`exercise${nextExerciseNumber}`] = {
+          name: '',
+          sets: [0],
+        }
+      })
+    )
+  }
 
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
@@ -82,7 +96,11 @@ export default function WorkoutsTableDialogContentExercises(
           </For>
           <TableRow>
             <TableCell sx={{ border: 0 }}>
-              <IconButton color="secondary" aria-label="add next exercise">
+              <IconButton
+                color="secondary"
+                aria-label="add next exercise"
+                onClick={handleAddNewExercise}
+              >
                 <AddCircle />
               </IconButton>
             </TableCell>
