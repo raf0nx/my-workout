@@ -41,6 +41,14 @@ export default function WorkoutsTableDialogContentExercises(
     )
   }
 
+  const handleAddNewSet = (exerciseNumber: number) => {
+    props.setWorkoutDetails(
+      produce(state => {
+        state.exercises[`exercise${exerciseNumber}`].sets.push(0)
+      })
+    )
+  }
+
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
       <Table stickyHeader>
@@ -58,7 +66,7 @@ export default function WorkoutsTableDialogContentExercises(
         </TableHead>
         <TableBody>
           <For each={exercises()}>
-            {exercise => (
+            {(exercise, idx) => (
               <TableRow
                 sx={{
                   '&:last-child td, &:last-child th': { border: 0 },
@@ -87,7 +95,11 @@ export default function WorkoutsTableDialogContentExercises(
                   sx={{ width: '40', border: 0, background: '#fff' }}
                   align="right"
                 >
-                  <IconButton color="secondary" aria-label="add next set">
+                  <IconButton
+                    color="secondary"
+                    aria-label="add next set"
+                    onClick={[handleAddNewSet, idx() + 1]}
+                  >
                     <AddCircle />
                   </IconButton>
                 </TableCell>
