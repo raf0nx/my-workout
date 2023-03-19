@@ -20,5 +20,5 @@ export const workoutDetailsInitialState: Workout = {
   week: '',
   date: '',
   duration: '',
-  exercises: {},
+  exercises: { exercise1: { name: '', sets: [0] } },
 }
