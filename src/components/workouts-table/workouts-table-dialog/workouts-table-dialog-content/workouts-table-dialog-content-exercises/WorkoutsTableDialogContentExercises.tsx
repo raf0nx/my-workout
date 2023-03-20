@@ -13,6 +13,7 @@ import { For, Index } from 'solid-js'
 import { produce } from 'solid-js/store'
 
 import { ExercisesSelect } from '~/components/exercises-select'
+import type { AvailableExercises } from '~/components/exercises-select/types'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WorkoutsTableDialogContentExercisesProps } from './types'
@@ -49,6 +50,17 @@ export default function WorkoutsTableDialogContentExercises(
     )
   }
 
+  const handleExerciseChange = (
+    selectedExercise: AvailableExercises,
+    targetExercise: string
+  ) => {
+    props.setWorkoutDetails(
+      produce(state => {
+        state.exercises[targetExercise].name = selectedExercise
+      })
+    )
+  }
+
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
       <Table stickyHeader>
@@ -74,7 +86,11 @@ export default function WorkoutsTableDialogContentExercises(
                 hover
               >
                 <TableCell component="th" scope="row">
-                  <ExercisesSelect selectedExercise={exercise.name} />
+                  <ExercisesSelect
+                    selectedExercise={exercise.name}
+                    name={`exercise${idx() + 1}`}
+                    onChange={handleExerciseChange}
+                  />
                 </TableCell>
                 <Index each={exercise.sets}>
                   {set => (

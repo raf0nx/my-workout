@@ -1,5 +1,7 @@
 export interface ExercisesSelectProps {
   selectedExercise: AvailableExercises | ''
+  name: string
+  onChange: (selectedExercise: AvailableExercises, targetName: string) => void
 }
 
 export const AVAILABLE_EXERCISES = [
