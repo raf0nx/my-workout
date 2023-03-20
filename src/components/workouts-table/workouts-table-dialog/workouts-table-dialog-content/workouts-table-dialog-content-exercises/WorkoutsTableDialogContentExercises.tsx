@@ -9,6 +9,7 @@ import {
   TableRow,
   TextField,
 } from '@suid/material'
+import type { ChangeEvent } from '@suid/types'
 import { For, Index } from 'solid-js'
 import { produce } from 'solid-js/store'
 
@@ -20,6 +21,7 @@ import type { WorkoutsTableDialogContentExercisesProps } from './types'
 import {
   getConsecutiveNumberOfColumns,
   getMaxColumnNumber,
+  getSetIdxFromTargetSet,
 } from './workouts-table-dialog-content-exercises-helpers'
 
 export default function WorkoutsTableDialogContentExercises(
@@ -61,6 +63,21 @@ export default function WorkoutsTableDialogContentExercises(
     )
   }
 
+  const handleExerciseSetChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value: string
+  ) => {
+    const [targetExercise, targetSet] = event.target.name.split('-')
+
+    props.setWorkoutDetails(
+      produce(state => {
+        state.exercises[targetExercise].sets[
+          getSetIdxFromTargetSet(targetSet)
+        ] = +value
+      })
+    )
+  }
+
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
       <Table stickyHeader>
@@ -93,7 +110,7 @@ export default function WorkoutsTableDialogContentExercises(
                   />
                 </TableCell>
                 <Index each={exercise.sets}>
-                  {set => (
+                  {(set, setIdx) => (
                     <TableCell align="right" sx={{ width: '80', pr: 0 }}>
                       <TextField
                         variant="standard"
@@ -103,6 +120,8 @@ export default function WorkoutsTableDialogContentExercises(
                         inputProps={{
                           style: { 'text-align': 'right' },
                         }}
+                        name={`exercise${idx() + 1}-set${setIdx + 1}`}
+                        onChange={handleExerciseSetChange}
                       />
                     </TableCell>
                   )}
