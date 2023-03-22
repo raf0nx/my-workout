@@ -16,6 +16,10 @@ import { produce } from 'solid-js/store'
 import { ExercisesSelect } from '~/components/exercises-select'
 import type { AvailableExercises } from '~/components/exercises-select/types'
 import { TableHeaderCell } from '~/components/table-header-cell'
+import {
+  getInputProps,
+  getInputStyle,
+} from '~/components/workouts-table/workouts-table-dialog/workouts-table-dialog-content/workouts-table-dialog-content-helpers'
 
 import type {
   TargetExercise,
@@ -31,6 +35,7 @@ import {
 export default function WorkoutsTableDialogContentExercises(
   props: WorkoutsTableDialogContentExercisesProps
 ) {
+  const isInputReadOnly = () => props.state === 'show'
   const exercises = () => Object.values(props.exercises)
   const consecutiveColumnNumbers = () =>
     getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
@@ -121,6 +126,9 @@ export default function WorkoutsTableDialogContentExercises(
                   {(set, setIdx) => (
                     <TableCell align="right" sx={{ width: '80', pr: 0 }}>
                       <TextField
+                        classes={{
+                          root: getInputStyle(isInputReadOnly()),
+                        }}
                         variant="standard"
                         size="small"
                         type="number"
@@ -128,6 +136,7 @@ export default function WorkoutsTableDialogContentExercises(
                         inputProps={{
                           style: { 'text-align': 'right' },
                           'aria-label': `exercise${idx() + 1}-set${setIdx + 1}`,
+                          ...getInputProps(isInputReadOnly()),
                         }}
                         name={`exercise${idx() + 1}-set${setIdx + 1}`}
                         onChange={handleExerciseSetChange}
