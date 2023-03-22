@@ -6,3 +6,6 @@ export interface WorkoutsTableDialogContentExercisesProps {
   exercises: Exercises
   setWorkoutDetails: SetStoreFunction<Workout>
 }
+
+export type TargetExercise = `exercise${number}`
+export type TargetSet = `set${number}`

@@ -17,7 +17,11 @@ import { ExercisesSelect } from '~/components/exercises-select'
 import type { AvailableExercises } from '~/components/exercises-select/types'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
-import type { WorkoutsTableDialogContentExercisesProps } from './types'
+import type {
+  TargetExercise,
+  TargetSet,
+  WorkoutsTableDialogContentExercisesProps,
+} from './types'
 import {
   getConsecutiveNumberOfColumns,
   getMaxColumnNumber,
@@ -54,7 +58,7 @@ export default function WorkoutsTableDialogContentExercises(
 
   const handleExerciseChange = (
     selectedExercise: AvailableExercises,
-    targetExercise: string
+    targetExercise: TargetExercise
   ) => {
     props.setWorkoutDetails(
       produce(state => {
@@ -67,7 +71,10 @@ export default function WorkoutsTableDialogContentExercises(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     value: string
   ) => {
-    const [targetExercise, targetSet] = event.target.name.split('-')
+    const [targetExercise, targetSet] = event.target.name.split('-') as [
+      TargetExercise,
+      TargetSet
+    ]
 
     props.setWorkoutDetails(
       produce(state => {

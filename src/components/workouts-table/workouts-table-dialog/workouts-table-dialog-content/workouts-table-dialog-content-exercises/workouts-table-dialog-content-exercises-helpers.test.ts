@@ -38,7 +38,7 @@ describe('getSetIdxFromTargetSet', () => {
   it('should return a set idx from the target set input name', () => {
     // Given
     const expected = 1
-    const exerciseSetInputName = 'set-2'
+    const exerciseSetInputName = 'set2'
 
     // When
     const actual = getSetIdxFromTargetSet(exerciseSetInputName)

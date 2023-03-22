@@ -1,7 +1,12 @@
+import type { TargetExercise } from '~/components/workouts-table/workouts-table-dialog/workouts-table-dialog-content/workouts-table-dialog-content-exercises/types'
+
 export interface ExercisesSelectProps {
   selectedExercise: AvailableExercises | ''
-  name: string
-  onChange: (selectedExercise: AvailableExercises, targetName: string) => void
+  name: TargetExercise
+  onChange: (
+    selectedExercise: AvailableExercises,
+    targetExercise: TargetExercise
+  ) => void
 }
 
 export const AVAILABLE_EXERCISES = [
