@@ -113,6 +113,7 @@ export default function WorkoutsTableDialogContentExercises(
                   <ExercisesSelect
                     selectedExercise={exercise.name}
                     name={`exercise${idx() + 1}`}
+                    ariaLabel={`exercise${idx() + 1}`}
                     onChange={handleExerciseChange}
                   />
                 </TableCell>
@@ -126,6 +127,7 @@ export default function WorkoutsTableDialogContentExercises(
                         value={set()}
                         inputProps={{
                           style: { 'text-align': 'right' },
+                          'aria-label': `exercise${idx() + 1}-set${setIdx + 1}`,
                         }}
                         name={`exercise${idx() + 1}-set${setIdx + 1}`}
                         onChange={handleExerciseSetChange}

@@ -23,6 +23,7 @@ export default function ExercisesSelect(props: ExercisesSelectProps) {
         name={props.name}
         displayEmpty
         onChange={handleChange}
+        inputProps={{ 'aria-label': props.ariaLabel }}
       >
         <Show when={!props.selectedExercise}>
           <MenuItem value="">

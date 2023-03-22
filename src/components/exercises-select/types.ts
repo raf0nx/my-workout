@@ -3,6 +3,7 @@ import type { TargetExercise } from '~/components/workouts-table/workouts-table-
 export interface ExercisesSelectProps {
   selectedExercise: AvailableExercises | ''
   name: TargetExercise
+  ariaLabel: TargetExercise
   onChange: (
     selectedExercise: AvailableExercises,
     targetExercise: TargetExercise
