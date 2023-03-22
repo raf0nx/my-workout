@@ -1,10 +1,11 @@
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 import { exercises } from '~/mockedData'
 
 import {
   getMaxColumnNumber,
   getConsecutiveNumberOfColumns,
+  getSetIdxFromTargetSet,
 } from './workouts-table-dialog-content-exercises-helpers'
 
 describe('getConsecutiveNumberOfColumns', () => {
@@ -27,6 +28,20 @@ describe('getMaxColumnNumber', () => {
 
     // When
     const actual = getMaxColumnNumber(Object.values(exercises))
+
+    // Then
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('getSetIdxFromTargetSet', () => {
+  it('should return a set idx from the target set input name', () => {
+    // Given
+    const expected = 1
+    const exerciseSetInputName = 'set-2'
+
+    // When
+    const actual = getSetIdxFromTargetSet(exerciseSetInputName)
 
     // Then
     expect(actual).toBe(expected)
