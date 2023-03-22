@@ -15,9 +15,7 @@ import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const [workoutDetails, setWorkoutDetails] = createStore(
-    props.workout || {
-      ...workoutDetailsInitialState,
-    }
+    props.workout || structuredClone(workoutDetailsInitialState)
   )
 
   const [dialogState, setDialogState] = createSignal(props.state)
@@ -76,6 +74,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
         onInputChange={handleInputChange}
         workoutDetails={workoutDetails}
         state={dialogState()}
+        setWorkoutDetails={setWorkoutDetails}
       />
     </Dialog>
   )

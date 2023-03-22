@@ -80,12 +80,12 @@ describe('WorkoutsTable', () => {
     const mockedDate = '01.01.2020'
     const mockedDuration = '777'
     const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
-    const workoutsNumber = screen.getAllByTestId('workouts-table-row').length
+    const workoutsNumber = screen.getAllByTestId(/workouts-table-row/i).length
 
     // When
     await userEvent.click(addWorkoutBtn)
 
-    // Given
+    // Then
     const workoutNameInput = screen.getByLabelText(/workout name/i)
     const descriptionInput = screen.getByLabelText(/description/i)
     const totalRepsInput = screen.getByLabelText(/total reps/i)
@@ -104,7 +104,7 @@ describe('WorkoutsTable', () => {
 
     // Then
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
-    expect(screen.getAllByTestId('workouts-table-row').length).toBe(
+    expect(screen.getAllByTestId(/workouts-table-row/i).length).toBe(
       workoutsNumber + 1
     )
     expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
@@ -149,7 +149,7 @@ describe('WorkoutsTable', () => {
   it('should edit the selected workout', async () => {
     // Given
     const workoutToSelect = screen.getAllByText(workouts[0].name)[0]
-    const workoutsNumber = screen.getAllByTestId('workouts-table-row').length
+    const workoutsNumber = screen.getAllByTestId(/workouts-table-row/i).length
     const mockedWorkoutName = 'Test edit name'
     const mockedDescription = 'Test edit description'
     const mockedTotalReps = '1111'
@@ -192,7 +192,7 @@ describe('WorkoutsTable', () => {
 
     // Then
     expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
-    expect(screen.getAllByTestId('workouts-table-row').length).toBe(
+    expect(screen.getAllByTestId(/workouts-table-row/i).length).toBe(
       workoutsNumber
     )
     expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
@@ -201,5 +201,46 @@ describe('WorkoutsTable', () => {
     expect(screen.getByText(mockedWeek)).toBeInTheDocument()
     expect(screen.getByText(mockedDate)).toBeInTheDocument()
     expect(screen.getByText(mockedDuration)).toBeInTheDocument()
+  })
+
+  it('should create a workout with exercises', async () => {
+    // Given
+    const mockedWorkoutName = 'Exercises Workout'
+    const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
+
+    // When
+    await userEvent.click(addWorkoutBtn)
+
+    // Then
+    const workoutNameInput = screen.getByLabelText(/workout name/i)
+    const addNextExerciseBtn = screen.getByLabelText(/add next exercise/i)
+    const addNextSetButton = screen.getByLabelText(/add next set/i)
+
+    // When
+    await userEvent.type(workoutNameInput, mockedWorkoutName)
+    await userEvent.click(addNextSetButton)
+    await userEvent.click(addNextExerciseBtn)
+
+    // Then
+    const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+    const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
+    const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+    const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
+    const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+
+    // When
+    await userEvent.click(firstExerciseSelect)
+    await userEvent.click(screen.getByText(/^muscle up$/i))
+    await userEvent.type(firstExerciseFirstSet, '8')
+    await userEvent.type(firstExerciseSecondSet, '6')
+
+    await userEvent.click(secondExerciseSelect)
+    await userEvent.click(screen.getByText(/bar dip/i))
+    await userEvent.type(secondExerciseFirstSet, '12')
+
+    await userEvent.click(screen.getByText(/save/i))
+
+    // Then
+    expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
   })
 })
