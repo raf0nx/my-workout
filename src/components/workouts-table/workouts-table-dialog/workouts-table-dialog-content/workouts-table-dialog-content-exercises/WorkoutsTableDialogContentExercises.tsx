@@ -111,6 +111,7 @@ export default function WorkoutsTableDialogContentExercises(
               <TableRow
                 sx={{
                   '&:last-child td, &:last-child th': { border: 0 },
+                  height: '4.5rem',
                 }}
                 hover
               >
