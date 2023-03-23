@@ -118,6 +118,7 @@ export default function WorkoutsTableDialogContentExercises(
                   <ExercisesSelect
                     selectedExercise={exercise.name}
                     name={`exercise${idx() + 1}`}
+                    isReadOnly={isInputReadOnly()}
                     ariaLabel={`exercise${idx() + 1}`}
                     onChange={handleExerciseChange}
                   />
