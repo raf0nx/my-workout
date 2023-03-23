@@ -4,6 +4,7 @@ export interface ExercisesSelectProps {
   selectedExercise: AvailableExercises | ''
   name: TargetExercise
   ariaLabel: TargetExercise
+  isReadOnly: boolean
   onChange: (
     selectedExercise: AvailableExercises,
     targetExercise: TargetExercise

@@ -243,4 +243,35 @@ describe('WorkoutsTable', () => {
     // Then
     expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
   })
+
+  it("should show the 'Exercises Workout' with all the created exercises and their sets", async () => {
+    // Given
+    const exercisesWorkout = screen.getByText(/exercises workout/i)
+
+    // When
+    await userEvent.click(exercisesWorkout)
+
+    // Then
+    const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+    const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
+    const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+    const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
+    const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+
+    expect(firstExerciseSelect).toHaveValue('Muscle Up')
+    expect(firstExerciseFirstSet).toHaveValue(8)
+    expect(firstExerciseSecondSet).toHaveValue(6)
+    expect(secondExerciseSelect).toHaveValue('Bar Dip')
+    expect(secondExerciseFirstSet).toHaveValue(12)
+  })
+
+  it("should not show 'add next exercise/set' buttons in 'show' state", () => {
+    // Given
+    const addNextExerciseBtn = screen.queryByLabelText(/add next exercise/i)
+    const addNextSetButton = screen.queryByLabelText(/add next set/i)
+
+    // Then
+    expect(addNextExerciseBtn).not.toBeInTheDocument()
+    expect(addNextSetButton).not.toBeInTheDocument()
+  })
 })
