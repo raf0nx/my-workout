@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
-import { For, Index } from 'solid-js'
+import { For, Index, Show } from 'solid-js'
 import { produce } from 'solid-js/store'
 
 import { ExercisesSelect } from '~/components/exercises-select'
@@ -35,7 +35,7 @@ import {
 export default function WorkoutsTableDialogContentExercises(
   props: WorkoutsTableDialogContentExercisesProps
 ) {
-  const isInputReadOnly = () => props.state === 'show'
+  const isComponentInReadOnlyState = () => props.state === 'show'
   const exercises = () => Object.values(props.exercises)
   const consecutiveColumnNumbers = () =>
     getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
@@ -118,7 +118,7 @@ export default function WorkoutsTableDialogContentExercises(
                   <ExercisesSelect
                     selectedExercise={exercise.name}
                     name={`exercise${idx() + 1}`}
-                    isReadOnly={isInputReadOnly()}
+                    isReadOnly={isComponentInReadOnlyState()}
                     ariaLabel={`exercise${idx() + 1}`}
                     onChange={handleExerciseChange}
                   />
@@ -128,7 +128,7 @@ export default function WorkoutsTableDialogContentExercises(
                     <TableCell align="right" sx={{ width: '80', pr: 0 }}>
                       <TextField
                         classes={{
-                          root: getInputStyle(isInputReadOnly()),
+                          root: getInputStyle(isComponentInReadOnlyState()),
                         }}
                         variant="standard"
                         size="small"
@@ -137,7 +137,7 @@ export default function WorkoutsTableDialogContentExercises(
                         inputProps={{
                           style: { 'text-align': 'right' },
                           'aria-label': `exercise${idx() + 1}-set${setIdx + 1}`,
-                          ...getInputProps(isInputReadOnly()),
+                          ...getInputProps(isComponentInReadOnlyState()),
                         }}
                         name={`exercise${idx() + 1}-set${setIdx + 1}`}
                         onChange={handleExerciseSetChange}
@@ -145,32 +145,36 @@ export default function WorkoutsTableDialogContentExercises(
                     </TableCell>
                   )}
                 </Index>
-                <TableCell
-                  sx={{ width: '40', border: 0, background: '#fff' }}
-                  align="right"
-                >
-                  <IconButton
-                    color="secondary"
-                    aria-label="add next set"
-                    onClick={[handleAddNewSet, idx() + 1]}
+                <Show when={!isComponentInReadOnlyState()}>
+                  <TableCell
+                    sx={{ width: '40', border: 0, background: '#fff' }}
+                    align="right"
                   >
-                    <AddCircle />
-                  </IconButton>
-                </TableCell>
+                    <IconButton
+                      color="secondary"
+                      aria-label="add next set"
+                      onClick={[handleAddNewSet, idx() + 1]}
+                    >
+                      <AddCircle />
+                    </IconButton>
+                  </TableCell>
+                </Show>
               </TableRow>
             )}
           </For>
-          <TableRow>
-            <TableCell sx={{ border: 0 }}>
-              <IconButton
-                color="secondary"
-                aria-label="add next exercise"
-                onClick={handleAddNewExercise}
-              >
-                <AddCircle />
-              </IconButton>
-            </TableCell>
-          </TableRow>
+          <Show when={!isComponentInReadOnlyState()}>
+            <TableRow>
+              <TableCell sx={{ border: 0 }}>
+                <IconButton
+                  color="secondary"
+                  aria-label="add next exercise"
+                  onClick={handleAddNewExercise}
+                >
+                  <AddCircle />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          </Show>
         </TableBody>
       </Table>
     </TableContainer>
