@@ -33,6 +33,7 @@
   "dependencies": {
     "@suid/icons-material": "^0.5.8",
     "@suid/material": "^0.10.1",
-    "@tanstack/solid-query": "^4.27.0"
+    "@tanstack/solid-query": "^4.27.0",
+    "firebase": "^9.18.0"
   }
 }
