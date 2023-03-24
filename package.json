@@ -1,6 +1,6 @@
 {
   "name": "my-workout",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@suid/icons-material": "^0.5.8",
-    "@suid/material": "^0.10.1"
+    "@suid/material": "^0.10.1",
+    "@tanstack/solid-query": "^4.27.0"
   }
 }
