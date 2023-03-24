@@ -22,7 +22,7 @@ describe('getConsecutiveNumberOfColumns', () => {
 })
 
 describe('getMaxColumnNumber', () => {
-  it('should return a maximum column number based on the largest sets among exercises', () => {
+  it('should return a maximum column number based on the largest set among exercises', () => {
     // Given
     const expected = 5
 
