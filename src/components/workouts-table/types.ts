@@ -1,3 +1,7 @@
+import type { AvailableExercises } from '~/components/exercises-select/types'
+
+import type { TargetExercise } from './workouts-table-dialog/workouts-table-dialog-content/workouts-table-dialog-content-exercises/types'
+
 export interface Workout {
   id: string
   name: string
@@ -6,6 +10,15 @@ export interface Workout {
   week: string
   date: string
   duration: string
+  exercises: Exercises
 }
 
-export type WorkoutProps = keyof Workout
+export type Exercises = Record<TargetExercise, Exercise>
+
+export interface Exercise {
+  name: AvailableExercises | ''
+  sets: number[]
+}
+
+// TODO: Adjust while handling exercises creation/edition
+export type WorkoutProps = Exclude<keyof Workout, 'exercises'>

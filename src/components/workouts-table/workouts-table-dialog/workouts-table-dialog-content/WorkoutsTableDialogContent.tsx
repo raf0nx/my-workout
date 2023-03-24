@@ -1,6 +1,7 @@
 import { Box, Grid, TextField, Typography } from '@suid/material'
 
 import type { WorkoutsTableDialogContentProps } from './types'
+import { WorkoutsTableDialogContentExercises } from './workouts-table-dialog-content-exercises'
 import {
   getInputProps,
   getInputStyle,
@@ -113,7 +114,11 @@ export default function WorkoutsTableDialogContent(
           />
         </Grid>
         <Grid item xs={12} sm={8}>
-          {/* TODO: Exercises table */}
+          <WorkoutsTableDialogContentExercises
+            exercises={props.workoutDetails.exercises}
+            state={props.state}
+            setWorkoutDetails={props.setWorkoutDetails}
+          />
         </Grid>
       </Grid>
     </Box>
