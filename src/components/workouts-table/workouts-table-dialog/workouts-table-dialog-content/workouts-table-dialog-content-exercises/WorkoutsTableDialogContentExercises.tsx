@@ -41,7 +41,7 @@ export default function WorkoutsTableDialogContentExercises(
     getConsecutiveNumberOfColumns(getMaxColumnNumber(exercises()))
 
   const handleAddNewExercise = () => {
-    const nextExerciseNumber = Object.keys(props.exercises).length + 1
+    const nextExerciseNumber = exercises().length + 1
 
     props.setWorkoutDetails(
       produce(state => {
