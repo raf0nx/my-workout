@@ -1,4 +1,6 @@
-import type { AvailableExercises } from '../exercises-select/types'
+import type { AvailableExercises } from '~/components/exercises-select/types'
+
+import type { TargetExercise } from './workouts-table-dialog/workouts-table-dialog-content/workouts-table-dialog-content-exercises/types'
 
 export interface Workout {
   id: string
@@ -11,7 +13,7 @@ export interface Workout {
   exercises: Exercises
 }
 
-export type Exercises = Record<string, Exercise>
+export type Exercises = Record<TargetExercise, Exercise>
 
 export interface Exercise {
   name: AvailableExercises | ''
