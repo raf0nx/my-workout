@@ -76,7 +76,7 @@ export default function WorkoutsTable() {
                   <Show when={selectedWorkoutId() === workout.id}>
                     <WorkoutsTableDialog
                       isOpen
-                      workout={{ ...workout }}
+                      workout={JSON.parse(JSON.stringify(workout))}
                       onClose={closeWorkoutDetails}
                       setWorkouts={setWorkouts}
                       state="show"

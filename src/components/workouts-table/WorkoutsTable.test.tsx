@@ -265,7 +265,7 @@ describe('WorkoutsTable', () => {
     expect(secondExerciseFirstSet).toHaveValue(12)
   })
 
-  it("should not show 'add next exercise/set' buttons in 'show' state", () => {
+  it("should not show 'add next exercise/set' buttons in 'show' state", async () => {
     // Given
     const addNextExerciseBtn = screen.queryByLabelText(/add next exercise/i)
     const addNextSetButton = screen.queryByLabelText(/add next set/i)
@@ -273,5 +273,43 @@ describe('WorkoutsTable', () => {
     // Then
     expect(addNextExerciseBtn).not.toBeInTheDocument()
     expect(addNextSetButton).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByLabelText(/close/i))
+  })
+
+  it('should edit workout exercises and sets', async () => {
+    // Given
+    const exercisesWorkout = screen.getByText(/exercises workout/i)
+
+    // When
+    await userEvent.click(exercisesWorkout)
+    await userEvent.click(screen.getByText(/^edit$/i))
+
+    // Then
+    let firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+    let firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+
+    // When
+    await userEvent.click(firstExerciseSelect)
+    await userEvent.click(screen.getByText(/handstand/i))
+    await userEvent.clear(firstExerciseSecondSet)
+    await userEvent.type(firstExerciseSecondSet, '20')
+
+    await userEvent.click(screen.getByText(/save/i))
+
+    await userEvent.click(exercisesWorkout)
+
+    // Then
+    firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+    firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+    const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
+    const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
+    const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+
+    expect(firstExerciseSelect).toHaveValue('Handstand')
+    expect(firstExerciseFirstSet).toHaveValue(8)
+    expect(firstExerciseSecondSet).toHaveValue(20)
+    expect(secondExerciseSelect).toHaveValue('Bar Dip')
+    expect(secondExerciseFirstSet).toHaveValue(12)
   })
 })
