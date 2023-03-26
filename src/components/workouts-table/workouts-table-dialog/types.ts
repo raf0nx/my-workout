@@ -13,7 +13,6 @@ export interface WorkoutsTableDialogProps {
 }
 
 export const workoutDetailsInitialState: Workout = {
-  id: '',
   name: '',
   description: '',
   totalReps: '',
