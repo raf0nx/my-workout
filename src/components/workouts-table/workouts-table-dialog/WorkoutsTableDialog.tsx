@@ -2,9 +2,11 @@ import { Dialog } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
 import { createSignal } from 'solid-js'
+import { createMutation } from '@tanstack/solid-query'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
-import type { WorkoutProps } from '~/components/workouts-table/types'
+import type { Workout, WorkoutProps } from '~/components/workouts-table/types'
+import { postWorkout } from '~/api/workouts'
 
 import {
   workoutDetailsInitialState,
@@ -14,6 +16,10 @@ import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
+  const workoutMutation = createMutation((workoutData: Workout) =>
+    postWorkout(workoutData)
+  )
+
   const [workoutDetails, setWorkoutDetails] = createStore(
     props.workout || structuredClone(workoutDetailsInitialState)
   )
@@ -34,11 +40,8 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   }
 
   const handleSave = () => {
-    props.setWorkouts(
-      produce(workouts => {
-        workouts.push({ ...workoutDetails, id: Date.now().toString() })
-      })
-    )
+    workoutMutation.mutate({ ...workoutDetails })
+
     props.onClose()
     clearStore()
   }
