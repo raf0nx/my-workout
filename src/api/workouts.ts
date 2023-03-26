@@ -26,7 +26,7 @@ const transformDocsToWorkoutObjects = (
   data: QuerySnapshot<DocumentData>
 ): Workout[] => {
   return data.docs.map(doc => {
-    const docData = doc.data() as Workout
+    const docData = doc.data() as Omit<Workout, 'id'>
 
     return {
       ...docData,
