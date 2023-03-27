@@ -2,6 +2,8 @@ import {
   collection,
   getDocs,
   addDoc,
+  updateDoc,
+  doc,
   type DocumentData,
   type QuerySnapshot,
 } from 'firebase/firestore'
@@ -24,6 +26,11 @@ export const getWorkouts = async (): Promise<Workout[]> => {
 
 export const postWorkout = async (workoutData: NoIDWorkout): Promise<void> => {
   await addDoc(workoutsCollection, workoutData)
+}
+
+export const updateWorkout = async (workoutData: Workout): Promise<void> => {
+  const workoutDoc = doc(db, 'workouts', workoutData.id!)
+  await updateDoc(workoutDoc, { ...workoutData })
 }
 
 const transformDocsToWorkoutObjects = (
