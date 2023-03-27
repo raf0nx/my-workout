@@ -6,6 +6,7 @@ import { workouts } from '~/mockedData'
 
 import { WorkoutsTable } from '.'
 
+// TODO: adjust tests after implementing firebase CRUD
 describe('WorkoutsTable', () => {
   let unmountComponent: () => void
 
