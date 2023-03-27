@@ -42,7 +42,7 @@ export default function WorkoutsTable() {
 
   return (
     <Card>
-      <WorkoutsTableToolbar setWorkouts={() => null} />
+      <WorkoutsTableToolbar />
       <TableContainer sx={{ borderRadius: 1 }}>
         <Table stickyHeader>
           <TableHead>
@@ -83,7 +83,6 @@ export default function WorkoutsTable() {
                       isOpen
                       workout={JSON.parse(JSON.stringify(workout))}
                       onClose={closeWorkoutDetails}
-                      setWorkouts={() => null}
                       state="show"
                     />
                   </Show>
