@@ -16,7 +16,8 @@ import type {
   Workout,
 } from '~/components/workouts-table/types'
 
-const workoutsCollection = collection(db, 'workouts')
+const workoutsDocName = 'workouts'
+const workoutsCollection = collection(db, workoutsDocName)
 
 export const getWorkouts = async (): Promise<Workout[]> => {
   const data = await getDocs(workoutsCollection)
@@ -29,7 +30,7 @@ export const postWorkout = async (workoutData: NoIDWorkout): Promise<void> => {
 }
 
 export const updateWorkout = async (workoutData: Workout): Promise<void> => {
-  const workoutDoc = doc(db, 'workouts', workoutData.id!)
+  const workoutDoc = doc(db, workoutsDocName, workoutData.id!)
   await updateDoc(workoutDoc, { ...workoutData })
 }
 
