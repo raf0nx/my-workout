@@ -13,8 +13,6 @@ export interface Workout {
   exercises: Exercises
 }
 
-export interface NoIDWorkout extends Omit<Workout, 'id'> {}
-
 export type Exercises = Record<TargetExercise, Exercise>
 
 export interface Exercise {

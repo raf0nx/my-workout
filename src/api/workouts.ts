@@ -10,11 +10,7 @@ import {
 
 import { db } from '~/config/firebase-config'
 import { keys } from '~/utils/utils'
-import type {
-  NoIDWorkout,
-  Exercises,
-  Workout,
-} from '~/components/workouts-table/types'
+import type { Exercises, Workout } from '~/components/workouts-table/types'
 
 const workoutsDocName = 'workouts'
 const workoutsCollection = collection(db, workoutsDocName)
@@ -25,7 +21,7 @@ export const getWorkouts = async (): Promise<Workout[]> => {
   return transformDocsToWorkoutObjects(data)
 }
 
-export const postWorkout = async (workoutData: NoIDWorkout): Promise<void> => {
+export const postWorkout = async (workoutData: Workout): Promise<void> => {
   await addDoc(workoutsCollection, workoutData)
 }
 
@@ -38,7 +34,7 @@ const transformDocsToWorkoutObjects = (
   data: QuerySnapshot<DocumentData>
 ): Workout[] => {
   return data.docs.map(doc => {
-    const docData = doc.data() as NoIDWorkout
+    const docData = doc.data() as Workout
 
     return {
       ...docData,

@@ -5,11 +5,7 @@ import { createSignal } from 'solid-js'
 import { createMutation } from '@tanstack/solid-query'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
-import type {
-  NoIDWorkout,
-  Workout,
-  WorkoutProps,
-} from '~/components/workouts-table/types'
+import type { Workout, WorkoutProps } from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
 
 import {
@@ -20,7 +16,7 @@ import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
-  const workoutPostMutation = createMutation((workoutData: NoIDWorkout) =>
+  const workoutPostMutation = createMutation((workoutData: Workout) =>
     postWorkout(workoutData)
   )
 
