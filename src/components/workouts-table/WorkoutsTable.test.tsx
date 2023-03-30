@@ -1,16 +1,23 @@
 import { afterEach, describe, expect, it, beforeEach } from 'vitest'
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
 import { workouts } from '~/mockedData'
 
 import { WorkoutsTable } from '.'
 
+const queryClient = new QueryClient()
+
 describe('WorkoutsTable', () => {
   let unmountComponent: () => void
 
   beforeEach(() => {
-    const { unmount } = render(() => <WorkoutsTable />)
+    const { unmount } = render(() => (
+      <QueryClientProvider client={queryClient}>
+        <WorkoutsTable />
+      </QueryClientProvider>
+    ))
     unmountComponent = unmount
   })
 
