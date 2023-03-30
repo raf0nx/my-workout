@@ -4,9 +4,7 @@ import { createSignal } from 'solid-js'
 
 import { WorkoutsTableDialog } from '~/components/workouts-table'
 
-import type { WorkoutsTableToolbarProps } from './types'
-
-export default function WorkoutsTableToolbar(props: WorkoutsTableToolbarProps) {
+export default function WorkoutsTableToolbar() {
   const [isDialogOpen, setIsDialogOpen] = createSignal(false)
 
   const handleCloseDialog = () => {
@@ -30,7 +28,6 @@ export default function WorkoutsTableToolbar(props: WorkoutsTableToolbarProps) {
       <WorkoutsTableDialog
         isOpen={isDialogOpen()}
         onClose={handleCloseDialog}
-        setWorkouts={props.setWorkouts}
         state="create"
       />
     </Toolbar>

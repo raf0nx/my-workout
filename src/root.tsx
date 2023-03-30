@@ -1,5 +1,6 @@
 // @refresh reload
 import { Routes } from '@solidjs/router'
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
@@ -7,6 +8,8 @@ import { ErrorBoundary } from 'solid-start/error-boundary'
 import { Navbar } from '~/components/navbar'
 
 import './index.scss'
+
+const queryClient = new QueryClient()
 
 export default function Root() {
   return (
@@ -19,10 +22,12 @@ export default function Root() {
       <Body>
         <Suspense>
           <ErrorBoundary>
-            <Navbar />
-            <Routes>
-              <FileRoutes />
-            </Routes>
+            <QueryClientProvider client={queryClient}>
+              <Navbar />
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </QueryClientProvider>
           </ErrorBoundary>
         </Suspense>
         <Scripts />

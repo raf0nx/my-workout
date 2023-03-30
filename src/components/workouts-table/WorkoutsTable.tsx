@@ -7,13 +7,14 @@ import {
   TableRow,
 } from '@suid/material'
 import { createSignal, For, Index, Show } from 'solid-js'
-import { createStore } from 'solid-js/store'
+import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
-import { workouts as mockedWorkouts } from '~/mockedData'
+import { getWorkouts } from '~/api/workouts'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
+import type { Workout } from './types'
 
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',
@@ -26,7 +27,11 @@ const WORKOUTS_TABLE_HEADERS = [
 
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
-  const [workouts, setWorkouts] = createStore(mockedWorkouts)
+  const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
+    () => ['workouts'],
+    getWorkouts
+  )
+
   const [selectedWorkoutId, setSelectedWorkoutId] = createSignal<string | null>(
     null
   )
@@ -37,7 +42,7 @@ export default function WorkoutsTable() {
 
   return (
     <Card>
-      <WorkoutsTableToolbar setWorkouts={setWorkouts} />
+      <WorkoutsTableToolbar />
       <TableContainer sx={{ borderRadius: 1 }}>
         <Table stickyHeader>
           <TableHead>
@@ -52,7 +57,7 @@ export default function WorkoutsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <For each={workouts}>
+            <For each={workoutsQuery.data}>
               {workout => (
                 <>
                   <TableRow
@@ -78,7 +83,6 @@ export default function WorkoutsTable() {
                       isOpen
                       workout={JSON.parse(JSON.stringify(workout))}
                       onClose={closeWorkoutDetails}
-                      setWorkouts={setWorkouts}
                       state="show"
                     />
                   </Show>
