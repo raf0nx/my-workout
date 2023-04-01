@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_SOLID_APP_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_SOLID_APP_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_SOLID_APP_APP_ID,
-  databaseURL: import.meta.env.VITE_SOLID_APP.DATABASE_URL,
+  databaseURL: import.meta.env.VITE_SOLID_APP_DATABASE_URL,
 }
 
 const app = initializeApp(firebaseConfig)
