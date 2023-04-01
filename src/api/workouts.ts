@@ -1,16 +1,18 @@
-import { get, ref, set } from 'firebase/database'
+import { get, push, ref, set } from 'firebase/database'
 
 import { db } from '~/config/firebase-config'
 import type { Workout } from '~/components/workouts-table/types'
 
+const workoutsDataRef = ref(db, 'workouts')
+
 export const getWorkouts = async (): Promise<Workout[]> => {
-  const data = await get(ref(db, 'workouts'))
+  const data = await get(workoutsDataRef)
 
   return transformWorkoutsData(data.val())
 }
 
 export const postWorkout = async (workoutData: Workout): Promise<void> => {
-  const newWorkoutId = Date.now().toString()
+  const newWorkoutId = push(workoutsDataRef).key
 
   set(ref(db, `workouts/${newWorkoutId}`), workoutData)
 }
