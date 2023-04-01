@@ -1,50 +1,28 @@
-import {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  type DocumentData,
-  type QuerySnapshot,
-} from 'firebase/firestore'
+import { get, ref } from 'firebase/database'
 
 import { db } from '~/config/firebase-config'
-import { keys } from '~/utils/utils'
-import type { Exercises, Workout } from '~/components/workouts-table/types'
+import type { Workout } from '~/components/workouts-table/types'
 
-const workoutsDocName = 'workouts'
-const workoutsCollection = collection(db, workoutsDocName)
+const workoutsRef = ref(db, 'workouts')
 
 export const getWorkouts = async (): Promise<Workout[]> => {
-  const data = await getDocs(workoutsCollection)
+  const data = await get(workoutsRef)
 
-  return transformDocsToWorkoutObjects(data)
+  return transformWorkoutsData(data.val())
 }
 
 export const postWorkout = async (workoutData: Workout): Promise<void> => {
-  await addDoc(workoutsCollection, workoutData)
+  // await addDoc(workoutsCollection, workoutData)
 }
 
 export const updateWorkout = async (workoutData: Workout): Promise<void> => {
-  const workoutDoc = doc(db, workoutsDocName, workoutData.id!)
-  await updateDoc(workoutDoc, { ...workoutData })
+  // const workoutDoc = doc(db, workoutsDocName, workoutData.id!)
+  // await updateDoc(workoutDoc, { ...workoutData })
 }
 
-const transformDocsToWorkoutObjects = (
-  data: QuerySnapshot<DocumentData>
-): Workout[] => {
-  return data.docs.map(doc => {
-    const docData = doc.data() as Workout
-
-    return {
-      ...docData,
-      id: doc.id,
-      exercises: sortWorkoutExercises(docData.exercises),
-    }
-  })
+const transformWorkoutsData = (data: Workout[]): Workout[] => {
+  return Object.entries(data).map(([id, workoutData]) => ({
+    ...workoutData,
+    id,
+  }))
 }
-
-const sortWorkoutExercises = (exercises: Exercises) =>
-  keys(exercises)
-    .sort()
-    .reduce<Exercises>((acc, curr) => ({ ...acc, [curr]: exercises[curr] }), {})
