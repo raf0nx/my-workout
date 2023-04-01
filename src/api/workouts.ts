@@ -1,4 +1,4 @@
-import { get, push, ref, set } from 'firebase/database'
+import { get, push, ref, set, update } from 'firebase/database'
 
 import { db } from '~/config/firebase-config'
 import type { Workout } from '~/components/workouts-table/types'
@@ -18,8 +18,10 @@ export const postWorkout = async (workoutData: Workout): Promise<void> => {
 }
 
 export const updateWorkout = async (workoutData: Workout): Promise<void> => {
-  // const workoutDoc = doc(db, workoutsDocName, workoutData.id!)
-  // await updateDoc(workoutDoc, { ...workoutData })
+  const { id, ...rest } = workoutData
+  const workoutToUpdateRef = ref(db, `workouts/${id}`)
+
+  update(workoutToUpdateRef, rest)
 }
 
 const transformWorkoutsData = (data: Workout[]): Workout[] => {
