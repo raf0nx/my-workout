@@ -24,3 +24,11 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebaserc
+firebase-debug.log
+firestore-debug.log
+firestore.indexes.json
+firestore.rules
+ui-debug.log
