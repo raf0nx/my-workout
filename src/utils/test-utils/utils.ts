@@ -1,4 +1,6 @@
+import { postWorkout } from '~/api/workouts'
 import { firebaseConfig } from '~/config/firebase-config'
+import type { Workout } from '~/components/workouts-table/types'
 
 export const flushDatabase = async () => {
   try {
@@ -9,4 +11,8 @@ export const flushDatabase = async () => {
   } catch (err) {
     console.error('Flushing the database went wrong!')
   }
+}
+
+export const populateDatabaseWithMockedWorkout = async (workout: Workout) => {
+  await postWorkout(workout)
 }
