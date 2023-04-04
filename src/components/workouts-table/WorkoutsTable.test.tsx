@@ -11,8 +11,12 @@ import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
-import { flushDatabase } from '~/utils/test-utils/utils'
+import {
+  flushDatabase,
+  populateDatabaseWithMockedWorkout,
+} from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
+import { workouts } from '~/mockedData'
 
 import { WorkoutsTable } from '.'
 
@@ -25,24 +29,24 @@ describe('WorkoutsTable', () => {
     await flushDatabase()
   })
 
+  beforeEach(() => {
+    const { unmount } = render(() => (
+      <QueryClientProvider client={queryClient}>
+        <WorkoutsTable />
+      </QueryClientProvider>
+    ))
+    unmountComponent = unmount
+  })
+
+  afterEach(() => {
+    unmountComponent()
+  })
+
   afterAll(async () => {
     await flushDatabase()
   })
 
   describe('a11y', () => {
-    beforeEach(() => {
-      const { unmount } = render(() => (
-        <QueryClientProvider client={queryClient}>
-          <WorkoutsTable />
-        </QueryClientProvider>
-      ))
-      unmountComponent = unmount
-    })
-
-    afterEach(() => {
-      unmountComponent()
-    })
-
     test("should open the workout creation dialog when clicking 'add new workout' button", async () => {
       // Given
       const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
@@ -98,18 +102,8 @@ describe('WorkoutsTable', () => {
   })
 
   describe('create workout', () => {
-    beforeEach(() => {
-      const { unmount } = render(() => (
-        <QueryClientProvider client={queryClient}>
-          <WorkoutsTable />
-        </QueryClientProvider>
-      ))
-      unmountComponent = unmount
-    })
-
-    afterEach(async () => {
+    afterAll(async () => {
       await flushDatabase()
-      unmountComponent()
     })
 
     test('should save the newly created workout', async () => {
@@ -177,58 +171,73 @@ describe('WorkoutsTable', () => {
     })
   })
 
-  describe('show workout details', () => {
-    // test('should open the selected workout details and close test by clicking the close button', async () => {
-    //   // Given
-    //   const { name, description, totalReps, week, date, duration } = workouts[0]
-    //   const workoutToSelect = screen.getAllByText(name)[0]
-    //   // When
-    //   await userEvent.click(workoutToSelect)
-    //   // Then
-    //   const workoutNameInput = screen.getByLabelText(/workout name/i)
-    //   const descriptionInput = screen.getByLabelText(/description/i)
-    //   const totalRepsInput = screen.getByLabelText(/total reps/i)
-    //   const weekInput = screen.getByLabelText(/week/i)
-    //   const dateInput = screen.getByLabelText(/date/i)
-    //   const durationInput = screen.getByLabelText(/duration/i)
-    //   expect(screen.getByText(/Your Workout/i)).toBeInTheDocument()
-    //   expect(workoutNameInput).toHaveValue(name)
-    //   expect(descriptionInput).toHaveValue(description)
-    //   expect(totalRepsInput).toHaveValue(+totalReps)
-    //   expect(weekInput).toHaveValue(+week)
-    //   expect(dateInput).toHaveValue(date)
-    //   expect(durationInput).toHaveValue(+duration)
-    //   // When
-    //   await userEvent.click(screen.getByLabelText(/close/i))
-    //   // Then
-    //   expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
-    // })
-    // test("should show the 'Exercises Workout' with all the created exercises and their sets", async () => {
-    //   // Given
-    //   const exercisesWorkout = screen.getByText(/exercises workout/i)
-    //   // When
-    //   await userEvent.click(exercisesWorkout)
-    //   // Then
-    //   const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-    //   const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
-    //   const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-    //   const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
-    //   const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
-    //   expect(firstExerciseSelect).toHaveValue('Muscle Up')
-    //   expect(firstExerciseFirstSet).toHaveValue(8)
-    //   expect(firstExerciseSecondSet).toHaveValue(6)
-    //   expect(secondExerciseSelect).toHaveValue('Bar Dip')
-    //   expect(secondExerciseFirstSet).toHaveValue(12)
-    // })
-    // test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
-    //   // Given
-    //   const addNextExerciseBtn = screen.queryByLabelText(/add next exercise/i)
-    //   const addNextSetButton = screen.queryByLabelText(/add next set/i)
-    //   // Then
-    //   expect(addNextExerciseBtn).not.toBeInTheDocument()
-    //   expect(addNextSetButton).not.toBeInTheDocument()
-    //   await userEvent.click(screen.getByLabelText(/close/i))
-    // })
+  describe.skip('show workout details', () => {
+    const mockedWorkout = workouts[0]
+
+    beforeAll(async () => {
+      await populateDatabaseWithMockedWorkout(mockedWorkout)
+    })
+
+    afterAll(async () => {
+      await flushDatabase()
+    })
+
+    test('should open the selected workout details with all the present data', async () => {
+      // Given
+      const { name, description, totalReps, week, date, duration } =
+        mockedWorkout
+      const workoutToSelect = screen.getByText(name)
+
+      // When
+      await userEvent.click(workoutToSelect)
+
+      // Then
+      const workoutNameInput = screen.getByLabelText(/workout name/i)
+      const descriptionInput = screen.getByLabelText(/description/i)
+      const totalRepsInput = screen.getByLabelText(/total reps/i)
+      const weekInput = screen.getByLabelText(/week/i)
+      const dateInput = screen.getByLabelText(/date/i)
+      const durationInput = screen.getByLabelText(/duration/i)
+
+      expect(screen.getByText(/Your Workout/i)).toBeInTheDocument()
+      expect(workoutNameInput).toHaveValue(name)
+      expect(descriptionInput).toHaveValue(description)
+      expect(totalRepsInput).toHaveValue(+totalReps)
+      expect(weekInput).toHaveValue(+week)
+      expect(dateInput).toHaveValue(date)
+      expect(durationInput).toHaveValue(+duration)
+    })
+
+    test("should show the 'Exercises Workout' with all the created exercises and their sets", async () => {
+      // Given
+      const exercisesWorkout = screen.getByText(/exercises workout/i)
+
+      // When
+      await userEvent.click(exercisesWorkout)
+
+      // Then
+      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+      const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
+      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+      const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
+      const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+      expect(firstExerciseSelect).toHaveValue('Muscle Up')
+      expect(firstExerciseFirstSet).toHaveValue(8)
+      expect(firstExerciseSecondSet).toHaveValue(6)
+      expect(secondExerciseSelect).toHaveValue('Bar Dip')
+      expect(secondExerciseFirstSet).toHaveValue(12)
+    })
+
+    test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
+      // Given
+      const addNextExerciseBtn = screen.queryByLabelText(/add next exercise/i)
+      const addNextSetButton = screen.queryByLabelText(/add next set/i)
+
+      // Then
+      expect(addNextExerciseBtn).not.toBeInTheDocument()
+      expect(addNextSetButton).not.toBeInTheDocument()
+      await userEvent.click(screen.getByLabelText(/close/i))
+    })
   })
 
   describe('edit workout', () => {
