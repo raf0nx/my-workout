@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
 import { flushDatabase } from '~/utils/test-utils/utils'
+import { getWorkouts } from '~/api/workouts'
 
 import { WorkoutsTable } from '.'
 
@@ -79,50 +80,51 @@ describe('WorkoutsTable', () => {
     expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
   })
 
-  // TODO: Fix these tests
-  // it('should save the newly created workout', async () => {
-  //   // Given
-  //   const mockedWorkoutName = 'Test workout'
-  //   const mockedDescription = 'Test description'
-  //   const mockedTotalReps = '999'
-  //   const mockedWeek = '888'
-  //   const mockedDate = '01.01.2020'
-  //   const mockedDuration = '777'
-  //   const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
-  //   const workoutsNumber = screen.getAllByTestId(/workouts-table-row/i).length
+  it('should save the newly created workout', async () => {
+    // Given
+    const mockedWorkoutName = 'Test workout'
+    const mockedDescription = 'Test description'
+    const mockedTotalReps = '999'
+    const mockedWeek = '888'
+    const mockedDate = '01.01.2020'
+    const mockedDuration = '777'
+    const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
-  //   // When
-  //   await userEvent.click(addWorkoutBtn)
+    // When
+    await userEvent.click(addWorkoutBtn)
 
-  //   // Then
-  //   const workoutNameInput = screen.getByLabelText(/workout name/i)
-  //   const descriptionInput = screen.getByLabelText(/description/i)
-  //   const totalRepsInput = screen.getByLabelText(/total reps/i)
-  //   const weekInput = screen.getByLabelText(/week/i)
-  //   const dateInput = screen.getByLabelText(/date/i)
-  //   const durationInput = screen.getByLabelText(/duration/i)
+    // Then
+    const workoutNameInput = screen.getByLabelText(/workout name/i)
+    const descriptionInput = screen.getByLabelText(/description/i)
+    const totalRepsInput = screen.getByLabelText(/total reps/i)
+    const weekInput = screen.getByLabelText(/week/i)
+    const dateInput = screen.getByLabelText(/date/i)
+    const durationInput = screen.getByLabelText(/duration/i)
 
-  //   // When
-  //   await userEvent.type(workoutNameInput, mockedWorkoutName)
-  //   await userEvent.type(descriptionInput, mockedDescription)
-  //   await userEvent.type(totalRepsInput, mockedTotalReps)
-  //   await userEvent.type(weekInput, mockedWeek)
-  //   await userEvent.type(dateInput, mockedDate)
-  //   await userEvent.type(durationInput, mockedDuration)
-  //   await userEvent.click(screen.getByText(/save/i))
+    // When
+    await userEvent.type(workoutNameInput, mockedWorkoutName)
+    await userEvent.type(descriptionInput, mockedDescription)
+    await userEvent.type(totalRepsInput, mockedTotalReps)
+    await userEvent.type(weekInput, mockedWeek)
+    await userEvent.type(dateInput, mockedDate)
+    await userEvent.type(durationInput, mockedDuration)
+    await userEvent.click(screen.getByText(/save/i))
 
-  //   // Then
-  //   expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
-  //   expect(screen.getAllByTestId(/workouts-table-row/i).length).toBe(
-  //     workoutsNumber + 1
-  //   )
-  //   expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
-  //   expect(screen.getByText(mockedDescription)).toBeInTheDocument()
-  //   expect(screen.getByText(mockedTotalReps)).toBeInTheDocument()
-  //   expect(screen.getByText(mockedWeek)).toBeInTheDocument()
-  //   expect(screen.getByText(mockedDate)).toBeInTheDocument()
-  //   expect(screen.getByText(mockedDuration)).toBeInTheDocument()
-  // })
+    // Then
+    expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+    expect(await getWorkouts()).toEqual([
+      {
+        id: expect.any(String),
+        name: mockedWorkoutName,
+        description: mockedDescription,
+        totalReps: mockedTotalReps,
+        week: mockedWeek,
+        date: mockedDate,
+        duration: mockedDuration,
+        exercises: { exercise1: { name: '', sets: [0] } },
+      },
+    ])
+  })
 
   // it('should open the selected workout details and close it by clicking the close button', async () => {
   //   // Given
