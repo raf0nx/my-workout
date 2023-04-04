@@ -3,7 +3,7 @@ import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
-import { workouts } from '~/mockedData'
+import { flushDatabase } from '~/utils/test-utils/utils'
 
 import { WorkoutsTable } from '.'
 
@@ -21,7 +21,8 @@ describe('WorkoutsTable', () => {
     unmountComponent = unmount
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await flushDatabase()
     unmountComponent()
   })
 
