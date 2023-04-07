@@ -236,80 +236,106 @@ describe('WorkoutsTable', () => {
     })
   })
 
-  describe.skip('edit workout', () => {
-    // test('should edit the selected workout', async () => {
-    //   // Given
-    //   const workoutToSelect = screen.getAllByText(workouts[0].name)[0]
-    //   const workoutsNumber = screen.getAllByTestId(/workouts-table-row/i).length
-    //   const mockedWorkoutName = 'Test edit name'
-    //   const mockedDescription = 'Test edit description'
-    //   const mockedTotalReps = '1111'
-    //   const mockedWeek = '2222'
-    //   const mockedDate = '01.01.2000'
-    //   const mockedDuration = '3333'
-    //   // When
-    //   await userEvent.click(workoutToSelect)
-    //   await userEvent.click(screen.getByText(/edit/i))
-    //   // Then
-    //   const workoutNameInput = screen.getByLabelText(/workout name/i)
-    //   const descriptionInput = screen.getByLabelText(/description/i)
-    //   const totalRepsInput = screen.getByLabelText(/total reps/i)
-    //   const weekInput = screen.getByLabelText(/week/i)
-    //   const dateInput = screen.getByLabelText(/date/i)
-    //   const durationInput = screen.getByLabelText(/duration/i)
-    //   // When
-    //   await userEvent.clear(workoutNameInput)
-    //   await userEvent.type(workoutNameInput, mockedWorkoutName)
-    //   await userEvent.clear(descriptionInput)
-    //   await userEvent.type(descriptionInput, mockedDescription)
-    //   await userEvent.clear(totalRepsInput)
-    //   await userEvent.type(totalRepsInput, mockedTotalReps)
-    //   await userEvent.clear(weekInput)
-    //   await userEvent.type(weekInput, mockedWeek)
-    //   await userEvent.clear(dateInput)
-    //   await userEvent.type(dateInput, mockedDate)
-    //   await userEvent.clear(durationInput)
-    //   await userEvent.type(durationInput, mockedDuration)
-    //   await userEvent.click(screen.getByText(/save/i))
-    //   // Then
-    //   expect(screen.queryByText(/Your Workout/i)).not.toBeInTheDocument()
-    //   expect(screen.getAllByTestId(/workouts-table-row/i).length).toBe(
-    //     workoutsNumber
-    //   )
-    //   expect(screen.getByText(mockedWorkoutName)).toBeInTheDocument()
-    //   expect(screen.getByText(mockedDescription)).toBeInTheDocument()
-    //   expect(screen.getByText(mockedTotalReps)).toBeInTheDocument()
-    //   expect(screen.getByText(mockedWeek)).toBeInTheDocument()
-    //   expect(screen.getByText(mockedDate)).toBeInTheDocument()
-    //   expect(screen.getByText(mockedDuration)).toBeInTheDocument()
-    // })
-    // test('should edit workout exercises and sets', async () => {
-    //   // Given
-    //   const exercisesWorkout = screen.getByText(/exercises workout/i)
-    //   // When
-    //   await userEvent.click(exercisesWorkout)
-    //   await userEvent.click(screen.getByText(/^edit$/i))
-    //   // Then
-    //   let firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-    //   let firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-    //   // When
-    //   await userEvent.click(firstExerciseSelect)
-    //   await userEvent.click(screen.getByText(/handstand/i))
-    //   await userEvent.clear(firstExerciseSecondSet)
-    //   await userEvent.type(firstExerciseSecondSet, '20')
-    //   await userEvent.click(screen.getByText(/save/i))
-    //   await userEvent.click(exercisesWorkout)
-    //   // Then
-    //   firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-    //   firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-    //   const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
-    //   const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
-    //   const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
-    //   expect(firstExerciseSelect).toHaveValue('Handstand')
-    //   expect(firstExerciseFirstSet).toHaveValue(8)
-    //   expect(firstExerciseSecondSet).toHaveValue(20)
-    //   expect(secondExerciseSelect).toHaveValue('Bar Dip')
-    //   expect(secondExerciseFirstSet).toHaveValue(12)
-    // })
+  describe('edit workout', () => {
+    const mockedWorkout = workouts[0]
+    const newName = 'Test edit name'
+    const newDescription = 'Test edit description'
+    const newTotalReps = '1111'
+    const newWeek = '2222'
+    const newDate = '01.01.2000'
+    const newDuration = '3333'
+
+    beforeAll(async () => {
+      await populateDatabaseWithMockedWorkout(mockedWorkout)
+    })
+
+    afterAll(async () => {
+      await flushDatabase()
+    })
+
+    test('should edit the selected workout', async () => {
+      // Given
+      const workoutToSelect = await waitFor(() =>
+        screen.getByText(mockedWorkout.name)
+      )
+
+      // When
+      await userEvent.click(workoutToSelect)
+      await userEvent.click(screen.getByText(/edit/i))
+
+      // Then
+      const workoutNameInput = screen.getByLabelText(/workout name/i)
+      const descriptionInput = screen.getByLabelText(/description/i)
+      const totalRepsInput = screen.getByLabelText(/total reps/i)
+      const weekInput = screen.getByLabelText(/week/i)
+      const dateInput = screen.getByLabelText(/date/i)
+      const durationInput = screen.getByLabelText(/duration/i)
+
+      // When
+      await userEvent.clear(workoutNameInput)
+      await userEvent.type(workoutNameInput, newName)
+      await userEvent.clear(descriptionInput)
+      await userEvent.type(descriptionInput, newDescription)
+      await userEvent.clear(totalRepsInput)
+      await userEvent.type(totalRepsInput, newTotalReps)
+      await userEvent.clear(weekInput)
+      await userEvent.type(weekInput, newWeek)
+      await userEvent.clear(dateInput)
+      await userEvent.type(dateInput, newDate)
+      await userEvent.clear(durationInput)
+      await userEvent.type(durationInput, newDuration)
+      await userEvent.click(screen.getByText(/save/i))
+
+      // Then
+      expect(await getWorkouts()).toEqual([
+        {
+          id: expect.any(String),
+          name: newName,
+          description: newDescription,
+          totalReps: newTotalReps,
+          week: newWeek,
+          date: newDate,
+          duration: newDuration,
+          exercises: mockedWorkout.exercises,
+        },
+      ])
+    })
+
+    test('should edit workout exercises and sets', async () => {
+      // Given
+      const workoutToSelect = await waitFor(() => screen.getByText(newName))
+
+      // When
+      await userEvent.click(workoutToSelect)
+      await userEvent.click(screen.getByText(/^edit$/i))
+
+      // Then
+      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+
+      // When
+      await userEvent.click(firstExerciseSelect)
+      await userEvent.click(screen.getByText(/handstand/i))
+      await userEvent.clear(firstExerciseSecondSet)
+      await userEvent.type(firstExerciseSecondSet, '20')
+      await userEvent.click(screen.getByText(/save/i))
+
+      // Then
+      expect(await getWorkouts()).toEqual([
+        {
+          id: expect.any(String),
+          name: newName,
+          description: newDescription,
+          totalReps: newTotalReps,
+          week: newWeek,
+          date: newDate,
+          duration: newDuration,
+          exercises: {
+            ...mockedWorkout.exercises,
+            exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
+          },
+        },
+      ])
+    })
   })
 })
