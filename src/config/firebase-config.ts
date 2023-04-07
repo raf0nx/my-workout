@@ -3,7 +3,7 @@ import { connectFirestoreEmulator, getFirestore } from '@firebase/firestore'
 
 import { isDevMode, isTestMode } from '~/utils/utils'
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: import.meta.env.VITE_SOLID_APP_API_KEY,
   authDomain: import.meta.env.VITE_SOLID_APP_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_SOLID_APP_PROJECT_ID,
@@ -16,4 +16,4 @@ const app = initializeApp(firebaseConfig)
 
 export const db = getFirestore(app)
 
-if (isDevMode() || isTestMode()) connectFirestoreEmulator(db, 'localhost', 8080)
+if (isDevMode() || isTestMode()) connectFirestoreEmulator(db, '127.0.0.1', 8080)
