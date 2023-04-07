@@ -11,10 +11,9 @@ import {
 import { db } from '~/config/firebase-config'
 import { keys } from '~/utils/utils'
 import type { Exercises, Workout } from '~/components/workouts-table/types'
+import { WORKOUTS_DOC_ID } from '~/constants'
 
-// TODO: move to constants
-const workoutsDocName = 'workouts'
-const workoutsCollection = collection(db, workoutsDocName)
+const workoutsCollection = collection(db, WORKOUTS_DOC_ID)
 
 export const getWorkouts = async (): Promise<Workout[]> => {
   const data = await getDocs(workoutsCollection)
@@ -27,7 +26,7 @@ export const postWorkout = async (workoutData: Workout): Promise<void> => {
 }
 
 export const updateWorkout = async (workoutData: Workout): Promise<void> => {
-  const workoutDoc = doc(db, workoutsDocName, workoutData.id!)
+  const workoutDoc = doc(db, WORKOUTS_DOC_ID, workoutData.id!)
   await updateDoc(workoutDoc, { ...workoutData })
 }
 
