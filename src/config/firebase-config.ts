@@ -16,4 +16,4 @@ const app = initializeApp(firebaseConfig)
 
 export const db = getFirestore(app)
 
-if (isDevMode() || isTestMode()) connectFirestoreEmulator(db, 'localhost', 8080)
+if (isDevMode() || isTestMode()) connectFirestoreEmulator(db, '127.0.0.1', 8080)

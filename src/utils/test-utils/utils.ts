@@ -5,7 +5,7 @@ import type { Workout } from '~/components/workouts-table/types'
 export const flushDatabase = async () => {
   try {
     await fetch(
-      `http://localhost:8080/emulator/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`,
+      `http://127.0.0.1:8080/emulator/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`,
       { method: 'DELETE' }
     )
   } catch (err) {
