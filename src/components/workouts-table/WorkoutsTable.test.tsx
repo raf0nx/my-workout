@@ -101,6 +101,82 @@ describe('WorkoutsTable', () => {
     })
   })
 
+  describe('edit workout', () => {
+    const mockedWorkout = workouts[0]
+    const newName = 'Test edit name'
+    const newDescription = 'Test edit description'
+    const newTotalReps = '1111'
+    const newWeek = '2222'
+    const newDate = '01.01.2000'
+    const newDuration = '3333'
+
+    beforeAll(async () => {
+      await populateDatabaseWithMockedWorkout(mockedWorkout)
+    })
+
+    afterAll(async () => {
+      await flushDatabase()
+    })
+
+    test('should edit the selected workout and its exercises', async () => {
+      // Given
+      const workoutToSelect = await waitFor(() =>
+        screen.getByText(mockedWorkout.name)
+      )
+
+      // When
+      await userEvent.click(workoutToSelect)
+      await userEvent.click(screen.getByText(/edit/i))
+
+      // Then
+      const workoutNameInput = screen.getByLabelText(/workout name/i)
+      const descriptionInput = screen.getByLabelText(/description/i)
+      const totalRepsInput = screen.getByLabelText(/total reps/i)
+      const weekInput = screen.getByLabelText(/week/i)
+      const dateInput = screen.getByLabelText(/date/i)
+      const durationInput = screen.getByLabelText(/duration/i)
+      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
+      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+
+      // When
+      await userEvent.clear(workoutNameInput)
+      await userEvent.type(workoutNameInput, newName)
+      await userEvent.clear(descriptionInput)
+      await userEvent.type(descriptionInput, newDescription)
+      await userEvent.clear(totalRepsInput)
+      await userEvent.type(totalRepsInput, newTotalReps)
+      await userEvent.clear(weekInput)
+      await userEvent.type(weekInput, newWeek)
+      await userEvent.clear(dateInput)
+      await userEvent.type(dateInput, newDate)
+      await userEvent.clear(durationInput)
+      await userEvent.type(durationInput, newDuration)
+      await userEvent.click(firstExerciseSelect)
+      await userEvent.click(screen.getByText(/handstand/i))
+      await userEvent.clear(firstExerciseSecondSet)
+      await userEvent.type(firstExerciseSecondSet, '20')
+
+      await userEvent.click(screen.getByText(/save/i))
+
+      // Then
+      expect(await getWorkouts()).toEqual([
+        {
+          id: expect.any(String),
+          name: newName,
+          description: newDescription,
+          totalReps: newTotalReps,
+          week: newWeek,
+          date: newDate,
+          duration: newDuration,
+          exercises: {
+            ...mockedWorkout.exercises,
+            exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
+          },
+        },
+      ])
+    })
+  })
+
   describe('create workout', () => {
     afterAll(async () => {
       await flushDatabase()
@@ -233,109 +309,6 @@ describe('WorkoutsTable', () => {
       expect(addNextExerciseBtn).not.toBeInTheDocument()
       expect(addNextSetButton).not.toBeInTheDocument()
       await userEvent.click(screen.getByLabelText(/close/i))
-    })
-  })
-
-  describe('edit workout', () => {
-    const mockedWorkout = workouts[0]
-    const newName = 'Test edit name'
-    const newDescription = 'Test edit description'
-    const newTotalReps = '1111'
-    const newWeek = '2222'
-    const newDate = '01.01.2000'
-    const newDuration = '3333'
-
-    beforeAll(async () => {
-      await populateDatabaseWithMockedWorkout(mockedWorkout)
-    })
-
-    afterAll(async () => {
-      await flushDatabase()
-    })
-
-    test('should edit the selected workout', async () => {
-      // Given
-      const workoutToSelect = await waitFor(() =>
-        screen.getByText(mockedWorkout.name)
-      )
-
-      // When
-      await userEvent.click(workoutToSelect)
-      await userEvent.click(screen.getByText(/edit/i))
-
-      // Then
-      const workoutNameInput = screen.getByLabelText(/workout name/i)
-      const descriptionInput = screen.getByLabelText(/description/i)
-      const totalRepsInput = screen.getByLabelText(/total reps/i)
-      const weekInput = screen.getByLabelText(/week/i)
-      const dateInput = screen.getByLabelText(/date/i)
-      const durationInput = screen.getByLabelText(/duration/i)
-
-      // When
-      await userEvent.clear(workoutNameInput)
-      await userEvent.type(workoutNameInput, newName)
-      await userEvent.clear(descriptionInput)
-      await userEvent.type(descriptionInput, newDescription)
-      await userEvent.clear(totalRepsInput)
-      await userEvent.type(totalRepsInput, newTotalReps)
-      await userEvent.clear(weekInput)
-      await userEvent.type(weekInput, newWeek)
-      await userEvent.clear(dateInput)
-      await userEvent.type(dateInput, newDate)
-      await userEvent.clear(durationInput)
-      await userEvent.type(durationInput, newDuration)
-      await userEvent.click(screen.getByText(/save/i))
-
-      // Then
-      expect(await getWorkouts()).toEqual([
-        {
-          id: expect.any(String),
-          name: newName,
-          description: newDescription,
-          totalReps: newTotalReps,
-          week: newWeek,
-          date: newDate,
-          duration: newDuration,
-          exercises: mockedWorkout.exercises,
-        },
-      ])
-    })
-
-    test('should edit workout exercises and sets', async () => {
-      // Given
-      const workoutToSelect = await waitFor(() => screen.getByText(newName))
-
-      // When
-      await userEvent.click(workoutToSelect)
-      await userEvent.click(screen.getByText(/^edit$/i))
-
-      // Then
-      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-
-      // When
-      await userEvent.click(firstExerciseSelect)
-      await userEvent.click(screen.getByText(/handstand/i))
-      await userEvent.clear(firstExerciseSecondSet)
-      await userEvent.type(firstExerciseSecondSet, '20')
-      await userEvent.click(screen.getByText(/save/i))
-
-      // Then
-      expect(await getWorkouts()).toEqual([
-        {
-          id: expect.any(String),
-          name: newName,
-          description: newDescription,
-          totalReps: newTotalReps,
-          week: newWeek,
-          date: newDate,
-          duration: newDuration,
-          exercises: {
-            ...mockedWorkout.exercises,
-            exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
-          },
-        },
-      ])
     })
   })
 })
