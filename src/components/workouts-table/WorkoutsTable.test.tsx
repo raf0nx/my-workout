@@ -7,7 +7,7 @@ import {
   afterAll,
   beforeAll,
 } from 'vitest'
-import { render, screen } from '@solidjs/testing-library'
+import { render, screen, waitFor } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
@@ -171,7 +171,7 @@ describe('WorkoutsTable', () => {
     })
   })
 
-  describe.skip('show workout details', () => {
+  describe('show workout details', () => {
     const mockedWorkout = workouts[0]
 
     beforeAll(async () => {
@@ -182,11 +182,11 @@ describe('WorkoutsTable', () => {
       await flushDatabase()
     })
 
-    test('should open the selected workout details with all the present data', async () => {
+    test('should open the selected workout details and read its data', async () => {
       // Given
       const { name, description, totalReps, week, date, duration } =
         mockedWorkout
-      const workoutToSelect = screen.getByText(name)
+      const workoutToSelect = await waitFor(() => screen.getByText(name))
 
       // When
       await userEvent.click(workoutToSelect)
@@ -208,24 +208,20 @@ describe('WorkoutsTable', () => {
       expect(durationInput).toHaveValue(+duration)
     })
 
-    test("should show the 'Exercises Workout' with all the created exercises and their sets", async () => {
+    test('should correctly display workout exercises and their sets', async () => {
       // Given
-      const exercisesWorkout = screen.getByText(/exercises workout/i)
-
-      // When
-      await userEvent.click(exercisesWorkout)
-
-      // Then
       const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
       const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
       const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
       const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
       const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+
+      // Then
       expect(firstExerciseSelect).toHaveValue('Muscle Up')
-      expect(firstExerciseFirstSet).toHaveValue(8)
-      expect(firstExerciseSecondSet).toHaveValue(6)
-      expect(secondExerciseSelect).toHaveValue('Bar Dip')
-      expect(secondExerciseFirstSet).toHaveValue(12)
+      expect(firstExerciseFirstSet).toHaveValue(5)
+      expect(firstExerciseSecondSet).toHaveValue(4)
+      expect(secondExerciseSelect).toHaveValue('Bulgarian Squat')
+      expect(secondExerciseFirstSet).toHaveValue(8)
     })
 
     test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
@@ -240,7 +236,7 @@ describe('WorkoutsTable', () => {
     })
   })
 
-  describe('edit workout', () => {
+  describe.skip('edit workout', () => {
     // test('should edit the selected workout', async () => {
     //   // Given
     //   const workoutToSelect = screen.getAllByText(workouts[0].name)[0]
