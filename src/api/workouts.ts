@@ -12,6 +12,7 @@ import { db } from '~/config/firebase-config'
 import { keys } from '~/utils/utils'
 import type { Exercises, Workout } from '~/components/workouts-table/types'
 
+// TODO: move to constants
 const workoutsDocName = 'workouts'
 const workoutsCollection = collection(db, workoutsDocName)
 
