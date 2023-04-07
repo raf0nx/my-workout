@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { postWorkout } from '~/api/workouts'
 import { firebaseConfig } from '~/config/firebase-config'
 import type { Workout } from '~/components/workouts-table/types'
