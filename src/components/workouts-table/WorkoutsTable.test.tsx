@@ -7,9 +7,8 @@ import {
   afterAll,
   beforeAll,
 } from 'vitest'
-import { render, screen, waitFor } from '@solidjs/testing-library'
+import { screen, waitFor } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
-import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
 import {
   flushDatabase,
@@ -19,8 +18,7 @@ import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mockedData'
 
 import { WorkoutsTable } from '.'
-
-const queryClient = new QueryClient()
+import { customRender } from '~/utils/test-utils/CustomRender'
 
 describe('WorkoutsTable', () => {
   let unmountComponent: () => void
@@ -30,11 +28,7 @@ describe('WorkoutsTable', () => {
   })
 
   beforeEach(() => {
-    const { unmount } = render(() => (
-      <QueryClientProvider client={queryClient}>
-        <WorkoutsTable />
-      </QueryClientProvider>
-    ))
+    const { unmount } = customRender(() => <WorkoutsTable />)
     unmountComponent = unmount
   })
 
