@@ -11,8 +11,11 @@ import { screen, waitFor } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 
 import {
+  assertInputValue,
+  clearAndUpdateInput,
   flushDatabase,
   populateDatabaseWithMockedWorkout,
+  updateInput,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
@@ -97,12 +100,6 @@ describe('WorkoutsTable', () => {
 
   describe('edit workout', () => {
     const mockedWorkout = workouts[0]
-    const newName = 'Test edit name'
-    const newDescription = 'Test edit description'
-    const newTotalReps = '1111'
-    const newWeek = '2222'
-    const newDate = '01.01.2000'
-    const newDuration = '3333'
 
     beforeAll(async () => {
       await populateDatabaseWithMockedWorkout(mockedWorkout)
@@ -114,54 +111,59 @@ describe('WorkoutsTable', () => {
 
     test('should edit the selected workout and its exercises', async () => {
       // Given
-      const workoutToSelect = await waitFor(() =>
+      const fieldsToEdit = {
+        name: 'Test edit name',
+        description: 'Test edit description',
+        totalReps: '1111',
+        week: '2222',
+        date: '01.01.2000',
+        duration: '3333',
+      }
+      const selectedWorkout = await waitFor(() =>
         screen.getByText(mockedWorkout.name)
       )
 
       // When
-      await userEvent.click(workoutToSelect)
+      await userEvent.click(selectedWorkout)
       await userEvent.click(screen.getByText(/edit/i))
 
-      // Then
-      const workoutNameInput = screen.getByLabelText(/workout name/i)
-      const descriptionInput = screen.getByLabelText(/description/i)
-      const totalRepsInput = screen.getByLabelText(/total reps/i)
-      const weekInput = screen.getByLabelText(/week/i)
-      const dateInput = screen.getByLabelText(/date/i)
-      const durationInput = screen.getByLabelText(/duration/i)
-      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
+      await clearAndUpdateInput(
+        screen.getByLabelText(/workout name/i),
+        fieldsToEdit.name
+      )
+      await clearAndUpdateInput(
+        screen.getByLabelText(/description/i),
+        fieldsToEdit.description
+      )
+      await clearAndUpdateInput(
+        screen.getByLabelText(/total reps/i),
+        fieldsToEdit.totalReps
+      )
+      await clearAndUpdateInput(
+        screen.getByLabelText(/week/i),
+        fieldsToEdit.week
+      )
+      await clearAndUpdateInput(
+        screen.getByLabelText(/date/i),
+        fieldsToEdit.date
+      )
+      await clearAndUpdateInput(
+        screen.getByLabelText(/duration/i),
+        fieldsToEdit.duration
+      )
 
-      // When
-      await userEvent.clear(workoutNameInput)
-      await userEvent.type(workoutNameInput, newName)
-      await userEvent.clear(descriptionInput)
-      await userEvent.type(descriptionInput, newDescription)
-      await userEvent.clear(totalRepsInput)
-      await userEvent.type(totalRepsInput, newTotalReps)
-      await userEvent.clear(weekInput)
-      await userEvent.type(weekInput, newWeek)
-      await userEvent.clear(dateInput)
-      await userEvent.type(dateInput, newDate)
-      await userEvent.clear(durationInput)
-      await userEvent.type(durationInput, newDuration)
-      await userEvent.click(firstExerciseSelect)
+      await userEvent.click(screen.getByLabelText(/^exercise1$/i))
       await userEvent.click(screen.getByText(/handstand/i))
-      await userEvent.clear(firstExerciseSecondSet)
-      await userEvent.type(firstExerciseSecondSet, '20')
+      await clearAndUpdateInput(screen.getByLabelText(/exercise1-set2/i), '20')
 
       await userEvent.click(screen.getByText(/save/i))
 
       // Then
+      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
-          name: newName,
-          description: newDescription,
-          totalReps: newTotalReps,
-          week: newWeek,
-          date: newDate,
-          duration: newDuration,
+          ...fieldsToEdit,
           exercises: {
             ...mockedWorkout.exercises,
             exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
@@ -178,12 +180,14 @@ describe('WorkoutsTable', () => {
 
     test('should save the newly created workout', async () => {
       // Given
-      const mockedWorkoutName = 'Test workout'
-      const mockedDescription = 'Test description'
-      const mockedTotalReps = '999'
-      const mockedWeek = '888'
-      const mockedDate = '01.01.2020'
-      const mockedDuration = '777'
+      const mockedWorkout = {
+        name: 'Test workout',
+        description: 'Test description',
+        totalReps: '999',
+        week: '888',
+        date: '01.01.2020',
+        duration: '777',
+      }
       const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
       // When
@@ -191,33 +195,33 @@ describe('WorkoutsTable', () => {
       await userEvent.click(screen.getByLabelText(/add next set/i))
       await userEvent.click(screen.getByLabelText(/add next exercise/i))
 
-      // Then
-      const workoutNameInput = screen.getByLabelText(/workout name/i)
-      const descriptionInput = screen.getByLabelText(/description/i)
-      const totalRepsInput = screen.getByLabelText(/total reps/i)
-      const weekInput = screen.getByLabelText(/week/i)
-      const dateInput = screen.getByLabelText(/date/i)
-      const durationInput = screen.getByLabelText(/duration/i)
-      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-      const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
-      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-      const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
-      const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
+      await updateInput(
+        screen.getByLabelText(/workout name/i),
+        mockedWorkout.name
+      )
+      await updateInput(
+        screen.getByLabelText(/description/i),
+        mockedWorkout.description
+      )
+      await updateInput(
+        screen.getByLabelText(/total reps/i),
+        mockedWorkout.totalReps
+      )
+      await updateInput(screen.getByLabelText(/week/i), mockedWorkout.week)
+      await updateInput(screen.getByLabelText(/date/i), mockedWorkout.date)
+      await updateInput(
+        screen.getByLabelText(/duration/i),
+        mockedWorkout.duration
+      )
 
-      // Then
-      await userEvent.type(workoutNameInput, mockedWorkoutName)
-      await userEvent.type(descriptionInput, mockedDescription)
-      await userEvent.type(totalRepsInput, mockedTotalReps)
-      await userEvent.type(weekInput, mockedWeek)
-      await userEvent.type(dateInput, mockedDate)
-      await userEvent.type(durationInput, mockedDuration)
-      await userEvent.click(firstExerciseSelect)
+      await userEvent.click(screen.getByLabelText(/^exercise1$/i))
       await userEvent.click(screen.getByText(/^muscle up$/i))
-      await userEvent.type(firstExerciseFirstSet, '8')
-      await userEvent.type(firstExerciseSecondSet, '6')
-      await userEvent.click(secondExerciseSelect)
+      await userEvent.click(screen.getByLabelText(/^exercise2$/i))
       await userEvent.click(screen.getByText(/bar dip/i))
-      await userEvent.type(secondExerciseFirstSet, '12')
+
+      await updateInput(screen.getByLabelText(/exercise1-set1/i), '8')
+      await updateInput(screen.getByLabelText(/exercise1-set2/i), '6')
+      await updateInput(screen.getByLabelText(/exercise2-set1/i), '12')
 
       await userEvent.click(screen.getByText(/save/i))
 
@@ -226,12 +230,7 @@ describe('WorkoutsTable', () => {
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
-          name: mockedWorkoutName,
-          description: mockedDescription,
-          totalReps: mockedTotalReps,
-          week: mockedWeek,
-          date: mockedDate,
-          duration: mockedDuration,
+          ...mockedWorkout,
           exercises: {
             exercise1: { name: 'Muscle Up', sets: [8, 6] },
             exercise2: { name: 'Bar Dip', sets: [12] },
@@ -256,42 +255,28 @@ describe('WorkoutsTable', () => {
       // Given
       const { name, description, totalReps, week, date, duration } =
         mockedWorkout
-      const workoutToSelect = await waitFor(() => screen.getByText(name))
+      const selectedWorkout = await waitFor(() => screen.getByText(name))
 
       // When
-      await userEvent.click(workoutToSelect)
+      await userEvent.click(selectedWorkout)
 
       // Then
-      const workoutNameInput = screen.getByLabelText(/workout name/i)
-      const descriptionInput = screen.getByLabelText(/description/i)
-      const totalRepsInput = screen.getByLabelText(/total reps/i)
-      const weekInput = screen.getByLabelText(/week/i)
-      const dateInput = screen.getByLabelText(/date/i)
-      const durationInput = screen.getByLabelText(/duration/i)
-
       expect(screen.getByText(/Your Workout/i)).toBeInTheDocument()
-      expect(workoutNameInput).toHaveValue(name)
-      expect(descriptionInput).toHaveValue(description)
-      expect(totalRepsInput).toHaveValue(+totalReps)
-      expect(weekInput).toHaveValue(+week)
-      expect(dateInput).toHaveValue(date)
-      expect(durationInput).toHaveValue(+duration)
+      assertInputValue(screen.getByLabelText(/workout name/i), name)
+      assertInputValue(screen.getByLabelText(/description/i), description)
+      assertInputValue(screen.getByLabelText(/total reps/i), +totalReps)
+      assertInputValue(screen.getByLabelText(/week/i), +week)
+      assertInputValue(screen.getByLabelText(/date/i), date)
+      assertInputValue(screen.getByLabelText(/duration/i), +duration)
     })
 
     test('should correctly display workout exercises and their sets', async () => {
-      // Given
-      const firstExerciseSelect = screen.getByLabelText(/^exercise1$/i)
-      const firstExerciseFirstSet = screen.getByLabelText(/exercise1-set1/i)
-      const firstExerciseSecondSet = screen.getByLabelText(/exercise1-set2/i)
-      const secondExerciseSelect = screen.getByLabelText(/^exercise2$/i)
-      const secondExerciseFirstSet = screen.getByLabelText(/exercise2-set1/i)
-
       // Then
-      expect(firstExerciseSelect).toHaveValue('Muscle Up')
-      expect(firstExerciseFirstSet).toHaveValue(5)
-      expect(firstExerciseSecondSet).toHaveValue(4)
-      expect(secondExerciseSelect).toHaveValue('Bulgarian Squat')
-      expect(secondExerciseFirstSet).toHaveValue(8)
+      assertInputValue(screen.getByLabelText(/^exercise1$/i), 'Muscle Up')
+      assertInputValue(screen.getByLabelText(/exercise1-set1/i), 5)
+      assertInputValue(screen.getByLabelText(/exercise1-set2/i), 4)
+      assertInputValue(screen.getByLabelText(/^exercise2$/i), 'Bulgarian Squat')
+      assertInputValue(screen.getByLabelText(/exercise2-set1/i), 8)
     })
 
     test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
