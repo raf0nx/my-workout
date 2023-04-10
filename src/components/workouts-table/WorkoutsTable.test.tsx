@@ -15,7 +15,12 @@ import {
   clearAndUpdateInput,
   flushDatabase,
   populateDatabaseWithMockedWorkout,
+  updateExercise,
+  clearAndUpdateExerciseSet,
   updateInput,
+  updateExerciseSet,
+  getExerciseSelect,
+  getExerciseSetInput,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
@@ -152,9 +157,8 @@ describe('WorkoutsTable', () => {
         fieldsToEdit.duration
       )
 
-      await userEvent.click(screen.getByLabelText(/^exercise1$/i))
-      await userEvent.click(screen.getByText(/handstand/i))
-      await clearAndUpdateInput(screen.getByLabelText(/exercise1-set2/i), '20')
+      await updateExercise(1, 'Handstand')
+      await clearAndUpdateExerciseSet(1, 2, '20')
 
       await userEvent.click(screen.getByText(/save/i))
 
@@ -214,14 +218,11 @@ describe('WorkoutsTable', () => {
         mockedWorkout.duration
       )
 
-      await userEvent.click(screen.getByLabelText(/^exercise1$/i))
-      await userEvent.click(screen.getByText(/^muscle up$/i))
-      await userEvent.click(screen.getByLabelText(/^exercise2$/i))
-      await userEvent.click(screen.getByText(/bar dip/i))
-
-      await updateInput(screen.getByLabelText(/exercise1-set1/i), '8')
-      await updateInput(screen.getByLabelText(/exercise1-set2/i), '6')
-      await updateInput(screen.getByLabelText(/exercise2-set1/i), '12')
+      await updateExercise(1, 'Muscle Up')
+      await updateExercise(2, 'Bar Dip')
+      await updateExerciseSet(1, 1, '8')
+      await updateExerciseSet(1, 2, '6')
+      await updateExerciseSet(2, 1, '12')
 
       await userEvent.click(screen.getByText(/save/i))
 
@@ -248,6 +249,7 @@ describe('WorkoutsTable', () => {
     })
 
     afterAll(async () => {
+      await userEvent.click(screen.getByLabelText(/close/i))
       await flushDatabase()
     })
 
@@ -268,15 +270,11 @@ describe('WorkoutsTable', () => {
       assertInputValue(screen.getByLabelText(/week/i), +week)
       assertInputValue(screen.getByLabelText(/date/i), date)
       assertInputValue(screen.getByLabelText(/duration/i), +duration)
-    })
-
-    test('should correctly display workout exercises and their sets', async () => {
-      // Then
-      assertInputValue(screen.getByLabelText(/^exercise1$/i), 'Muscle Up')
-      assertInputValue(screen.getByLabelText(/exercise1-set1/i), 5)
-      assertInputValue(screen.getByLabelText(/exercise1-set2/i), 4)
-      assertInputValue(screen.getByLabelText(/^exercise2$/i), 'Bulgarian Squat')
-      assertInputValue(screen.getByLabelText(/exercise2-set1/i), 8)
+      assertInputValue(getExerciseSelect(1), 'Muscle Up')
+      assertInputValue(getExerciseSetInput(1, 1), 5)
+      assertInputValue(getExerciseSetInput(1, 2), 4)
+      assertInputValue(getExerciseSelect(2), 'Bulgarian Squat')
+      assertInputValue(getExerciseSetInput(2, 1), 8)
     })
 
     test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
@@ -287,7 +285,6 @@ describe('WorkoutsTable', () => {
       // Then
       expect(addNextExerciseBtn).not.toBeInTheDocument()
       expect(addNextSetButton).not.toBeInTheDocument()
-      await userEvent.click(screen.getByLabelText(/close/i))
     })
   })
 })
