@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { exercises } from '~/mockedData'
+import { exercises } from '~/mocked-data'
 
 import {
   getMaxColumnNumber,

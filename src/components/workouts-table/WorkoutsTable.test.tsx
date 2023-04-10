@@ -15,7 +15,7 @@ import {
   populateDatabaseWithMockedWorkout,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
-import { workouts } from '~/mockedData'
+import { workouts } from '~/mocked-data'
 
 import { WorkoutsTable } from '.'
 import { customRender } from '~/utils/test-utils/CustomRender'

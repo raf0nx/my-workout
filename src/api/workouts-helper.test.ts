@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, test } from 'vitest'
 import { collection, getDocs } from 'firebase/firestore'
 
-import { workouts } from '~/mockedData'
+import { workouts } from '~/mocked-data'
 import {
   flushDatabase,
   populateDatabaseWithMockedWorkout,
