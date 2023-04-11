@@ -4,7 +4,6 @@ import {
   expect,
   test,
   beforeEach,
-  afterAll,
   beforeAll,
 } from 'vitest'
 import userEvent from '@testing-library/user-event'
@@ -51,12 +50,9 @@ describe('WorkoutsTable', () => {
     unmountComponent = unmount
   })
 
-  afterEach(() => {
-    unmountComponent()
-  })
-
-  afterAll(async () => {
+  afterEach(async () => {
     await flushDatabase()
+    unmountComponent()
   })
 
   describe('a11y', () => {
@@ -112,10 +108,6 @@ describe('WorkoutsTable', () => {
       await populateDatabaseWithMockedWorkout(mockedWorkout)
     })
 
-    afterAll(async () => {
-      await flushDatabase()
-    })
-
     test('should edit the selected workout and its exercises', async () => {
       // Given
       const fieldsToUpdate: Omit<Workout, 'exercises'> = {
@@ -150,10 +142,6 @@ describe('WorkoutsTable', () => {
   })
 
   describe('create workout', () => {
-    afterAll(async () => {
-      await flushDatabase()
-    })
-
     test('should save the newly created workout', async () => {
       // Given
       const mockedWorkout: Omit<Workout, 'exercises'> = {
@@ -195,10 +183,6 @@ describe('WorkoutsTable', () => {
 
     beforeAll(async () => {
       await populateDatabaseWithMockedWorkout(mockedWorkout)
-    })
-
-    afterAll(async () => {
-      await flushDatabase()
     })
 
     test('should open the selected workout details and read its data', async () => {
