@@ -7,26 +7,37 @@ import {
   afterAll,
   beforeAll,
 } from 'vitest'
-import { screen, waitFor } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 
 import {
   assertInputValue,
-  clearAndUpdateInput,
   flushDatabase,
   populateDatabaseWithMockedWorkout,
   updateExercise,
   clearAndUpdateExerciseSet,
-  updateInput,
   updateExerciseSet,
   getExerciseSelect,
   getExerciseSetInput,
+  updateWorkoutDetails,
+  selectWorkoutToEdit,
+  saveWorkout,
+  selectWorkout,
+  prepareCreateNewWorkout,
+  getInputByLabel,
+  getAddNewWorkoutBtn,
+  closeWorkoutDialog,
+  getCreateWorkoutDialogHeader,
+  queryCreateWorkoutDialogHeader,
+  getWorkoutDetailsDialogHeader,
+  queryAddNextExerciseBtn,
+  queryAddNextSetBtn,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
+import { customRender } from '~/utils/test-utils/CustomRender'
 
 import { WorkoutsTable } from '.'
-import { customRender } from '~/utils/test-utils/CustomRender'
+import type { Workout } from './types'
 
 describe('WorkoutsTable', () => {
   let unmountComponent: () => void
@@ -50,25 +61,19 @@ describe('WorkoutsTable', () => {
 
   describe('a11y', () => {
     test("should open the workout creation dialog when clicking 'add new workout' button", async () => {
-      // Given
-      const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
-
       // When
-      await userEvent.click(addWorkoutBtn)
+      await userEvent.click(getAddNewWorkoutBtn())
 
       // Then
-      expect(screen.getByText(/new workout/i)).toBeInTheDocument()
+      expect(getCreateWorkoutDialogHeader()).toBeInTheDocument()
     })
 
     test('should close the workout creation dialog when clicking the close button', async () => {
-      // Given
-      const closeBtn = screen.getByLabelText(/close/i)
-
       // When
-      await userEvent.click(closeBtn)
+      await closeWorkoutDialog()
 
       // Then
-      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
     })
 
     test("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
@@ -77,7 +82,7 @@ describe('WorkoutsTable', () => {
       await userEvent.keyboard('[Enter]')
 
       // Then
-      expect(screen.getByText(/new workout/i)).toBeInTheDocument()
+      expect(getCreateWorkoutDialogHeader()).toBeInTheDocument()
     })
 
     test('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
@@ -86,20 +91,17 @@ describe('WorkoutsTable', () => {
       await userEvent.keyboard('[Enter]')
 
       // Then
-      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
     })
 
     test('should close the workout creation dialog when pressing [Escape] keydown', async () => {
-      // Given
-      const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
-
       // When
-      await userEvent.click(addWorkoutBtn)
+      await userEvent.click(getAddNewWorkoutBtn())
       await userEvent.tab()
       await userEvent.keyboard('[Escape]')
 
       // Then
-      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
     })
   })
 
@@ -116,7 +118,7 @@ describe('WorkoutsTable', () => {
 
     test('should edit the selected workout and its exercises', async () => {
       // Given
-      const fieldsToEdit = {
+      const fieldsToUpdate: Omit<Workout, 'exercises'> = {
         name: 'Test edit name',
         description: 'Test edit description',
         totalReps: '1111',
@@ -124,50 +126,20 @@ describe('WorkoutsTable', () => {
         date: '01.01.2000',
         duration: '3333',
       }
-      const selectedWorkout = await waitFor(() =>
-        screen.getByText(mockedWorkout.name)
-      )
 
       // When
-      await userEvent.click(selectedWorkout)
-      await userEvent.click(screen.getByText(/edit/i))
-
-      await clearAndUpdateInput(
-        screen.getByLabelText(/workout name/i),
-        fieldsToEdit.name
-      )
-      await clearAndUpdateInput(
-        screen.getByLabelText(/description/i),
-        fieldsToEdit.description
-      )
-      await clearAndUpdateInput(
-        screen.getByLabelText(/total reps/i),
-        fieldsToEdit.totalReps
-      )
-      await clearAndUpdateInput(
-        screen.getByLabelText(/week/i),
-        fieldsToEdit.week
-      )
-      await clearAndUpdateInput(
-        screen.getByLabelText(/date/i),
-        fieldsToEdit.date
-      )
-      await clearAndUpdateInput(
-        screen.getByLabelText(/duration/i),
-        fieldsToEdit.duration
-      )
-
+      await selectWorkoutToEdit(mockedWorkout.name)
+      await updateWorkoutDetails(fieldsToUpdate)
       await updateExercise(1, 'Handstand')
       await clearAndUpdateExerciseSet(1, 2, '20')
-
-      await userEvent.click(screen.getByText(/save/i))
+      await saveWorkout()
 
       // Then
-      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
-          ...fieldsToEdit,
+          ...fieldsToUpdate,
           exercises: {
             ...mockedWorkout.exercises,
             exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
@@ -184,7 +156,7 @@ describe('WorkoutsTable', () => {
 
     test('should save the newly created workout', async () => {
       // Given
-      const mockedWorkout = {
+      const mockedWorkout: Omit<Workout, 'exercises'> = {
         name: 'Test workout',
         description: 'Test description',
         totalReps: '999',
@@ -192,42 +164,19 @@ describe('WorkoutsTable', () => {
         date: '01.01.2020',
         duration: '777',
       }
-      const addWorkoutBtn = screen.getByLabelText(/add new workout/i)
 
       // When
-      await userEvent.click(addWorkoutBtn)
-      await userEvent.click(screen.getByLabelText(/add next set/i))
-      await userEvent.click(screen.getByLabelText(/add next exercise/i))
-
-      await updateInput(
-        screen.getByLabelText(/workout name/i),
-        mockedWorkout.name
-      )
-      await updateInput(
-        screen.getByLabelText(/description/i),
-        mockedWorkout.description
-      )
-      await updateInput(
-        screen.getByLabelText(/total reps/i),
-        mockedWorkout.totalReps
-      )
-      await updateInput(screen.getByLabelText(/week/i), mockedWorkout.week)
-      await updateInput(screen.getByLabelText(/date/i), mockedWorkout.date)
-      await updateInput(
-        screen.getByLabelText(/duration/i),
-        mockedWorkout.duration
-      )
-
+      await prepareCreateNewWorkout()
+      await updateWorkoutDetails(mockedWorkout)
       await updateExercise(1, 'Muscle Up')
       await updateExercise(2, 'Bar Dip')
       await updateExerciseSet(1, 1, '8')
       await updateExerciseSet(1, 2, '6')
       await updateExerciseSet(2, 1, '12')
-
-      await userEvent.click(screen.getByText(/save/i))
+      await saveWorkout()
 
       // Then
-      expect(screen.queryByText(/new workout/i)).not.toBeInTheDocument()
+      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
@@ -249,7 +198,6 @@ describe('WorkoutsTable', () => {
     })
 
     afterAll(async () => {
-      await userEvent.click(screen.getByLabelText(/close/i))
       await flushDatabase()
     })
 
@@ -257,19 +205,18 @@ describe('WorkoutsTable', () => {
       // Given
       const { name, description, totalReps, week, date, duration } =
         mockedWorkout
-      const selectedWorkout = await waitFor(() => screen.getByText(name))
 
       // When
-      await userEvent.click(selectedWorkout)
+      await selectWorkout(name)
 
       // Then
-      expect(screen.getByText(/Your Workout/i)).toBeInTheDocument()
-      assertInputValue(screen.getByLabelText(/workout name/i), name)
-      assertInputValue(screen.getByLabelText(/description/i), description)
-      assertInputValue(screen.getByLabelText(/total reps/i), +totalReps)
-      assertInputValue(screen.getByLabelText(/week/i), +week)
-      assertInputValue(screen.getByLabelText(/date/i), date)
-      assertInputValue(screen.getByLabelText(/duration/i), +duration)
+      expect(getWorkoutDetailsDialogHeader()).toBeInTheDocument()
+      assertInputValue(getInputByLabel('Workout name'), name)
+      assertInputValue(getInputByLabel('Description'), description)
+      assertInputValue(getInputByLabel('Total reps'), +totalReps)
+      assertInputValue(getInputByLabel('Week'), +week)
+      assertInputValue(getInputByLabel('Date'), date)
+      assertInputValue(getInputByLabel('Duration'), +duration)
       assertInputValue(getExerciseSelect(1), 'Muscle Up')
       assertInputValue(getExerciseSetInput(1, 1), 5)
       assertInputValue(getExerciseSetInput(1, 2), 4)
@@ -278,13 +225,10 @@ describe('WorkoutsTable', () => {
     })
 
     test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
-      // Given
-      const addNextExerciseBtn = screen.queryByLabelText(/add next exercise/i)
-      const addNextSetButton = screen.queryByLabelText(/add next set/i)
-
       // Then
-      expect(addNextExerciseBtn).not.toBeInTheDocument()
-      expect(addNextSetButton).not.toBeInTheDocument()
+      expect(queryAddNextExerciseBtn()).not.toBeInTheDocument()
+      expect(queryAddNextSetBtn()).not.toBeInTheDocument()
+      await closeWorkoutDialog()
     })
   })
 })
