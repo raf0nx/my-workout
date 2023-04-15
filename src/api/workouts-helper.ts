@@ -1,4 +1,4 @@
-import { type QueryClient } from '@tanstack/solid-query'
+import type { QueryClient } from '@tanstack/solid-query'
 import type { DocumentData, QuerySnapshot } from 'firebase/firestore'
 
 import type { Exercises, Workout } from '~/components/workouts-table/types'
