@@ -12,6 +12,7 @@ import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { getWorkouts } from '~/api/workouts'
+import { WORKOUTS_DOC_ID } from '~/constants'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
@@ -28,7 +29,7 @@ const WORKOUTS_TABLE_HEADERS = [
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
-    () => ['workouts'],
+    () => [WORKOUTS_DOC_ID],
     getWorkouts
   )
 
