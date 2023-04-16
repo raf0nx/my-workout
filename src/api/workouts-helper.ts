@@ -18,10 +18,14 @@ export const transformDocsToWorkoutObjects = (
     return {
       ...docData,
       id: doc.id,
+      date: formatToWorkoutDate(docData.date),
       exercises: sortWorkoutExercises(docData.exercises),
     }
   })
 }
+
+export const formatToWorkoutDate = (date: string) =>
+  dayjs(date).format('DD.MM.YYYY')
 
 export const sortWorkoutExercises = (exercises: Exercises) =>
   keys(exercises)
