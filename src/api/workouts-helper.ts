@@ -1,9 +1,13 @@
 import type { QueryClient } from '@tanstack/solid-query'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import type { DocumentData, QuerySnapshot } from 'firebase/firestore'
 
 import type { Exercises, Workout } from '~/components/workouts-table/types'
 import { WORKOUTS_DOC_ID } from '~/constants'
 import { keys } from '~/utils/utils'
+
+dayjs.extend(customParseFormat)
 
 export const transformDocsToWorkoutObjects = (
   data: QuerySnapshot<DocumentData>
@@ -27,3 +31,6 @@ export const sortWorkoutExercises = (exercises: Exercises) =>
 export const invalidateGetWorkoutsQuery = (queryClient: QueryClient) => {
   queryClient.invalidateQueries([WORKOUTS_DOC_ID])
 }
+
+export const formatWorkoutDateToISO8601 = (workoutDate: string) =>
+  dayjs(workoutDate, 'DD.MM.YYYY').format()
