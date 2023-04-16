@@ -34,6 +34,7 @@
     "@suid/icons-material": "^0.5.8",
     "@suid/material": "^0.10.1",
     "@tanstack/solid-query": "^4.27.0",
+    "dayjs": "^1.11.7",
     "firebase": "^9.18.0"
   }
 }
