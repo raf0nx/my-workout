@@ -3,7 +3,11 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import type { DocumentData, QuerySnapshot } from 'firebase/firestore'
 
-import type { Exercises, Workout } from '~/components/workouts-table/types'
+import type {
+  Exercises,
+  Workout,
+  WorkoutDateFormat,
+} from '~/components/workouts-table/types'
 import { WORKOUTS_DOC_ID } from '~/constants'
 import { keys } from '~/utils/utils'
 
@@ -24,8 +28,8 @@ export const transformDocsToWorkoutObjects = (
   })
 }
 
-export const formatToWorkoutDate = (date: string) =>
-  dayjs(date).format('DD.MM.YYYY')
+export const formatToWorkoutDate = (date: string): WorkoutDateFormat =>
+  dayjs(date).format('DD.MM.YYYY') as WorkoutDateFormat
 
 export const sortWorkoutExercises = (exercises: Exercises) =>
   keys(exercises)
@@ -36,5 +40,5 @@ export const invalidateGetWorkoutsQuery = (queryClient: QueryClient) => {
   queryClient.invalidateQueries([WORKOUTS_DOC_ID])
 }
 
-export const formatWorkoutDateToISO8601 = (workoutDate: string) =>
+export const formatWorkoutDateToISO8601 = (workoutDate: WorkoutDateFormat) =>
   dayjs(workoutDate, 'DD.MM.YYYY').format()
