@@ -22,13 +22,13 @@ export const transformDocsToWorkoutObjects = (
     return {
       ...docData,
       id: doc.id,
-      date: formatToWorkoutDate(docData.date),
+      date: formatISO8601ToWorkoutDate(docData.date),
       exercises: sortWorkoutExercises(docData.exercises),
     }
   })
 }
 
-export const formatToWorkoutDate = (date: string): WorkoutDateFormat =>
+export const formatISO8601ToWorkoutDate = (date: string): WorkoutDateFormat =>
   dayjs(date).format('DD.MM.YYYY') as WorkoutDateFormat
 
 export const sortWorkoutExercises = (exercises: Exercises) =>
