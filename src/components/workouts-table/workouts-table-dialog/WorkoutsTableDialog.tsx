@@ -5,7 +5,10 @@ import { createSignal } from 'solid-js'
 import { createMutation, useQueryClient } from '@tanstack/solid-query'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
-import type { Workout, WorkoutProps } from '~/components/workouts-table/types'
+import type {
+  Workout,
+  WorkoutDetailsProps,
+} from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
 import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
 
@@ -43,7 +46,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     value: string
   ) => {
-    const fieldToUpdate = event.target.name as WorkoutProps
+    const fieldToUpdate = event.target.name as WorkoutDetailsProps
 
     setWorkoutDetails(
       produce(state => {

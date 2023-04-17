@@ -22,5 +22,5 @@ export interface Exercise {
   sets: number[]
 }
 
-export type WorkoutProps = Exclude<keyof Workout, 'exercises' | 'id'>
+export type WorkoutDetailsProps = Exclude<keyof Workout, 'exercises' | 'id'>
 export type WorkoutDateFormat = `${Day}.${Month}.${Year}`
