@@ -193,7 +193,7 @@ export const assertFirstNodePrecedeNextOne = (
   firstNode: HTMLElement,
   secondNode: HTMLElement
 ) => {
-  return expect(firstNode.compareDocumentPosition(secondNode)).toBe(
+  expect(firstNode.compareDocumentPosition(secondNode)).toBe(
     DOCUMENT_POSITION_FOLLOWING
   )
 }
