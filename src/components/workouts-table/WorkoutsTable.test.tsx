@@ -35,6 +35,7 @@ import {
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
 import { customRender } from '~/utils/test-utils/CustomRender'
+import { DOCUMENT_POSITION_FOLLOWING } from '~/constants'
 
 import { WorkoutsTable } from '.'
 import type { Workout } from './types'
@@ -72,8 +73,12 @@ describe('WorkoutsTable', () => {
       )
 
       // Then
-      expect(firstWorkout.compareDocumentPosition(secondWorkout)).toBe(4)
-      expect(secondWorkout.compareDocumentPosition(thirdWorkout)).toBe(4)
+      expect(firstWorkout.compareDocumentPosition(secondWorkout)).toBe(
+        DOCUMENT_POSITION_FOLLOWING
+      )
+      expect(secondWorkout.compareDocumentPosition(thirdWorkout)).toBe(
+        DOCUMENT_POSITION_FOLLOWING
+      )
     })
   })
 
