@@ -5,6 +5,7 @@ import { screen, waitFor } from '@solidjs/testing-library'
 import { postWorkout } from '~/api/workouts'
 import { firebaseConfig } from '~/config/firebase-config'
 import type { Workout } from '~/components/workouts-table/types'
+import { DOCUMENT_POSITION_FOLLOWING } from '~/constants'
 
 export const flushDatabase = async () => {
   try {
@@ -42,6 +43,10 @@ export const getAddNewWorkoutBtn = () => {
 
 export const getCreateWorkoutDialogHeader = () => {
   return screen.getByText(/new workout/i)
+}
+
+export const getWorkoutsTableRows = () => {
+  return waitFor(() => screen.getAllByTestId('workouts-table-row'))
 }
 
 export const queryCreateWorkoutDialogHeader = () => {
@@ -182,4 +187,13 @@ export const assertInputValue = (
   value: string | number
 ) => {
   expect(input).toHaveValue(value)
+}
+
+export const assertFirstNodePrecedeNextOne = (
+  firstNode: HTMLElement,
+  secondNode: HTMLElement
+) => {
+  return expect(firstNode.compareDocumentPosition(secondNode)).toBe(
+    DOCUMENT_POSITION_FOLLOWING
+  )
 }

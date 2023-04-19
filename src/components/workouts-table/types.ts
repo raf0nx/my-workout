@@ -1,4 +1,5 @@
 import type { AvailableExercises } from '~/components/exercises-select/types'
+import type { Day, Month, Year } from '~/utils/types'
 
 import type { TargetExercise } from './workouts-table-dialog/workouts-table-dialog-content/workouts-table-dialog-content-exercises/types'
 
@@ -8,7 +9,8 @@ export interface Workout {
   description: string
   totalReps: string
   week: string
-  date: string
+  // TODO: UI changes/validation needed to ensure the type
+  date: WorkoutDateFormat | string
   duration: string
   exercises: Exercises
 }
@@ -20,4 +22,5 @@ export interface Exercise {
   sets: number[]
 }
 
-export type WorkoutProps = Exclude<keyof Workout, 'exercises' | 'id'>
+export type WorkoutDetailsProps = Exclude<keyof Workout, 'exercises' | 'id'>
+export type WorkoutDateFormat = `${Day}.${Month}.${Year}`

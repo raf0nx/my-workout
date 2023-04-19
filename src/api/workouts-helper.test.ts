@@ -11,6 +11,8 @@ import { WORKOUTS_DOC_ID } from '~/constants'
 import { keys } from '~/utils/utils'
 
 import {
+  formatISO8601ToWorkoutDate,
+  formatWorkoutDateToISO8601,
   sortWorkoutExercises,
   transformDocsToWorkoutObjects,
 } from './workouts-helper'
@@ -55,5 +57,33 @@ describe('sortWorkoutExercises', () => {
 
     // Then
     expect(keys(actual)).toStrictEqual(keys(mockedWorkoutExercises))
+  })
+})
+
+describe('formatISO8601ToWorkoutDate', () => {
+  test('should format date in ISO8601 to workout date format', () => {
+    // Given
+    const mockedISO8601Date = '2020-09-16T00:00:00+02:00'
+    const expected = '16.09.2020'
+
+    // When
+    const actual = formatISO8601ToWorkoutDate(mockedISO8601Date)
+
+    // Then
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('formatWorkoutDateToISO8601', () => {
+  test('should format workout date to date in ISO8601 format', () => {
+    // Given
+    const mockedWorkoutDate = '16.09.2020'
+    const expected = '2020-09-16T00:00:00+02:00'
+
+    // When
+    const actual = formatWorkoutDateToISO8601(mockedWorkoutDate)
+
+    // Then
+    expect(actual).toBe(expected)
   })
 })

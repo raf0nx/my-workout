@@ -30,6 +30,8 @@ import {
   getWorkoutDetailsDialogHeader,
   queryAddNextExerciseBtn,
   queryAddNextSetBtn,
+  getWorkoutsTableRows,
+  assertFirstNodePrecedeNextOne,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
@@ -53,6 +55,26 @@ describe('WorkoutsTable', () => {
   afterEach(async () => {
     await flushDatabase()
     unmountComponent()
+  })
+
+  describe('table content', () => {
+    beforeAll(async () => {
+      await Promise.all([
+        populateDatabaseWithMockedWorkout(workouts[0]),
+        populateDatabaseWithMockedWorkout(workouts[1]),
+        populateDatabaseWithMockedWorkout(workouts[2]),
+      ])
+    })
+
+    test('should be sorted by date descending', async () => {
+      // Given
+      const [firstWorkout, secondWorkout, thirdWorkout] =
+        await getWorkoutsTableRows()
+
+      // Then
+      assertFirstNodePrecedeNextOne(firstWorkout, secondWorkout)
+      assertFirstNodePrecedeNextOne(secondWorkout, thirdWorkout)
+    })
   })
 
   describe('a11y', () => {
