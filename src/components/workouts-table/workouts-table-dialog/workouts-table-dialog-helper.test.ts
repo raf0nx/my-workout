@@ -6,13 +6,15 @@ import { getWorkoutDetailsInitialState } from './workouts-table-dialog-helper'
 describe('getWorkoutDetailsInitialState', () => {
   test('should return workout details object in initial state', () => {
     // Given
-    MockDate.set('01.01.2023')
+    const mockedDate = '01.01.2023'
+    MockDate.set(mockedDate)
+
     const expected = {
       name: '',
       description: '',
       totalReps: '',
       week: '1',
-      date: '01.01.2023',
+      date: mockedDate,
       duration: '',
       exercises: { exercise1: { name: '', sets: [0] } },
     }
