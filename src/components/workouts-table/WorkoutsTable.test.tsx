@@ -7,7 +7,6 @@ import {
   beforeAll,
 } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import { screen, waitFor } from '@solidjs/testing-library'
 
 import {
   assertInputValue,
@@ -31,11 +30,12 @@ import {
   getWorkoutDetailsDialogHeader,
   queryAddNextExerciseBtn,
   queryAddNextSetBtn,
+  getWorkoutsTableRows,
+  assertFirstNodePrecedeNextOne,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
 import { customRender } from '~/utils/test-utils/CustomRender'
-import { DOCUMENT_POSITION_FOLLOWING } from '~/constants'
 
 import { WorkoutsTable } from '.'
 import type { Workout } from './types'
@@ -68,17 +68,12 @@ describe('WorkoutsTable', () => {
 
     test('should be sorted by date descending', async () => {
       // Given
-      const [firstWorkout, secondWorkout, thirdWorkout] = await waitFor(() =>
-        screen.getAllByTestId('workouts-table-row')
-      )
+      const [firstWorkout, secondWorkout, thirdWorkout] =
+        await getWorkoutsTableRows()
 
       // Then
-      expect(firstWorkout.compareDocumentPosition(secondWorkout)).toBe(
-        DOCUMENT_POSITION_FOLLOWING
-      )
-      expect(secondWorkout.compareDocumentPosition(thirdWorkout)).toBe(
-        DOCUMENT_POSITION_FOLLOWING
-      )
+      assertFirstNodePrecedeNextOne(firstWorkout, secondWorkout)
+      assertFirstNodePrecedeNextOne(secondWorkout, thirdWorkout)
     })
   })
 
