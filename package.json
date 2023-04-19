@@ -21,6 +21,7 @@
     "@vitest/coverage-c8": "^0.26.3",
     "@vitest/ui": "^0.26.3",
     "jsdom": "^20.0.3",
+    "mockdate": "^3.0.5",
     "sass": "^1.58.3",
     "solid-js": "^1.6.9",
     "solid-start": "^0.2.19",
