@@ -8,13 +8,3 @@ export interface WorkoutsTableDialogProps {
   state: WorkoutsTableDialogState
   onClose: () => void
 }
-
-export const workoutDetailsInitialState: Workout = {
-  name: '',
-  description: '',
-  totalReps: '',
-  week: '',
-  date: '',
-  duration: '',
-  exercises: { exercise1: { name: '', sets: [0] } },
-}
