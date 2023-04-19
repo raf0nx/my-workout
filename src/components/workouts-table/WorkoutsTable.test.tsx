@@ -32,6 +32,7 @@ import {
   queryAddNextSetBtn,
   getWorkoutsTableRows,
   assertFirstNodePrecedeNextOne,
+  assertWorkoutInWorkoutsTable,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
@@ -57,13 +58,24 @@ describe('WorkoutsTable', () => {
     unmountComponent()
   })
 
-  describe('table content', () => {
+  describe('content', () => {
     beforeAll(async () => {
       await Promise.all([
         populateDatabaseWithMockedWorkout(workouts[0]),
         populateDatabaseWithMockedWorkout(workouts[1]),
         populateDatabaseWithMockedWorkout(workouts[2]),
       ])
+    })
+
+    test('row should contain the workout details data', async () => {
+      // Given
+      const workoutToCheck = workouts[0]
+
+      // When
+      await getWorkoutsTableRows()
+
+      // Then
+      assertWorkoutInWorkoutsTable(workoutToCheck)
     })
 
     test('should be sorted by date descending', async () => {

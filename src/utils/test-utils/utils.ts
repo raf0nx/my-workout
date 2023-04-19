@@ -189,6 +189,10 @@ export const assertInputValue = (
   expect(input).toHaveValue(value)
 }
 
+export const assertElementToBeInTheDocument = (element: HTMLElement) => {
+  expect(element).toBeInTheDocument()
+}
+
 export const assertFirstNodePrecedeNextOne = (
   firstNode: HTMLElement,
   secondNode: HTMLElement
@@ -196,4 +200,13 @@ export const assertFirstNodePrecedeNextOne = (
   expect(firstNode.compareDocumentPosition(secondNode)).toBe(
     DOCUMENT_POSITION_FOLLOWING
   )
+}
+
+export const assertWorkoutInWorkoutsTable = (workout: Workout) => {
+  assertElementToBeInTheDocument(screen.getByText(workout.name))
+  assertElementToBeInTheDocument(screen.getByText(workout.description))
+  assertElementToBeInTheDocument(screen.getByText(workout.totalReps))
+  assertElementToBeInTheDocument(screen.getByText(workout.week))
+  assertElementToBeInTheDocument(screen.getByText(workout.date))
+  assertElementToBeInTheDocument(screen.getByText(workout.duration))
 }
