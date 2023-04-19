@@ -7,6 +7,7 @@ import {
   beforeAll,
 } from 'vitest'
 import userEvent from '@testing-library/user-event'
+import { screen, waitFor } from '@solidjs/testing-library'
 
 import {
   assertInputValue,
@@ -53,6 +54,27 @@ describe('WorkoutsTable', () => {
   afterEach(async () => {
     await flushDatabase()
     unmountComponent()
+  })
+
+  describe('table content', () => {
+    beforeAll(async () => {
+      await Promise.all([
+        populateDatabaseWithMockedWorkout(workouts[0]),
+        populateDatabaseWithMockedWorkout(workouts[1]),
+        populateDatabaseWithMockedWorkout(workouts[2]),
+      ])
+    })
+
+    test('should be sorted by date descending', async () => {
+      // Given
+      const [firstWorkout, secondWorkout, thirdWorkout] = await waitFor(() =>
+        screen.getAllByTestId('workouts-table-row')
+      )
+
+      // Then
+      expect(firstWorkout.compareDocumentPosition(secondWorkout)).toBe(4)
+      expect(secondWorkout.compareDocumentPosition(thirdWorkout)).toBe(4)
+    })
   })
 
   describe('a11y', () => {
