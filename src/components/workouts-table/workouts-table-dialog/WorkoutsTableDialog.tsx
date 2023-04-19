@@ -12,11 +12,9 @@ import type {
 import { postWorkout, updateWorkout } from '~/api/workouts'
 import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
 
-import {
-  workoutDetailsInitialState,
-  type WorkoutsTableDialogProps,
-} from './types'
+import type { WorkoutsTableDialogProps } from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
+import { getWorkoutDetailsInitialState } from './workouts-table-dialog-helper'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
@@ -37,7 +35,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   )
 
   const [workoutDetails, setWorkoutDetails] = createStore(
-    props.workout || structuredClone(workoutDetailsInitialState)
+    props.workout || getWorkoutDetailsInitialState()
   )
 
   const [dialogState, setDialogState] = createSignal(props.state)
@@ -69,7 +67,7 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   }
 
   const clearStore = () => {
-    setWorkoutDetails(workoutDetailsInitialState)
+    setWorkoutDetails(getWorkoutDetailsInitialState())
   }
 
   return (
