@@ -193,6 +193,12 @@ export const assertElementToBeInTheDocument = (element: HTMLElement) => {
   expect(element).toBeInTheDocument()
 }
 
+export const assertElementNotToBeInTheDocument = (
+  element: HTMLElement | null
+) => {
+  expect(element).not.toBeInTheDocument()
+}
+
 export const assertFirstNodePrecedeNextOne = (
   firstNode: HTMLElement,
   secondNode: HTMLElement
