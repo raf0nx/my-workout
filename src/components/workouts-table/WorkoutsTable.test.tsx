@@ -231,7 +231,6 @@ describe('WorkoutsTable', () => {
 
       // Then
       assertElementToBeInTheDocument(getWorkoutDetailsDialogHeader())
-      // TODO: Try to refactor this one
       assertInputValue(getInputByLabel('Workout name'), name)
       assertInputValue(getInputByLabel('Description'), description)
       assertInputValue(getInputByLabel('Total reps'), +totalReps)
