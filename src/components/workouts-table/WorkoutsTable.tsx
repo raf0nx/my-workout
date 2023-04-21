@@ -12,7 +12,7 @@ import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { getWorkouts } from '~/api/workouts'
-import { WORKOUTS_DOC_ID } from '~/constants'
+import { QUARTER_HOUR, WORKOUTS_DOC_ID } from '~/constants'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
@@ -32,7 +32,7 @@ export default function WorkoutsTable() {
     () => [WORKOUTS_DOC_ID],
     getWorkouts,
     {
-      staleTime: 900_000,
+      staleTime: QUARTER_HOUR,
     }
   )
 
