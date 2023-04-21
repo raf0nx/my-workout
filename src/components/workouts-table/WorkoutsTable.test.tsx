@@ -32,6 +32,9 @@ import {
   queryAddNextSetBtn,
   getWorkoutsTableRows,
   assertFirstNodePrecedeNextOne,
+  assertWorkoutInWorkoutsTable,
+  assertElementToBeInTheDocument,
+  assertElementNotToBeInTheDocument,
 } from '~/utils/test-utils/utils'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
@@ -57,13 +60,24 @@ describe('WorkoutsTable', () => {
     unmountComponent()
   })
 
-  describe('table content', () => {
+  describe('content', () => {
     beforeAll(async () => {
       await Promise.all([
         populateDatabaseWithMockedWorkout(workouts[0]),
         populateDatabaseWithMockedWorkout(workouts[1]),
         populateDatabaseWithMockedWorkout(workouts[2]),
       ])
+    })
+
+    test('row should contain the workout details data', async () => {
+      // Given
+      const workoutToCheck = workouts[0]
+
+      // When
+      await getWorkoutsTableRows()
+
+      // Then
+      assertWorkoutInWorkoutsTable(workoutToCheck)
     })
 
     test('should be sorted by date descending', async () => {
@@ -83,7 +97,7 @@ describe('WorkoutsTable', () => {
       await userEvent.click(getAddNewWorkoutBtn())
 
       // Then
-      expect(getCreateWorkoutDialogHeader()).toBeInTheDocument()
+      assertElementToBeInTheDocument(getCreateWorkoutDialogHeader())
     })
 
     test('should close the workout creation dialog when clicking the close button', async () => {
@@ -91,7 +105,7 @@ describe('WorkoutsTable', () => {
       await closeWorkoutDialog()
 
       // Then
-      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
     })
 
     test("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
@@ -100,7 +114,7 @@ describe('WorkoutsTable', () => {
       await userEvent.keyboard('[Enter]')
 
       // Then
-      expect(getCreateWorkoutDialogHeader()).toBeInTheDocument()
+      assertElementToBeInTheDocument(getCreateWorkoutDialogHeader())
     })
 
     test('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
@@ -109,7 +123,7 @@ describe('WorkoutsTable', () => {
       await userEvent.keyboard('[Enter]')
 
       // Then
-      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
     })
 
     test('should close the workout creation dialog when pressing [Escape] keydown', async () => {
@@ -119,7 +133,7 @@ describe('WorkoutsTable', () => {
       await userEvent.keyboard('[Escape]')
 
       // Then
-      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
     })
   })
 
@@ -149,7 +163,7 @@ describe('WorkoutsTable', () => {
       await saveWorkout()
 
       // Then
-      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
@@ -186,7 +200,7 @@ describe('WorkoutsTable', () => {
       await saveWorkout()
 
       // Then
-      expect(queryCreateWorkoutDialogHeader()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
@@ -216,7 +230,7 @@ describe('WorkoutsTable', () => {
       await selectWorkout(name)
 
       // Then
-      expect(getWorkoutDetailsDialogHeader()).toBeInTheDocument()
+      assertElementToBeInTheDocument(getWorkoutDetailsDialogHeader())
       assertInputValue(getInputByLabel('Workout name'), name)
       assertInputValue(getInputByLabel('Description'), description)
       assertInputValue(getInputByLabel('Total reps'), +totalReps)
@@ -232,8 +246,8 @@ describe('WorkoutsTable', () => {
 
     test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
       // Then
-      expect(queryAddNextExerciseBtn()).not.toBeInTheDocument()
-      expect(queryAddNextSetBtn()).not.toBeInTheDocument()
+      assertElementNotToBeInTheDocument(queryAddNextExerciseBtn())
+      assertElementNotToBeInTheDocument(queryAddNextSetBtn())
       await closeWorkoutDialog()
     })
   })
