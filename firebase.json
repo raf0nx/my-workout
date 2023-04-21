@@ -11,5 +11,8 @@
     "ui": {
       "enabled": true
     }
+  },
+  "hosting": {
+    "public": "dist/public"
   }
 }
