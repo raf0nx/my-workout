@@ -30,7 +30,10 @@ const WORKOUTS_TABLE_HEADERS = [
 export default function WorkoutsTable() {
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
     () => [WORKOUTS_DOC_ID],
-    getWorkouts
+    getWorkouts,
+    {
+      staleTime: 900_000,
+    }
   )
 
   const [selectedWorkoutId, setSelectedWorkoutId] = createSignal<string | null>(
