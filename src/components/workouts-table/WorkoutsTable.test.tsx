@@ -9,36 +9,38 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import {
+  customRender,
   assertInputValue,
   flushDatabase,
   populateDatabaseWithMockedWorkout,
-  updateExercise,
-  clearAndUpdateExerciseSet,
-  updateExerciseSet,
-  getExerciseSelect,
-  getExerciseSetInput,
-  updateWorkoutDetails,
-  selectWorkoutToEdit,
-  saveWorkout,
-  selectWorkout,
-  prepareCreateNewWorkout,
   getInputByLabel,
-  getAddNewWorkoutBtn,
-  closeWorkoutDialog,
-  getCreateWorkoutDialogHeader,
-  queryCreateWorkoutDialogHeader,
-  getWorkoutDetailsDialogHeader,
-  queryAddNextExerciseBtn,
-  queryAddNextSetBtn,
-  getWorkoutsTableRows,
   assertFirstNodePrecedeNextOne,
-  assertWorkoutInWorkoutsTable,
   assertElementToBeInTheDocument,
   assertElementNotToBeInTheDocument,
-} from '~/utils/test-utils/utils'
+} from '~/utils/test-utils'
+import {
+  assertWorkoutInWorkoutsTable,
+  clearAndUpdateExerciseSet,
+  closeWorkoutDialog,
+  getAddNewWorkoutBtn,
+  getCreateWorkoutDialogHeader,
+  getExerciseSelect,
+  getExerciseSetInput,
+  getWorkoutDetailsDialogHeader,
+  getWorkoutsTableRows,
+  prepareCreateNewWorkout,
+  queryAddNextExerciseBtn,
+  queryAddNextSetBtn,
+  queryCreateWorkoutDialogHeader,
+  saveWorkout,
+  selectWorkout,
+  selectWorkoutToEdit,
+  updateExercise,
+  updateExerciseSet,
+  updateWorkoutDetails,
+} from '~/utils/test-utils/workouts-table'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
-import { customRender } from '~/utils/test-utils/CustomRender'
 
 import { WorkoutsTable } from '.'
 import type { Workout } from './types'
