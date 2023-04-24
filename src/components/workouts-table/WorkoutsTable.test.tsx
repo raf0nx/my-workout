@@ -9,6 +9,7 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import {
+  customRender,
   assertInputValue,
   flushDatabase,
   populateDatabaseWithMockedWorkout,
@@ -16,7 +17,7 @@ import {
   assertFirstNodePrecedeNextOne,
   assertElementToBeInTheDocument,
   assertElementNotToBeInTheDocument,
-} from '~/utils/test-utils/utils'
+} from '~/utils/test-utils'
 import {
   assertWorkoutInWorkoutsTable,
   clearAndUpdateExerciseSet,
@@ -40,7 +41,6 @@ import {
 } from '~/utils/test-utils/workouts-table'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
-import { customRender } from '~/utils/test-utils/CustomRender'
 
 import { WorkoutsTable } from '.'
 import type { Workout } from './types'

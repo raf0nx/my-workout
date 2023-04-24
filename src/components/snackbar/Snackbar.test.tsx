@@ -9,7 +9,7 @@ import {
   assertElementNotToBeInTheDocument,
   assertElementToBeInTheDocument,
   queryCloseBtn,
-} from '~/utils/test-utils/utils'
+} from '~/utils/test-utils'
 import {
   closeSnackbar,
   getSnackbar,
