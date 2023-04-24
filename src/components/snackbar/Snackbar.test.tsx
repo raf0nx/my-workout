@@ -4,53 +4,60 @@ import {
   waitForElementToBeRemoved,
 } from '@solidjs/testing-library'
 import { describe, test } from 'vitest'
-import userEvent from '@testing-library/user-event'
 
 import {
   assertElementNotToBeInTheDocument,
   assertElementToBeInTheDocument,
 } from '~/utils/test-utils/utils'
+import {
+  closeSnackbar,
+  getSnackbar,
+  queryCloseButton,
+  querySnackbar,
+} from '~/utils/test-utils/snackbar-utils'
 
 import Snackbar from './Snackbar'
 
 describe('Snackbar', () => {
   test('should render with a predefined title and description', () => {
     // Given
+    const mockedTitle = 'Success'
+    const mockedDescription = 'Action was performed successfully'
+
     render(() => (
       <Snackbar
-        title="Success"
-        description="Action was performed successfully"
+        title={mockedTitle}
+        description={mockedDescription}
         dissmissable
       />
     ))
 
     // Then
-    assertElementToBeInTheDocument(screen.getByText('Success'))
-    assertElementToBeInTheDocument(
-      screen.getByText('Action was performed successfully')
-    )
+    assertElementToBeInTheDocument(screen.getByText(mockedTitle))
+    assertElementToBeInTheDocument(screen.getByText(mockedDescription))
   })
 
   test('should be dismissed after clicking the close button', async () => {
     // When
-    await userEvent.click(screen.getByLabelText('Close'))
-    await waitForElementToBeRemoved(screen.getByRole('alert'))
+    await closeSnackbar()
 
     // Then
-    assertElementNotToBeInTheDocument(screen.queryByRole('alert'))
+    assertElementNotToBeInTheDocument(querySnackbar())
   })
 
   test('should be dismissed automatically after specified timeout', async () => {
     // Given
-    render(() => <Snackbar description="" timeout={1000} />)
+    const mockedTimeout = 1000
+
+    render(() => <Snackbar description="" timeout={mockedTimeout} />)
 
     // When
-    await waitForElementToBeRemoved(screen.getByRole('alert'), {
-      timeout: 1500,
+    await waitForElementToBeRemoved(getSnackbar(), {
+      timeout: mockedTimeout + 500,
     })
 
     // Then
-    assertElementNotToBeInTheDocument(screen.queryByRole('alert'))
+    assertElementNotToBeInTheDocument(querySnackbar())
   })
 
   test('should not render close button when not dismissable', () => {
@@ -58,6 +65,6 @@ describe('Snackbar', () => {
     render(() => <Snackbar description="" />)
 
     // Then
-    assertElementNotToBeInTheDocument(screen.queryByRole('Close'))
+    assertElementNotToBeInTheDocument(queryCloseButton())
   })
 })
