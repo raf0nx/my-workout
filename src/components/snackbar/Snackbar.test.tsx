@@ -14,7 +14,7 @@ import {
   getSnackbar,
   queryCloseButton,
   querySnackbar,
-} from '~/utils/test-utils/snackbar-utils'
+} from '~/utils/test-utils/snackbar'
 
 import Snackbar from './Snackbar'
 
