@@ -8,11 +8,11 @@ import { describe, test } from 'vitest'
 import {
   assertElementNotToBeInTheDocument,
   assertElementToBeInTheDocument,
+  queryCloseBtn,
 } from '~/utils/test-utils/utils'
 import {
   closeSnackbar,
   getSnackbar,
-  queryCloseButton,
   querySnackbar,
 } from '~/utils/test-utils/snackbar'
 
@@ -65,6 +65,6 @@ describe('Snackbar', () => {
     render(() => <Snackbar description="" />)
 
     // Then
-    assertElementNotToBeInTheDocument(queryCloseButton())
+    assertElementNotToBeInTheDocument(queryCloseBtn())
   })
 })
