@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { screen, waitFor } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 
