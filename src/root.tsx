@@ -7,6 +7,8 @@ import { ErrorBoundary } from 'solid-start/error-boundary'
 
 import { Navbar } from '~/components/navbar'
 
+import { SnackbarProvider } from './contexts/SnackbarContext'
+
 import './index.scss'
 
 const queryClient = new QueryClient()
@@ -23,10 +25,12 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <QueryClientProvider client={queryClient}>
-              <Navbar />
-              <Routes>
-                <FileRoutes />
-              </Routes>
+              <SnackbarProvider>
+                <Navbar />
+                <Routes>
+                  <FileRoutes />
+                </Routes>
+              </SnackbarProvider>
             </QueryClientProvider>
           </ErrorBoundary>
         </Suspense>

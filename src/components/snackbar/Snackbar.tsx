@@ -1,14 +1,12 @@
 import { Alert, AlertTitle } from '@suid/material'
-import { Portal } from 'solid-js/web'
-import { Show, createSignal, mergeProps, onMount } from 'solid-js'
+import { Show, mergeProps, onMount } from 'solid-js'
 
-import { TransitionSlideUp } from '~/utils/transition-slide-up'
+import { useSnackbar } from '~/contexts/SnackbarContext'
 
 import type { SnackbarProps, SnackbarSeverity } from './types'
 
 export default function Snackbar(props: SnackbarProps) {
-  const [isOpen, setIsOpen] = createSignal(true)
-  const [isInTheDOM, setIsInTheDOM] = createSignal(true)
+  const { dismissSnackbar } = useSnackbar()
 
   const merged = mergeProps(
     {
@@ -22,29 +20,20 @@ export default function Snackbar(props: SnackbarProps) {
 
   onMount(() => {
     setTimeout(() => {
-      setIsOpen(false)
+      dismissSnackbar()
     }, merged.timeout)
   })
 
   return (
-    <Show when={isInTheDOM()}>
-      <Portal>
-        <TransitionSlideUp
-          in={isOpen()}
-          onExited={() => setIsInTheDOM(false)}
-        >
-          <Alert
-            severity={merged.severity}
-            onClose={merged.dissmissable ? () => setIsOpen(false) : undefined}
-            sx={{ position: 'fixed', zIndex: 9999, bottom: 20, left: 20 }}
-          >
-            <Show when={merged.title}>
-              <AlertTitle>{merged.title}</AlertTitle>
-            </Show>
-            {merged.description}
-          </Alert>
-        </TransitionSlideUp>
-      </Portal>
-    </Show>
+    <Alert
+      severity={merged.severity}
+      onClose={merged.dissmissable ? () => dismissSnackbar() : undefined}
+      sx={{ position: 'fixed', zIndex: 9999, bottom: 20, left: 20 }}
+    >
+      <Show when={merged.title}>
+        <AlertTitle>{merged.title}</AlertTitle>
+      </Show>
+      {merged.description}
+    </Alert>
   )
 }
