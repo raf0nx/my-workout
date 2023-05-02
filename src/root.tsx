@@ -7,7 +7,7 @@ import { ErrorBoundary } from 'solid-start/error-boundary'
 
 import { Navbar } from '~/components/navbar'
 
-import { SnackbarProvider } from './contexts/SnackbarContext'
+import { SnackbarProvider } from './contexts/snackbar/SnackbarContext'
 
 import './index.scss'
 
