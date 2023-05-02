@@ -4,12 +4,12 @@ import { Portal } from 'solid-js/web'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
 
-import type { SnackbarProps, SnackbarSeverity } from './types'
+import { type SnackbarProps, SnackbarSeverity } from './types'
 
 export default function Snackbar(props: SnackbarProps) {
   const merged = mergeProps(
     {
-      severity: 'success' as SnackbarSeverity,
+      severity: SnackbarSeverity.SUCCESS,
       title: '',
       dissmissable: false,
       timeout: 5000,

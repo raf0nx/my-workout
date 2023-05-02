@@ -7,4 +7,9 @@ export interface SnackbarProps {
   onClose?: () => void
 }
 
-export type SnackbarSeverity = 'error' | 'info' | 'success' | 'warning'
+export enum SnackbarSeverity {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+  WARNING = 'warning',
+}

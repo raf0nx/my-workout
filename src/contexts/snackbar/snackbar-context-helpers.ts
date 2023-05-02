@@ -1,4 +1,7 @@
-import type { SnackbarProps } from '~/components/snackbar/types'
+import {
+  type SnackbarProps,
+  SnackbarSeverity,
+} from '~/components/snackbar/types'
 
 export const getInitialSnackbarContextProps = () => ({
   showSnackbar: () => null,
@@ -7,7 +10,7 @@ export const getInitialSnackbarContextProps = () => ({
 export const getInitialSnackbarProps = (): SnackbarProps => ({
   title: '',
   description: '',
-  severity: 'success',
+  severity: SnackbarSeverity.SUCCESS,
   dissmissable: false,
   timeout: 5000,
 })
