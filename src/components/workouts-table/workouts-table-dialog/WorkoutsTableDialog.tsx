@@ -11,11 +11,15 @@ import type {
 } from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
 import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
-import { useSnackbar } from '~/contexts/SnackbarContext'
+import { useSnackbar } from '~/contexts/snackbar/SnackbarContext'
 
 import type { WorkoutsTableDialogProps } from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
-import { getWorkoutDetailsInitialState } from './workouts-table-dialog-helper'
+import {
+  getSaveWorkoutErrorSnackbarProps,
+  getSaveWorkoutSuccessSnackbarProps,
+  getWorkoutDetailsInitialState,
+} from './workouts-table-dialog-helper'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
@@ -43,8 +47,21 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const [dialogState, setDialogState] = createSignal(props.state)
 
   createEffect(() => {
-    workoutPostMutation.isSuccess && showSnackbar()
-    workoutUpdateMutation.isSuccess && showSnackbar()
+    const isCreateWorkoutSuccessful = workoutPostMutation.isSuccess
+    const isSaveWorkoutSuccessful =
+      isCreateWorkoutSuccessful || workoutUpdateMutation.isSuccess
+    const isSaveWorkoutError =
+      workoutPostMutation.isError || workoutUpdateMutation.isError
+
+    if (isSaveWorkoutSuccessful) {
+      showSnackbar(getSaveWorkoutSuccessSnackbarProps())
+      props.onClose()
+      isCreateWorkoutSuccessful && clearStore()
+    }
+
+    if (isSaveWorkoutError) {
+      showSnackbar(getSaveWorkoutErrorSnackbarProps())
+    }
   })
 
   const handleInputChange = (
@@ -62,15 +79,10 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
 
   const handleSave = () => {
     workoutPostMutation.mutate({ ...workoutDetails })
-
-    props.onClose()
-    clearStore()
   }
 
   const handleEdit = () => {
     workoutUpdateMutation.mutate(workoutDetails)
-
-    props.onClose()
   }
 
   const clearStore = () => {
