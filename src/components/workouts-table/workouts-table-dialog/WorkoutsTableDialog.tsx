@@ -1,4 +1,4 @@
-import { Dialog } from '@suid/material'
+import { Backdrop, CircularProgress, Dialog, useTheme } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
 import { createEffect, createSignal } from 'solid-js'
@@ -25,6 +25,7 @@ import {
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const queryClient = useQueryClient()
   const { showSnackbar } = useSnackbar()
+  const theme = useTheme()
 
   const workoutPostMutation = createMutation(
     (workoutData: Workout) => postWorkout(workoutData),
@@ -89,27 +90,36 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
     setWorkoutDetails(getWorkoutDetailsInitialState())
   }
 
+  // TODO: refactor backdrop to its own context
   return (
-    <Dialog
-      fullScreen
-      open={props.isOpen}
-      TransitionComponent={TransitionSlideUp}
-      onClose={props.onClose}
-      aria-labelledby="workouts-table-dialog-title"
-    >
-      <WorkoutsTableDialogBar
+    <>
+      <Backdrop
+        open={workoutPostMutation.isLoading || workoutUpdateMutation.isLoading}
+        sx={{ zIndex: theme.zIndex.modal + 1 }}
+      >
+        <CircularProgress color="secondary" />
+      </Backdrop>
+      <Dialog
+        fullScreen
+        open={props.isOpen}
+        TransitionComponent={TransitionSlideUp}
         onClose={props.onClose}
-        onSave={handleSave}
-        state={dialogState()}
-        onStateChange={setDialogState}
-        onEdit={handleEdit}
-      />
-      <WorkoutsTableDialogContent
-        onInputChange={handleInputChange}
-        workoutDetails={workoutDetails}
-        state={dialogState()}
-        setWorkoutDetails={setWorkoutDetails}
-      />
-    </Dialog>
+        aria-labelledby="workouts-table-dialog-title"
+      >
+        <WorkoutsTableDialogBar
+          onClose={props.onClose}
+          onSave={handleSave}
+          state={dialogState()}
+          onStateChange={setDialogState}
+          onEdit={handleEdit}
+        />
+        <WorkoutsTableDialogContent
+          onInputChange={handleInputChange}
+          workoutDetails={workoutDetails}
+          state={dialogState()}
+          setWorkoutDetails={setWorkoutDetails}
+        />
+      </Dialog>
+    </>
   )
 }
