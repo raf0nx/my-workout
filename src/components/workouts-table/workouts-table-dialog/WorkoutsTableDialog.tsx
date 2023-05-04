@@ -1,7 +1,7 @@
 import { Dialog } from '@suid/material'
 import type { ChangeEvent } from '@suid/types'
 import { createStore, produce } from 'solid-js/store'
-import { createEffect, createSignal } from 'solid-js'
+import { createSignal } from 'solid-js'
 import { createMutation, useQueryClient } from '@tanstack/solid-query'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
@@ -12,6 +12,7 @@ import type {
 import { postWorkout, updateWorkout } from '~/api/workouts'
 import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
 import { useSnackbar } from '~/contexts/snackbar/SnackbarContext'
+import { useLoadingScreen } from '~/contexts/loading-screen/LoadingScreenContext'
 
 import type { WorkoutsTableDialogProps } from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
@@ -25,10 +26,12 @@ import {
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const queryClient = useQueryClient()
   const { showSnackbar } = useSnackbar()
+  const { displayLoadingScreen, hideLoadingScreen } = useLoadingScreen()
 
   const workoutPostMutation = createMutation(
     (workoutData: Workout) => postWorkout(workoutData),
     {
+      onMutate: () => displayLoadingScreen(),
       onSuccess: () => {
         invalidateGetWorkoutsQuery(queryClient)
         showSnackbar(getSaveWorkoutSuccessSnackbarProps())
@@ -36,18 +39,21 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
         props.onClose()
       },
       onError: () => showSnackbar(getSaveWorkoutErrorSnackbarProps()),
+      onSettled: () => hideLoadingScreen(),
     }
   )
 
   const workoutUpdateMutation = createMutation(
     (workoutData: Workout) => updateWorkout(workoutData),
     {
+      onMutate: () => displayLoadingScreen(),
       onSuccess: () => {
         invalidateGetWorkoutsQuery(queryClient)
         showSnackbar(getSaveWorkoutSuccessSnackbarProps())
         props.onClose()
       },
       onError: () => showSnackbar(getSaveWorkoutErrorSnackbarProps()),
+      onSettled: () => hideLoadingScreen(),
     }
   )
 
