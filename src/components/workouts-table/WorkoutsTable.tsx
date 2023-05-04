@@ -13,10 +13,14 @@ import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { getWorkouts } from '~/api/workouts'
 import { WORKOUTS_DOC_ID } from '~/constants'
+import { useSnackbar } from '~/contexts/snackbar'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
-import { getWorkoutsQueryStaleTime } from './workouts-table-helper'
+import {
+  getGetWorkoutsErrorSnackbarProps,
+  getWorkoutsQueryStaleTime,
+} from './workouts-table-helpers'
 import { WorkoutsTableSpinner } from './workouts-table-spinner'
 
 const WORKOUTS_TABLE_HEADERS = [
@@ -30,11 +34,14 @@ const WORKOUTS_TABLE_HEADERS = [
 
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
+  const { showSnackbar } = useSnackbar()
+
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
     () => [WORKOUTS_DOC_ID],
     getWorkouts,
     {
       staleTime: getWorkoutsQueryStaleTime(),
+      onError: () => showSnackbar(getGetWorkoutsErrorSnackbarProps()),
     }
   )
 
