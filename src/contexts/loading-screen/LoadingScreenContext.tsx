@@ -1,10 +1,11 @@
-import { Backdrop, CircularProgress, useTheme } from '@suid/material'
 import {
   createContext,
   useContext,
   createSignal,
   type JSXElement,
 } from 'solid-js'
+
+import { LoadingScreen } from '~/components/loading-screen'
 
 import { getInitialLoadingScreenContextProps } from './loading-screen-context-helpers'
 import type { LoadingScreenContextProps } from './types'
@@ -14,16 +15,14 @@ const LoadingScreenContext = createContext<LoadingScreenContextProps>(
 )
 
 export function LoadingScreenProvider(props: { children: JSXElement }) {
-  const theme = useTheme()
-
-  const [showBackdrop, setShowBackdrop] = createSignal(false)
+  const [showLoadingScreen, setShowLoadingScreen] = createSignal(false)
 
   const displayLoadingScreen = () => {
-    setShowBackdrop(true)
+    setShowLoadingScreen(true)
   }
 
   const hideLoadingScreen = () => {
-    setShowBackdrop(false)
+    setShowLoadingScreen(false)
   }
 
   return (
@@ -31,9 +30,7 @@ export function LoadingScreenProvider(props: { children: JSXElement }) {
       value={{ displayLoadingScreen, hideLoadingScreen }}
     >
       {props.children}
-      <Backdrop open={showBackdrop()} sx={{ zIndex: theme.zIndex.modal + 1 }}>
-        <CircularProgress color="secondary" />
-      </Backdrop>
+      <LoadingScreen open={showLoadingScreen()} />
     </LoadingScreenContext.Provider>
   )
 }
