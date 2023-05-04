@@ -45,6 +45,4 @@ export function SnackbarProvider(props: { children: JSXElement }) {
   )
 }
 
-export function useSnackbar() {
-  return useContext(SnackbarContext)
-}
+export const useSnackbar = () => useContext(SnackbarContext)
