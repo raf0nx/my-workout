@@ -1,4 +1,6 @@
 import {
+  Box,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -6,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { createSignal, For, Index, Show } from 'solid-js'
+import { createSignal, For, Index, Show, Suspense } from 'solid-js'
 import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 
 import { Card } from '~/components/card'
@@ -62,38 +64,62 @@ export default function WorkoutsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <For each={workoutsQuery.data}>
-              {workout => (
-                <>
-                  <TableRow
-                    hover
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                      cursor: 'pointer',
-                    }}
-                    onClick={[setSelectedWorkoutId, workout.id]}
-                    data-testid="workouts-table-row"
-                  >
-                    <TableCell component="th" scope="row">
-                      {workout.name}
-                    </TableCell>
-                    <TableCell>{workout.description}</TableCell>
-                    <TableCell align="right">{workout.totalReps}</TableCell>
-                    <TableCell align="right">{workout.week}</TableCell>
-                    <TableCell align="right">{workout.date}</TableCell>
-                    <TableCell align="right">{workout.duration}</TableCell>
-                  </TableRow>
-                  <Show when={selectedWorkoutId() === workout.id}>
-                    <WorkoutsTableDialog
-                      isOpen
-                      workout={JSON.parse(JSON.stringify(workout))}
-                      onClose={closeWorkoutDetails}
-                      state="show"
-                    />
-                  </Show>
-                </>
-              )}
-            </For>
+            <Suspense
+              fallback={
+                <TableRow
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
+                >
+                  <TableCell colSpan={6}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        // TODO: height will be the same as fixed table size
+                        height: 100,
+                      }}
+                    >
+                      <CircularProgress />
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              }
+            >
+              <For each={workoutsQuery.data}>
+                {workout => (
+                  <>
+                    <TableRow
+                      hover
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                        cursor: 'pointer',
+                      }}
+                      onClick={[setSelectedWorkoutId, workout.id]}
+                      data-testid="workouts-table-row"
+                    >
+                      <TableCell component="th" scope="row">
+                        {workout.name}
+                      </TableCell>
+                      <TableCell>{workout.description}</TableCell>
+                      <TableCell align="right">{workout.totalReps}</TableCell>
+                      <TableCell align="right">{workout.week}</TableCell>
+                      <TableCell align="right">{workout.date}</TableCell>
+                      <TableCell align="right">{workout.duration}</TableCell>
+                    </TableRow>
+                    <Show when={selectedWorkoutId() === workout.id}>
+                      <WorkoutsTableDialog
+                        isOpen
+                        workout={JSON.parse(JSON.stringify(workout))}
+                        onClose={closeWorkoutDetails}
+                        state="show"
+                      />
+                    </Show>
+                  </>
+                )}
+              </For>
+            </Suspense>
           </TableBody>
         </Table>
       </TableContainer>
