@@ -1,6 +1,4 @@
 import {
-  Box,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -19,6 +17,7 @@ import { WORKOUTS_DOC_ID } from '~/constants'
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
 import { getWorkoutsQueryStaleTime } from './workouts-table-helper'
+import { WorkoutsTableSpinner } from './workouts-table-spinner'
 
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',
@@ -64,29 +63,7 @@ export default function WorkoutsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <Suspense
-              fallback={
-                <TableRow
-                  sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                  }}
-                >
-                  <TableCell colSpan={6}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        // TODO: height will be the same as fixed table size
-                        height: 100,
-                      }}
-                    >
-                      <CircularProgress />
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              }
-            >
+            <Suspense fallback={<WorkoutsTableSpinner />}>
               <For each={workoutsQuery.data}>
                 {workout => (
                   <>
