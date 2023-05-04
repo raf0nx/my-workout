@@ -7,8 +7,8 @@ import { ErrorBoundary } from 'solid-start/error-boundary'
 
 import { Navbar } from '~/components/navbar'
 
-import { SnackbarProvider } from '~/contexts/snackbar/SnackbarContext'
-import { LoadingScreenProvider } from '~/contexts/loading-screen/LoadingScreenContext'
+import { SnackbarProvider } from '~/contexts/snackbar'
+import { LoadingScreenProvider } from '~/contexts/loading-screen'
 
 import './index.scss'
 

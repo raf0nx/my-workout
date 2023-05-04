@@ -11,8 +11,8 @@ import type {
 } from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
 import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
-import { useSnackbar } from '~/contexts/snackbar/SnackbarContext'
-import { useLoadingScreen } from '~/contexts/loading-screen/LoadingScreenContext'
+import { useSnackbar } from '~/contexts/snackbar'
+import { useLoadingScreen } from '~/contexts/loading-screen'
 
 import type { WorkoutsTableDialogProps } from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
