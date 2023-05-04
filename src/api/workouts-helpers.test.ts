@@ -15,7 +15,7 @@ import {
   formatWorkoutDateToISO8601,
   sortWorkoutExercises,
   transformDocsToWorkoutObjects,
-} from './workouts-helper'
+} from './workouts-helpers'
 
 describe('transformDocsToWorkoutObjects', () => {
   beforeAll(async () => {

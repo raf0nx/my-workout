@@ -6,17 +6,22 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { createSignal, For, Index, Show } from 'solid-js'
+import { createSignal, For, Index, Show, Suspense } from 'solid-js'
 import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { getWorkouts } from '~/api/workouts'
 import { WORKOUTS_DOC_ID } from '~/constants'
+import { useSnackbar } from '~/contexts/snackbar'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
-import { getWorkoutsQueryStaleTime } from './workouts-table-helper'
+import {
+  getGetWorkoutsErrorSnackbarProps,
+  getWorkoutsQueryStaleTime,
+} from './workouts-table-helpers'
+import { WorkoutsTableSpinner } from './workouts-table-spinner'
 
 const WORKOUTS_TABLE_HEADERS = [
   'Workout name',
@@ -29,11 +34,14 @@ const WORKOUTS_TABLE_HEADERS = [
 
 // TODO: Improve Table accessibility (e.g. add caption)
 export default function WorkoutsTable() {
+  const { showSnackbar } = useSnackbar()
+
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
     () => [WORKOUTS_DOC_ID],
     getWorkouts,
     {
       staleTime: getWorkoutsQueryStaleTime(),
+      onError: () => showSnackbar(getGetWorkoutsErrorSnackbarProps()),
     }
   )
 
@@ -62,38 +70,40 @@ export default function WorkoutsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <For each={workoutsQuery.data}>
-              {workout => (
-                <>
-                  <TableRow
-                    hover
-                    sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
-                      cursor: 'pointer',
-                    }}
-                    onClick={[setSelectedWorkoutId, workout.id]}
-                    data-testid="workouts-table-row"
-                  >
-                    <TableCell component="th" scope="row">
-                      {workout.name}
-                    </TableCell>
-                    <TableCell>{workout.description}</TableCell>
-                    <TableCell align="right">{workout.totalReps}</TableCell>
-                    <TableCell align="right">{workout.week}</TableCell>
-                    <TableCell align="right">{workout.date}</TableCell>
-                    <TableCell align="right">{workout.duration}</TableCell>
-                  </TableRow>
-                  <Show when={selectedWorkoutId() === workout.id}>
-                    <WorkoutsTableDialog
-                      isOpen
-                      workout={JSON.parse(JSON.stringify(workout))}
-                      onClose={closeWorkoutDetails}
-                      state="show"
-                    />
-                  </Show>
-                </>
-              )}
-            </For>
+            <Suspense fallback={<WorkoutsTableSpinner />}>
+              <For each={workoutsQuery.data}>
+                {workout => (
+                  <>
+                    <TableRow
+                      hover
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                        cursor: 'pointer',
+                      }}
+                      onClick={[setSelectedWorkoutId, workout.id]}
+                      data-testid="workouts-table-row"
+                    >
+                      <TableCell component="th" scope="row">
+                        {workout.name}
+                      </TableCell>
+                      <TableCell>{workout.description}</TableCell>
+                      <TableCell align="right">{workout.totalReps}</TableCell>
+                      <TableCell align="right">{workout.week}</TableCell>
+                      <TableCell align="right">{workout.date}</TableCell>
+                      <TableCell align="right">{workout.duration}</TableCell>
+                    </TableRow>
+                    <Show when={selectedWorkoutId() === workout.id}>
+                      <WorkoutsTableDialog
+                        isOpen
+                        workout={JSON.parse(JSON.stringify(workout))}
+                        onClose={closeWorkoutDetails}
+                        state="show"
+                      />
+                    </Show>
+                  </>
+                )}
+              </For>
+            </Suspense>
           </TableBody>
         </Table>
       </TableContainer>
