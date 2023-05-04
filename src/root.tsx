@@ -7,7 +7,8 @@ import { ErrorBoundary } from 'solid-start/error-boundary'
 
 import { Navbar } from '~/components/navbar'
 
-import { SnackbarProvider } from './contexts/snackbar/SnackbarContext'
+import { SnackbarProvider } from '~/contexts/snackbar/SnackbarContext'
+import { LoadingScreenProvider } from '~/contexts/loading-screen/LoadingScreenContext'
 
 import './index.scss'
 
@@ -25,12 +26,14 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <QueryClientProvider client={queryClient}>
-              <SnackbarProvider>
-                <Navbar />
-                <Routes>
-                  <FileRoutes />
-                </Routes>
-              </SnackbarProvider>
+              <LoadingScreenProvider>
+                <SnackbarProvider>
+                  <Navbar />
+                  <Routes>
+                    <FileRoutes />
+                  </Routes>
+                </SnackbarProvider>
+              </LoadingScreenProvider>
             </QueryClientProvider>
           </ErrorBoundary>
         </Suspense>
