@@ -10,7 +10,7 @@ import type {
   WorkoutDetailsProps,
 } from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
-import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
+import { invalidateGetWorkoutsQuery } from '~/api/workouts-helpers'
 import { useSnackbar } from '~/contexts/snackbar'
 import { useLoadingScreen } from '~/contexts/loading-screen'
 
