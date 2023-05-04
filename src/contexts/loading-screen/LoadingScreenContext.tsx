@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   createSignal,
+  Show,
   type JSXElement,
 } from 'solid-js'
 
@@ -30,7 +31,9 @@ export function LoadingScreenProvider(props: { children: JSXElement }) {
       value={{ displayLoadingScreen, hideLoadingScreen }}
     >
       {props.children}
-      <LoadingScreen open={showLoadingScreen()} />
+      <Show when={showLoadingScreen()}>
+        <LoadingScreen open={showLoadingScreen()} />
+      </Show>
     </LoadingScreenContext.Provider>
   )
 }
