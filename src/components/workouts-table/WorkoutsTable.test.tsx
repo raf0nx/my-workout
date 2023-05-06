@@ -140,6 +140,44 @@ describe('WorkoutsTable', () => {
     })
   })
 
+  describe('show workout details', () => {
+    const mockedWorkout = workouts[0]
+
+    beforeAll(async () => {
+      await populateDatabaseWithMockedWorkout(mockedWorkout)
+    })
+
+    test('should open the selected workout details and read its data', async () => {
+      // Given
+      const { name, description, totalReps, week, date, duration } =
+        mockedWorkout
+
+      // When
+      await selectWorkout(name)
+
+      // Then
+      assertElementToBeInTheDocument(getWorkoutDetailsDialogHeader())
+      assertInputValue(getInputByLabel('Workout name'), name)
+      assertInputValue(getInputByLabel('Description'), description)
+      assertInputValue(getInputByLabel('Total reps'), +totalReps)
+      assertInputValue(getInputByLabel('Week'), +week)
+      assertInputValue(getInputByLabel('Date'), date)
+      assertInputValue(getInputByLabel('Duration'), +duration)
+      assertInputValue(getExerciseSelect(1), 'Muscle Up')
+      assertInputValue(getExerciseSetInput(1, 1), 5)
+      assertInputValue(getExerciseSetInput(1, 2), 4)
+      assertInputValue(getExerciseSelect(2), 'Bulgarian Squat')
+      assertInputValue(getExerciseSetInput(2, 1), 8)
+    })
+
+    test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
+      // Then
+      assertElementNotToBeInTheDocument(queryAddNextExerciseBtn())
+      assertElementNotToBeInTheDocument(queryAddNextSetBtn())
+      await closeWorkoutDialog()
+    })
+  })
+
   describe('edit workout', () => {
     const mockedWorkout = workouts[0]
 
@@ -215,44 +253,6 @@ describe('WorkoutsTable', () => {
           },
         },
       ])
-    })
-  })
-
-  describe('show workout details', () => {
-    const mockedWorkout = workouts[0]
-
-    beforeAll(async () => {
-      await populateDatabaseWithMockedWorkout(mockedWorkout)
-    })
-
-    test('should open the selected workout details and read its data', async () => {
-      // Given
-      const { name, description, totalReps, week, date, duration } =
-        mockedWorkout
-
-      // When
-      await selectWorkout(name)
-
-      // Then
-      assertElementToBeInTheDocument(getWorkoutDetailsDialogHeader())
-      assertInputValue(getInputByLabel('Workout name'), name)
-      assertInputValue(getInputByLabel('Description'), description)
-      assertInputValue(getInputByLabel('Total reps'), +totalReps)
-      assertInputValue(getInputByLabel('Week'), +week)
-      assertInputValue(getInputByLabel('Date'), date)
-      assertInputValue(getInputByLabel('Duration'), +duration)
-      assertInputValue(getExerciseSelect(1), 'Muscle Up')
-      assertInputValue(getExerciseSetInput(1, 1), 5)
-      assertInputValue(getExerciseSetInput(1, 2), 4)
-      assertInputValue(getExerciseSelect(2), 'Bulgarian Squat')
-      assertInputValue(getExerciseSetInput(2, 1), 8)
-    })
-
-    test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
-      // Then
-      assertElementNotToBeInTheDocument(queryAddNextExerciseBtn())
-      assertElementNotToBeInTheDocument(queryAddNextSetBtn())
-      await closeWorkoutDialog()
     })
   })
 })
