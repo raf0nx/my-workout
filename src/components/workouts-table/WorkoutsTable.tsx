@@ -56,7 +56,7 @@ export default function WorkoutsTable() {
   return (
     <Card>
       <WorkoutsTableToolbar />
-      <TableContainer sx={{ borderRadius: 1 }}>
+      <TableContainer sx={{ borderRadius: 1, maxHeight: 'calc(100% - 14rem)' }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
