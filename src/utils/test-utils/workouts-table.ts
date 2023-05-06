@@ -67,6 +67,10 @@ export const getWorkoutByName = (name: string) => {
   return screen.getByText(name)
 }
 
+export const getWorkoutSaveSnackbar = () => {
+  return waitFor(() => screen.getByText(/workout saved successfully/i))
+}
+
 // Actions
 export const updateExercise = async (
   exerciseNumber: number,

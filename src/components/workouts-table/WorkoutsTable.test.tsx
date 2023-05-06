@@ -18,6 +18,7 @@ import {
   assertFirstNodePrecedeNextOne,
   assertElementToBeInTheDocument,
   assertElementNotToBeInTheDocument,
+  getCloseBtn,
 } from '~/utils/test-utils'
 import {
   assertWorkoutInWorkoutsTable,
@@ -28,6 +29,7 @@ import {
   getExerciseSelect,
   getExerciseSetInput,
   getWorkoutDetailsDialogHeader,
+  getWorkoutSaveSnackbar,
   getWorkoutsTableRows,
   prepareCreateNewWorkout,
   queryAddNextExerciseBtn,
@@ -205,6 +207,7 @@ describe('WorkoutsTable', () => {
 
       // Then
       assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
+      assertElementToBeInTheDocument(await getWorkoutSaveSnackbar())
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
@@ -220,6 +223,9 @@ describe('WorkoutsTable', () => {
 
   describe('create workout', () => {
     test('should save the newly created workout', async () => {
+      // Close the snackbar from the previous test
+      await userEvent.click(getCloseBtn())
+
       // Given
       const mockedWorkout: Omit<Workout, 'exercises'> = {
         name: 'Test workout',
@@ -243,6 +249,7 @@ describe('WorkoutsTable', () => {
       // Then
       await waitForElementToBeRemoved(getCreateWorkoutDialogHeader)
       assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
+      assertElementToBeInTheDocument(await getWorkoutSaveSnackbar())
       expect(await getWorkouts()).toEqual([
         {
           id: expect.any(String),
