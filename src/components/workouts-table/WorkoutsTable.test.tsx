@@ -7,6 +7,7 @@ import {
   beforeAll,
 } from 'vitest'
 import userEvent from '@testing-library/user-event'
+import { waitForElementToBeRemoved } from '@solidjs/testing-library'
 
 import {
   customRender,
@@ -202,6 +203,7 @@ describe('WorkoutsTable', () => {
       await saveWorkout()
 
       // Then
+      await waitForElementToBeRemoved(getCreateWorkoutDialogHeader)
       assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
       expect(await getWorkouts()).toEqual([
         {
