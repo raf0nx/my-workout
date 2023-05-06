@@ -30,19 +30,19 @@ export const getInputByLabel = (label: string) => {
 }
 
 export const getEditBtn = () => {
-  return screen.getByText(/edit/i)
+  return screen.getByText(/^edit$/i)
 }
 
 export const getSaveBtn = () => {
-  return screen.getByText(/save/i)
+  return screen.getByText(/^save$/i)
 }
 
 export const getCloseBtn = () => {
-  return screen.getByLabelText(/close/i)
+  return screen.getByLabelText(/^close$/i)
 }
 
 export const queryCloseBtn = () => {
-  return screen.queryByLabelText(/close/i)
+  return screen.queryByLabelText(/^close$/i)
 }
 
 // Actions

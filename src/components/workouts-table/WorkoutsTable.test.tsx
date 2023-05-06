@@ -7,6 +7,7 @@ import {
   beforeAll,
 } from 'vitest'
 import userEvent from '@testing-library/user-event'
+import { waitForElementToBeRemoved } from '@solidjs/testing-library'
 
 import {
   customRender,
@@ -17,6 +18,7 @@ import {
   assertFirstNodePrecedeNextOne,
   assertElementToBeInTheDocument,
   assertElementNotToBeInTheDocument,
+  getCloseBtn,
 } from '~/utils/test-utils'
 import {
   assertWorkoutInWorkoutsTable,
@@ -27,6 +29,7 @@ import {
   getExerciseSelect,
   getExerciseSetInput,
   getWorkoutDetailsDialogHeader,
+  getWorkoutSaveSnackbar,
   getWorkoutsTableRows,
   prepareCreateNewWorkout,
   queryAddNextExerciseBtn,
@@ -139,83 +142,6 @@ describe('WorkoutsTable', () => {
     })
   })
 
-  describe('edit workout', () => {
-    const mockedWorkout = workouts[0]
-
-    beforeAll(async () => {
-      await populateDatabaseWithMockedWorkout(mockedWorkout)
-    })
-
-    test('should edit the selected workout and its exercises', async () => {
-      // Given
-      const fieldsToUpdate: Omit<Workout, 'exercises'> = {
-        name: 'Test edit name',
-        description: 'Test edit description',
-        totalReps: '1111',
-        week: '2222',
-        date: '01.01.2000',
-        duration: '3333',
-      }
-
-      // When
-      await selectWorkoutToEdit(mockedWorkout.name)
-      await updateWorkoutDetails(fieldsToUpdate)
-      await updateExercise(1, 'Handstand')
-      await clearAndUpdateExerciseSet(1, 2, '20')
-      await saveWorkout()
-
-      // Then
-      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
-      expect(await getWorkouts()).toEqual([
-        {
-          id: expect.any(String),
-          ...fieldsToUpdate,
-          exercises: {
-            ...mockedWorkout.exercises,
-            exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
-          },
-        },
-      ])
-    })
-  })
-
-  describe('create workout', () => {
-    test('should save the newly created workout', async () => {
-      // Given
-      const mockedWorkout: Omit<Workout, 'exercises'> = {
-        name: 'Test workout',
-        description: 'Test description',
-        totalReps: '999',
-        week: '888',
-        date: '01.01.2020',
-        duration: '777',
-      }
-
-      // When
-      await prepareCreateNewWorkout()
-      await updateWorkoutDetails(mockedWorkout)
-      await updateExercise(1, 'Muscle Up')
-      await updateExercise(2, 'Bar Dip')
-      await updateExerciseSet(1, 1, '8')
-      await updateExerciseSet(1, 2, '6')
-      await updateExerciseSet(2, 1, '12')
-      await saveWorkout()
-
-      // Then
-      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
-      expect(await getWorkouts()).toEqual([
-        {
-          id: expect.any(String),
-          ...mockedWorkout,
-          exercises: {
-            exercise1: { name: 'Muscle Up', sets: [8, 6] },
-            exercise2: { name: 'Bar Dip', sets: [12] },
-          },
-        },
-      ])
-    })
-  })
-
   describe('show workout details', () => {
     const mockedWorkout = workouts[0]
 
@@ -251,6 +177,89 @@ describe('WorkoutsTable', () => {
       assertElementNotToBeInTheDocument(queryAddNextExerciseBtn())
       assertElementNotToBeInTheDocument(queryAddNextSetBtn())
       await closeWorkoutDialog()
+    })
+  })
+
+  describe('edit workout', () => {
+    const mockedWorkout = workouts[0]
+
+    beforeAll(async () => {
+      await populateDatabaseWithMockedWorkout(mockedWorkout)
+    })
+
+    test('should edit the selected workout and its exercises', async () => {
+      // Given
+      const fieldsToUpdate: Omit<Workout, 'exercises'> = {
+        name: 'Test edit name',
+        description: 'Test edit description',
+        totalReps: '1111',
+        week: '2222',
+        date: '01.01.2000',
+        duration: '3333',
+      }
+
+      // When
+      await selectWorkoutToEdit(mockedWorkout.name)
+      await updateWorkoutDetails(fieldsToUpdate)
+      await updateExercise(1, 'Handstand')
+      await clearAndUpdateExerciseSet(1, 2, '20')
+      await saveWorkout()
+
+      // Then
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
+      assertElementToBeInTheDocument(await getWorkoutSaveSnackbar())
+      expect(await getWorkouts()).toEqual([
+        {
+          id: expect.any(String),
+          ...fieldsToUpdate,
+          exercises: {
+            ...mockedWorkout.exercises,
+            exercise1: { name: 'Handstand', sets: [5, 20, 4, 3, 2] },
+          },
+        },
+      ])
+    })
+  })
+
+  describe('create workout', () => {
+    test('should save the newly created workout', async () => {
+      // Close the snackbar from the previous test
+      await userEvent.click(getCloseBtn())
+
+      // Given
+      const mockedWorkout: Omit<Workout, 'exercises'> = {
+        name: 'Test workout',
+        description: 'Test description',
+        totalReps: '999',
+        week: '888',
+        date: '01.01.2020',
+        duration: '777',
+      }
+
+      // When
+      await prepareCreateNewWorkout()
+      await updateWorkoutDetails(mockedWorkout)
+      await updateExercise(1, 'Muscle Up')
+      await updateExercise(2, 'Bar Dip')
+      await updateExerciseSet(1, 1, '8')
+      await updateExerciseSet(1, 2, '6')
+      await updateExerciseSet(2, 1, '12')
+      await saveWorkout()
+
+      // Then
+      await waitForElementToBeRemoved(getCreateWorkoutDialogHeader)
+      assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
+      assertElementToBeInTheDocument(await getWorkoutSaveSnackbar())
+      expect(await getWorkouts()).toEqual([
+        {
+          id: expect.any(String),
+          ...mockedWorkout,
+          exercises: {
+            exercise1: { name: 'Muscle Up', sets: [8, 6] },
+            exercise2: { name: 'Bar Dip', sets: [12] },
+          },
+        },
+      ])
     })
   })
 })

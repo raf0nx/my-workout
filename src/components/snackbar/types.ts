@@ -4,6 +4,12 @@ export interface SnackbarProps {
   severity?: SnackbarSeverity
   dissmissable?: boolean
   timeout?: number
+  onClose?: () => void
 }
 
-export type SnackbarSeverity = 'error' | 'info' | 'success' | 'warning'
+export enum SnackbarSeverity {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+  WARNING = 'warning',
+}

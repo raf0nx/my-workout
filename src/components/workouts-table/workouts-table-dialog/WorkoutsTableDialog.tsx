@@ -10,27 +10,50 @@ import type {
   WorkoutDetailsProps,
 } from '~/components/workouts-table/types'
 import { postWorkout, updateWorkout } from '~/api/workouts'
-import { invalidateGetWorkoutsQuery } from '~/api/workouts-helper'
+import { invalidateGetWorkoutsQuery } from '~/api/workouts-helpers'
+import { useSnackbar } from '~/contexts/snackbar'
+import { useLoadingScreen } from '~/contexts/loading-screen'
 
 import type { WorkoutsTableDialogProps } from './types'
 import { WorkoutsTableDialogBar, WorkoutsTableDialogContent } from '.'
-import { getWorkoutDetailsInitialState } from './workouts-table-dialog-helper'
+import {
+  getSaveWorkoutErrorSnackbarProps,
+  getSaveWorkoutSuccessSnackbarProps,
+  getWorkoutDetailsInitialState,
+} from './workouts-table-dialog-helper'
 
 // TODO: Implement Dialog's accessibility
 export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   const queryClient = useQueryClient()
+  const { showSnackbar } = useSnackbar()
+  const { displayLoadingScreen, hideLoadingScreen } = useLoadingScreen()
 
   const workoutPostMutation = createMutation(
     (workoutData: Workout) => postWorkout(workoutData),
     {
-      onSuccess: () => invalidateGetWorkoutsQuery(queryClient),
+      onMutate: () => displayLoadingScreen(),
+      onSuccess: () => {
+        invalidateGetWorkoutsQuery(queryClient)
+        showSnackbar(getSaveWorkoutSuccessSnackbarProps())
+        clearStore()
+        props.onClose()
+      },
+      onError: () => showSnackbar(getSaveWorkoutErrorSnackbarProps()),
+      onSettled: () => hideLoadingScreen(),
     }
   )
 
   const workoutUpdateMutation = createMutation(
     (workoutData: Workout) => updateWorkout(workoutData),
     {
-      onSuccess: () => invalidateGetWorkoutsQuery(queryClient),
+      onMutate: () => displayLoadingScreen(),
+      onSuccess: () => {
+        invalidateGetWorkoutsQuery(queryClient)
+        showSnackbar(getSaveWorkoutSuccessSnackbarProps())
+        props.onClose()
+      },
+      onError: () => showSnackbar(getSaveWorkoutErrorSnackbarProps()),
+      onSettled: () => hideLoadingScreen(),
     }
   )
 
@@ -55,15 +78,10 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
 
   const handleSave = () => {
     workoutPostMutation.mutate({ ...workoutDetails })
-
-    props.onClose()
-    clearStore()
   }
 
   const handleEdit = () => {
     workoutUpdateMutation.mutate(workoutDetails)
-
-    props.onClose()
   }
 
   const clearStore = () => {
@@ -71,26 +89,28 @@ export default function WorkoutsTableDialog(props: WorkoutsTableDialogProps) {
   }
 
   return (
-    <Dialog
-      fullScreen
-      open={props.isOpen}
-      TransitionComponent={TransitionSlideUp}
-      onClose={props.onClose}
-      aria-labelledby="workouts-table-dialog-title"
-    >
-      <WorkoutsTableDialogBar
+    <>
+      <Dialog
+        fullScreen
+        open={props.isOpen}
+        TransitionComponent={TransitionSlideUp}
         onClose={props.onClose}
-        onSave={handleSave}
-        state={dialogState()}
-        onStateChange={setDialogState}
-        onEdit={handleEdit}
-      />
-      <WorkoutsTableDialogContent
-        onInputChange={handleInputChange}
-        workoutDetails={workoutDetails}
-        state={dialogState()}
-        setWorkoutDetails={setWorkoutDetails}
-      />
-    </Dialog>
+        aria-labelledby="workouts-table-dialog-title"
+      >
+        <WorkoutsTableDialogBar
+          onClose={props.onClose}
+          onSave={handleSave}
+          state={dialogState()}
+          onStateChange={setDialogState}
+          onEdit={handleEdit}
+        />
+        <WorkoutsTableDialogContent
+          onInputChange={handleInputChange}
+          workoutDetails={workoutDetails}
+          state={dialogState()}
+          setWorkoutDetails={setWorkoutDetails}
+        />
+      </Dialog>
+    </>
   )
 }

@@ -1,24 +1,25 @@
 import { Alert, AlertTitle } from '@suid/material'
-import { Portal } from 'solid-js/web'
 import { Show, createSignal, mergeProps, onMount } from 'solid-js'
+import { Portal } from 'solid-js/web'
 
 import { TransitionSlideUp } from '~/utils/transition-slide-up'
 
-import type { SnackbarProps, SnackbarSeverity } from './types'
+import { type SnackbarProps, SnackbarSeverity } from './types'
 
 export default function Snackbar(props: SnackbarProps) {
-  const [isOpen, setIsOpen] = createSignal(true)
-  const [isInTheDOM, setIsInTheDOM] = createSignal(true)
-
   const merged = mergeProps(
     {
-      severity: 'success' as SnackbarSeverity,
+      severity: SnackbarSeverity.SUCCESS,
       title: '',
       dissmissable: false,
       timeout: 5000,
+      onClose: () => null,
     },
     props
   )
+
+  const [isOpen, setIsOpen] = createSignal(true)
+  const [isInTheDOM, setIsInTheDOM] = createSignal(true)
 
   onMount(() => {
     setTimeout(() => {
@@ -31,7 +32,10 @@ export default function Snackbar(props: SnackbarProps) {
       <Portal>
         <TransitionSlideUp
           in={isOpen()}
-          onExited={() => setIsInTheDOM(false)}
+          onExited={() => {
+            setIsInTheDOM(false)
+            merged.onClose()
+          }}
         >
           <Alert
             severity={merged.severity}

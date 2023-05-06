@@ -18,7 +18,7 @@ import { OrderDirection, WORKOUTS_DOC_ID } from '~/constants'
 import {
   formatWorkoutDateToISO8601,
   transformDocsToWorkoutObjects,
-} from './workouts-helper'
+} from './workouts-helpers'
 
 const workoutsCollection = collection(db, WORKOUTS_DOC_ID)
 
