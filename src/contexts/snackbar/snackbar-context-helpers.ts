@@ -3,9 +3,11 @@ import {
   SnackbarSeverity,
 } from '~/components/snackbar/types'
 
+/* c8 ignore start */
 export const getInitialSnackbarContextProps = () => ({
   showSnackbar: () => null,
 })
+/* c8 ignore end */
 
 export const getInitialSnackbarProps = (): SnackbarProps => ({
   title: '',
