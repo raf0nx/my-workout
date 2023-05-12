@@ -92,13 +92,13 @@ export default function WorkoutsTableDialogContentExercises(
 
   return (
     <TableContainer sx={{ borderRadius: 1 }}>
-      <Table stickyHeader>
+      <Table>
         <TableHead>
           <TableRow>
             <TableHeaderCell>Exercise type</TableHeaderCell>
             <Index each={consecutiveColumnNumbers()}>
               {columnNumber => (
-                <TableHeaderCell align="right">
+                <TableHeaderCell align="right" sx={{ minWidth: '3rem' }}>
                   Set {columnNumber()}
                 </TableHeaderCell>
               )}
@@ -126,7 +126,7 @@ export default function WorkoutsTableDialogContentExercises(
                 </TableCell>
                 <Index each={exercise.sets}>
                   {(set, setIdx) => (
-                    <TableCell align="right" sx={{ width: '80', pr: 0 }}>
+                    <TableCell align="right" sx={{ width: '3rem' }}>
                       <TextField
                         classes={{
                           root: getInputStyle(isComponentInReadOnlyState()),
@@ -148,7 +148,12 @@ export default function WorkoutsTableDialogContentExercises(
                 </Index>
                 <Show when={!isComponentInReadOnlyState()}>
                   <TableCell
-                    sx={{ width: '40', border: 0, background: '#fff' }}
+                    sx={{
+                      width: '3rem',
+                      minWidth: '3rem',
+                      border: 0,
+                      background: '#fff',
+                    }}
                     align="right"
                   >
                     <IconButton
