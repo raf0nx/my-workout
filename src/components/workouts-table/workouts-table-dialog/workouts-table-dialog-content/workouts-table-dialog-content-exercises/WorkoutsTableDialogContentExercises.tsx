@@ -95,7 +95,9 @@ export default function WorkoutsTableDialogContentExercises(
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Exercise type</TableHeaderCell>
+            <TableHeaderCell sx={{ minWidth: '11rem' }}>
+              Exercise type
+            </TableHeaderCell>
             <Index each={consecutiveColumnNumbers()}>
               {columnNumber => (
                 <TableHeaderCell align="right" sx={{ minWidth: '3rem' }}>
