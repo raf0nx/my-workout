@@ -1,9 +1,7 @@
-import { WorkoutsTable } from '~/components/workouts-table'
-
-export default function Home() {
+export default function Dashboard() {
   return (
     <main>
-      <WorkoutsTable />
+      <h1>Dashboard</h1>
     </main>
   )
 }
