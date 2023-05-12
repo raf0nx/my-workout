@@ -1,25 +1,16 @@
-import { Box, CircularProgress, TableCell, TableRow } from '@suid/material'
+import { Box, CircularProgress } from '@suid/material'
 
 export default function WorkoutsTableSpinner() {
   return (
-    <TableRow
+    <Box
       sx={{
-        '&:last-child td, &:last-child th': { border: 0 },
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
-      <TableCell colSpan={6}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // TODO: height will be the same as fixed table size
-            height: 100,
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      </TableCell>
-    </TableRow>
+      <CircularProgress />
+    </Box>
   )
 }

@@ -1,6 +1,6 @@
 {
   "name": "my-workout",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",

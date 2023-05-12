@@ -32,7 +32,11 @@ export default function ExercisesSelect(props: ExercisesSelectProps) {
           sx={{ mb: 0.5 }}
           name={props.name}
           fullWidth
-          inputProps={{ 'aria-label': props.ariaLabel, ...getInputProps(true) }}
+          inputProps={{
+            'aria-label': props.ariaLabel,
+            style: { 'text-overflow': 'ellipsis' },
+            ...getInputProps(true),
+          }}
           defaultValue={props.selectedExercise}
           variant="standard"
         />
