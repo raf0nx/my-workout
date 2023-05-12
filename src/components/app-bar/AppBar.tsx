@@ -1,9 +1,14 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@suid/material'
+import {
+  AppBar as SuidAppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@suid/material'
 import MenuIcon from '@suid/icons-material/Menu'
 
-export default function Navbar() {
+export default function AppBar() {
   return (
-    <AppBar position="sticky">
+    <SuidAppBar position="sticky">
       <Toolbar>
         <IconButton
           size="large"
@@ -18,6 +23,6 @@ export default function Navbar() {
           Dashboard
         </Typography>
       </Toolbar>
-    </AppBar>
+    </SuidAppBar>
   )
 }

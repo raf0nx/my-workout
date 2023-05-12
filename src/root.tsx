@@ -5,7 +5,7 @@ import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
 
-import { Navbar } from '~/components/navbar'
+import { AppBar } from '~/components/app-bar'
 
 import { SnackbarProvider } from '~/contexts/snackbar'
 import { LoadingScreenProvider } from '~/contexts/loading-screen'
@@ -28,7 +28,7 @@ export default function Root() {
             <QueryClientProvider client={queryClient}>
               <LoadingScreenProvider>
                 <SnackbarProvider>
-                  <Navbar />
+                  <AppBar />
                   <Routes>
                     <FileRoutes />
                   </Routes>
