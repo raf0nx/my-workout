@@ -3,12 +3,15 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  useTheme,
 } from '@suid/material'
 import MenuIcon from '@suid/icons-material/Menu'
 
 export default function AppBar() {
+  const theme = useTheme()
+
   return (
-    <SuidAppBar position="sticky">
+    <SuidAppBar position="sticky" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
       <Toolbar>
         <IconButton
           size="large"

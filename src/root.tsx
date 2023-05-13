@@ -4,9 +4,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
+import { Box } from '@suid/material'
 
 import { AppBar } from '~/components/app-bar'
-
+import { NavBar } from '~/components/nav-bar'
 import { SnackbarProvider } from '~/contexts/snackbar'
 import { LoadingScreenProvider } from '~/contexts/loading-screen'
 
@@ -29,9 +30,12 @@ export default function Root() {
               <LoadingScreenProvider>
                 <SnackbarProvider>
                   <AppBar />
-                  <Routes>
-                    <FileRoutes />
-                  </Routes>
+                  <Box sx={{ display: 'flex', height: 'calc(100% - 4rem)' }}>
+                    <NavBar />
+                    <Routes>
+                      <FileRoutes />
+                    </Routes>
+                  </Box>
                 </SnackbarProvider>
               </LoadingScreenProvider>
             </QueryClientProvider>

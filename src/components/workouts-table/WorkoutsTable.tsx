@@ -59,7 +59,7 @@ export default function WorkoutsTable() {
       <TableContainer
         sx={{
           borderRadius: 1,
-          height: 'calc(100% - 14rem)',
+          height: 'calc(100% - 6rem)',
           position: 'relative',
         }}
       >
