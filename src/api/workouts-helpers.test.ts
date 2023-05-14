@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, test } from 'vitest'
+import { afterAll, beforeAll, describe, it } from 'vitest'
 import { collection, getDocs } from 'firebase/firestore'
 
 import { workouts } from '~/mocked-data'
@@ -26,7 +26,7 @@ describe('transformDocsToWorkoutObjects', () => {
     await flushDatabase()
   })
 
-  test('should transform workouts docs to javascript objects', async () => {
+  it('should transform workouts docs to javascript objects', async () => {
     // Given
     const data = await getDocs(collection(db, WORKOUTS_DOC_ID))
     const expected = workouts[0]
@@ -40,7 +40,7 @@ describe('transformDocsToWorkoutObjects', () => {
 })
 
 describe('sortWorkoutExercises', () => {
-  test('should sort the workout exercises keys in ascending order', async () => {
+  it('should sort the workout exercises keys in ascending order', async () => {
     // Given
     const mockedWorkoutExercises = workouts[0].exercises
     const unsortedExercises = {
@@ -61,7 +61,7 @@ describe('sortWorkoutExercises', () => {
 })
 
 describe('formatISO8601ToWorkoutDate', () => {
-  test('should format date in ISO8601 to workout date format', () => {
+  it('should format date in ISO8601 to workout date format', () => {
     // Given
     const mockedISO8601Date = '2020-09-16T00:00:00+02:00'
     const expected = '16.09.2020'
@@ -75,7 +75,7 @@ describe('formatISO8601ToWorkoutDate', () => {
 })
 
 describe('formatWorkoutDateToISO8601', () => {
-  test('should format workout date to date in ISO8601 format', () => {
+  it('should format workout date to date in ISO8601 format', () => {
     // Given
     const mockedWorkoutDate = '16.09.2020'
     const expected = '2020-09-16T00:00:00+02:00'

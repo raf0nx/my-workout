@@ -1,11 +1,11 @@
-import { describe, test } from 'vitest'
+import { describe, it } from 'vitest'
 
 import { SnackbarSeverity } from '~/components/snackbar/types'
 
 import { getInitialSnackbarProps } from './snackbar-context-helpers'
 
 describe('getInitialSnackbarProps', () => {
-  test('should correctly return initial snackbar props ', () => {
+  it('should correctly return initial snackbar props ', () => {
     // Given
     const expected = {
       title: '',

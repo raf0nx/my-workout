@@ -3,7 +3,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@solidjs/testing-library'
-import { describe, test } from 'vitest'
+import { describe, it } from 'vitest'
 
 import {
   assertElementNotToBeInTheDocument,
@@ -19,7 +19,7 @@ import {
 import Snackbar from './Snackbar'
 
 describe('Snackbar', () => {
-  test('should render with a predefined title and description', () => {
+  it('should render with a predefined title and description', () => {
     // Given
     const mockedTitle = 'Success'
     const mockedDescription = 'Action was performed successfully'
@@ -37,7 +37,7 @@ describe('Snackbar', () => {
     assertElementToBeInTheDocument(screen.getByText(mockedDescription))
   })
 
-  test('should be dismissed after clicking the close button', async () => {
+  it('should be dismissed after clicking the close button', async () => {
     // When
     await closeSnackbar()
 
@@ -45,7 +45,7 @@ describe('Snackbar', () => {
     assertElementNotToBeInTheDocument(querySnackbar())
   })
 
-  test('should be dismissed automatically after specified timeout', async () => {
+  it('should be dismissed automatically after specified timeout', async () => {
     // Given
     const mockedTimeout = 1000
 
@@ -60,7 +60,7 @@ describe('Snackbar', () => {
     assertElementNotToBeInTheDocument(querySnackbar())
   })
 
-  test('should not render close button when not dismissable', () => {
+  it('should not render close button when not dismissable', () => {
     // Given
     render(() => <Snackbar description="" />)
 
