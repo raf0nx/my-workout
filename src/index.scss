@@ -25,3 +25,9 @@ input[type='number']::-webkit-outer-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}

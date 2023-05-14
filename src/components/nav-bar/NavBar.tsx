@@ -9,11 +9,16 @@ import {
   Toolbar,
 } from '@suid/material'
 import { Index, Show } from 'solid-js'
+import { A, useLocation } from 'solid-start'
 
-import { NAV_WIDTH } from '~/constants'
+import { NAVBAR_ITEMS, NAV_WIDTH } from '~/constants'
+
+import { getNavBarItemLink, isLinkActive } from './navbar-helpers'
 
 export default function NavBar() {
-  const NAV_ITEMS = ['Dashboard', 'Workouts']
+  const NAV_ITEMS = Object.values(NAVBAR_ITEMS)
+
+  const location = useLocation()
 
   return (
     <Drawer
@@ -26,17 +31,22 @@ export default function NavBar() {
       <Toolbar />
       <List>
         <Index each={NAV_ITEMS}>
-          {(text, idx) => (
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Show when={idx === 0} fallback={<FitnessCenter />}>
-                    <Dashboard />
-                  </Show>
-                </ListItemIcon>
-                <ListItemText primary={text()} />
-              </ListItemButton>
-            </ListItem>
+          {(navbarItem, idx) => (
+            <A href={getNavBarItemLink(navbarItem())} end>
+              <ListItem disablePadding>
+                <ListItemButton
+                  selected={isLinkActive(navbarItem(), location.pathname)}
+                  tabIndex={-1}
+                >
+                  <ListItemIcon>
+                    <Show when={idx === 0} fallback={<FitnessCenter />}>
+                      <Dashboard />
+                    </Show>
+                  </ListItemIcon>
+                  <ListItemText primary={navbarItem()} />
+                </ListItemButton>
+              </ListItem>
+            </A>
           )}
         </Index>
       </List>

@@ -9,7 +9,14 @@ export const QUARTER_HOUR = 900_000
 
 export const NAV_WIDTH = 200
 
+export const HOME_PATH = '/'
+
 export enum OrderDirection {
   ASCENDING = 'asc',
   DESCENDING = 'desc',
+}
+
+export enum NAVBAR_ITEMS {
+  DASHBOARD = 'Dashboard',
+  WORKOUTS = 'Workouts',
 }
