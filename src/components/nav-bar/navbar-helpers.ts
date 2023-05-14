@@ -1,13 +1,13 @@
 import { HOME_PATH, NAVBAR_ITEMS } from '~/constants'
 import { convertTextToPath } from '~/utils/utils'
 
-export const getNavBarItemLink = (navbarItem: string) => {
+export const getNavBarItemLink = (navbarItem: NAVBAR_ITEMS) => {
   if (navbarItem === NAVBAR_ITEMS.WORKOUTS) return convertTextToPath(navbarItem)
 
   return HOME_PATH
 }
 
-export const isLinkActive = (navbarItem: string, pathname: string) => {
+export const isLinkActive = (navbarItem: NAVBAR_ITEMS, pathname: string) => {
   switch (navbarItem) {
     case NAVBAR_ITEMS.DASHBOARD:
       return pathname === HOME_PATH
