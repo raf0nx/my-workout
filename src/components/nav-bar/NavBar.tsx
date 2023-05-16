@@ -12,6 +12,7 @@ import { Index, Show } from 'solid-js'
 import { A, useLocation } from 'solid-start'
 
 import { NAVBAR_ITEMS, NAV_WIDTH } from '~/constants'
+import { useUi } from '~/contexts/ui'
 
 import { getNavBarItemLink, isLinkActive } from './navbar-helpers'
 
@@ -19,10 +20,16 @@ export default function NavBar() {
   const NAV_ITEMS = Object.values(NAVBAR_ITEMS)
 
   const location = useLocation()
+  const { isMobileDesign, isNavBarOpen, closeNavBar } = useUi()
 
   return (
     <Drawer
-      variant="permanent"
+      variant={isMobileDesign() ? 'temporary' : 'permanent'}
+      open={isNavBarOpen()}
+      onClose={closeNavBar}
+      ModalProps={{
+        keepMounted: isMobileDesign(),
+      }}
       sx={{
         width: NAV_WIDTH,
         [`& .MuiDrawer-paper`]: { width: NAV_WIDTH },
