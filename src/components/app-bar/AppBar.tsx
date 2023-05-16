@@ -12,7 +12,7 @@ import { useUi } from '~/contexts/ui'
 
 export default function AppBar() {
   const theme = useTheme()
-  const { isMobileDesign } = useUi()
+  const { isMobileDesign, openNavBar } = useUi()
 
   return (
     <SuidAppBar position="sticky" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
@@ -24,6 +24,7 @@ export default function AppBar() {
             edge="start"
             aria-label="open navigation drawer"
             sx={{ mr: 2 }}
+            onClick={openNavBar}
           >
             <MenuIcon />
           </IconButton>
