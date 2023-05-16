@@ -19,6 +19,15 @@ export function UiProvider(props: { children: JSXElement }) {
   const [isMobileDesign, setIsMobileDesign] = createSignal(
     mobileDesignQuery.matches
   )
+  const [isNavBarOpen, setIsNavBarOpen] = createSignal(false)
+
+  const openNavBar = () => {
+    setIsNavBarOpen(true)
+  }
+
+  const closeNavBar = () => {
+    setIsNavBarOpen(false)
+  }
 
   createEffect(() => {
     const updateIsMobileDesign = () => {
@@ -33,7 +42,9 @@ export function UiProvider(props: { children: JSXElement }) {
   })
 
   return (
-    <UiContext.Provider value={{ isMobileDesign }}>
+    <UiContext.Provider
+      value={{ isMobileDesign, isNavBarOpen, openNavBar, closeNavBar }}
+    >
       {props.children}
     </UiContext.Provider>
   )
