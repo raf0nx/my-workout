@@ -8,11 +8,15 @@ import {
 import MenuIcon from '@suid/icons-material/Menu'
 import { Close } from '@suid/icons-material'
 import { Show } from 'solid-js'
+import { useLocation } from 'solid-start'
 
 import { useUi } from '~/contexts/ui'
 
+import { getAppBarTitle } from './app-bar-helpers'
+
 export default function AppBar() {
   const theme = useTheme()
+  const location = useLocation()
   const { isMobileDesign, isNavBarOpen, openNavBar, closeNavBar } = useUi()
 
   const hamburgerIconAriaLabel = () =>
@@ -35,9 +39,12 @@ export default function AppBar() {
             </Show>
           </IconButton>
         </Show>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Dashboard
-        </Typography>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1 }}
+          textContent={getAppBarTitle(location.pathname)}
+        />
       </Toolbar>
     </SuidAppBar>
   )
