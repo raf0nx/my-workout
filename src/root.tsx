@@ -10,6 +10,7 @@ import { AppBar } from '~/components/app-bar'
 import { NavBar } from '~/components/nav-bar'
 import { SnackbarProvider } from '~/contexts/snackbar'
 import { LoadingScreenProvider } from '~/contexts/loading-screen'
+import { UiProvider } from '~/contexts/ui'
 
 import './index.scss'
 
@@ -27,17 +28,19 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <QueryClientProvider client={queryClient}>
-              <LoadingScreenProvider>
-                <SnackbarProvider>
-                  <AppBar />
-                  <Box sx={{ display: 'flex', height: 'calc(100% - 4rem)' }}>
-                    <NavBar />
-                    <Routes>
-                      <FileRoutes />
-                    </Routes>
-                  </Box>
-                </SnackbarProvider>
-              </LoadingScreenProvider>
+              <UiProvider>
+                <LoadingScreenProvider>
+                  <SnackbarProvider>
+                    <AppBar />
+                    <Box sx={{ display: 'flex', height: 'calc(100% - 4rem)' }}>
+                      <NavBar />
+                      <Routes>
+                        <FileRoutes />
+                      </Routes>
+                    </Box>
+                  </SnackbarProvider>
+                </LoadingScreenProvider>
+              </UiProvider>
             </QueryClientProvider>
           </ErrorBoundary>
         </Suspense>
