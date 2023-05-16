@@ -39,7 +39,7 @@ export default function NavBar() {
       <List>
         <Index each={NAV_ITEMS}>
           {(navbarItem, idx) => (
-            <A href={getNavBarItemLink(navbarItem())} end>
+            <A href={getNavBarItemLink(navbarItem())} end onClick={closeNavBar}>
               <ListItem disablePadding>
                 <ListItemButton
                   selected={isLinkActive(navbarItem(), location.pathname)}
