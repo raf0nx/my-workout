@@ -1,3 +1,5 @@
+$navbar-width: 240px;
+
 html {
   font-size: 16px;
 }
@@ -11,7 +13,10 @@ body {
 
 main {
   padding: 2rem;
-  flex-grow: 1;
+
+  @media (min-width: 900px) {
+    margin-left: $navbar-width;
+  }
 }
 
 /* For Webkit browsers (Chrome, Safari) */
