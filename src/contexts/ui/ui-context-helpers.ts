@@ -2,4 +2,3 @@
 export const getInitialUiContextProps = () => ({
   isMobileDesign: () => false,
 })
-/* c8 ignore end */
