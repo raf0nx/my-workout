@@ -12,15 +12,12 @@ import { useLocation } from 'solid-start'
 
 import { useUi } from '~/contexts/ui'
 
-import { getAppBarTitle } from './app-bar-helpers'
+import { getAppBarTitle, getHamburgerIconAriaLabel } from './app-bar-helpers'
 
 export default function AppBar() {
   const theme = useTheme()
   const location = useLocation()
   const { isMobileDesign, isNavBarOpen, openNavBar, closeNavBar } = useUi()
-
-  const hamburgerIconAriaLabel = () =>
-    `${isNavBarOpen() ? 'close' : 'open'} navigation drawer`
 
   return (
     <SuidAppBar position="sticky" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
@@ -30,7 +27,7 @@ export default function AppBar() {
             size="large"
             color="inherit"
             edge="start"
-            aria-label={hamburgerIconAriaLabel()}
+            aria-label={getHamburgerIconAriaLabel(isNavBarOpen())}
             sx={{ mr: 2 }}
             onClick={isNavBarOpen() ? closeNavBar : openNavBar}
           >

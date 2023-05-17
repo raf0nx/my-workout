@@ -5,3 +5,6 @@ export const getAppBarTitle = (currentPath: string) => {
 
   return NAVBAR_ITEMS.DASHBOARD
 }
+
+export const getHamburgerIconAriaLabel = (isNavBarOpen: boolean) =>
+  `${isNavBarOpen ? 'close' : 'open'} navigation drawer`
