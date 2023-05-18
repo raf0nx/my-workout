@@ -1,9 +1,11 @@
+import { describe, it } from 'vitest'
+
 import { NAVBAR_ITEMS } from '~/constants'
 
 import { getAppBarTitle, getHamburgerIconAriaLabel } from './app-bar-helpers'
 
 describe('getAppBarTitle', () => {
-  test.each`
+  it.each`
     currentPath                  | expected
     ${'my-workout.com'}          | ${NAVBAR_ITEMS.DASHBOARD}
     ${'my-workout.com/profile'}  | ${NAVBAR_ITEMS.DASHBOARD}
@@ -21,7 +23,7 @@ describe('getAppBarTitle', () => {
 })
 
 describe('getHamburgerIconAriaLabel', () => {
-  test('should return correct aria label when NavBar is open', () => {
+  it('should return correct aria label when NavBar is open', () => {
     // Given
     const expected = 'close navigation drawer'
 
@@ -32,7 +34,7 @@ describe('getHamburgerIconAriaLabel', () => {
     expect(actual).toBe(expected)
   })
 
-  test('should return correct aria label when NavBar is closed', () => {
+  it('should return correct aria label when NavBar is closed', () => {
     // Given
     const expected = 'open navigation drawer'
 
