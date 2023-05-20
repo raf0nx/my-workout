@@ -5,10 +5,11 @@ import { Suspense } from 'solid-js'
 import { Body, FileRoutes, Head, Html, Meta, Scripts, Title } from 'solid-start'
 import { ErrorBoundary } from 'solid-start/error-boundary'
 
-import { Navbar } from '~/components/navbar'
-
+import { AppBar } from '~/components/app-bar'
+import { NavBar } from '~/components/nav-bar'
 import { SnackbarProvider } from '~/contexts/snackbar'
 import { LoadingScreenProvider } from '~/contexts/loading-screen'
+import { UiProvider } from '~/contexts/ui'
 
 import './index.scss'
 
@@ -26,14 +27,17 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <QueryClientProvider client={queryClient}>
-              <LoadingScreenProvider>
-                <SnackbarProvider>
-                  <Navbar />
-                  <Routes>
-                    <FileRoutes />
-                  </Routes>
-                </SnackbarProvider>
-              </LoadingScreenProvider>
+              <UiProvider>
+                <LoadingScreenProvider>
+                  <SnackbarProvider>
+                    <AppBar />
+                    <NavBar />
+                    <Routes>
+                      <FileRoutes />
+                    </Routes>
+                  </SnackbarProvider>
+                </LoadingScreenProvider>
+              </UiProvider>
             </QueryClientProvider>
           </ErrorBoundary>
         </Suspense>

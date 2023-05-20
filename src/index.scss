@@ -1,3 +1,5 @@
+$navbar-width: 240px;
+
 html {
   font-size: 16px;
 }
@@ -11,6 +13,10 @@ body {
 
 main {
   padding: 2rem;
+
+  @media (min-width: 900px) {
+    margin-left: $navbar-width;
+  }
 }
 
 /* For Webkit browsers (Chrome, Safari) */
@@ -23,4 +29,10 @@ input[type='number']::-webkit-outer-spin-button {
 /* For Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }

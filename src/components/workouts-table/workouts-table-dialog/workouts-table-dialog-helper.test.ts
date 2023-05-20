@@ -1,4 +1,4 @@
-import { describe, test } from 'vitest'
+import { describe, it } from 'vitest'
 import MockDate from 'mockdate'
 
 import { SnackbarSeverity } from '~/components/snackbar/types'
@@ -10,7 +10,7 @@ import {
 } from './workouts-table-dialog-helper'
 
 describe('getWorkoutDetailsInitialState', () => {
-  test('should return workout details object in initial state', () => {
+  it('should return workout details object in initial state', () => {
     // Given
     const mockedDate = '01.01.2023'
     MockDate.set(mockedDate)
@@ -35,7 +35,7 @@ describe('getWorkoutDetailsInitialState', () => {
 })
 
 describe('getSaveWorkoutSuccessSnackbarProps', () => {
-  test('should return proper snackbar props when saving workout is successful', () => {
+  it('should return proper snackbar props when saving workout is successful', () => {
     // Given
     const expected = {
       title: 'Success',
@@ -52,7 +52,7 @@ describe('getSaveWorkoutSuccessSnackbarProps', () => {
 })
 
 describe('getSaveWorkoutErrorSnackbarProps', () => {
-  test('should return proper snackbar props when saving workout failed', () => {
+  it('should return proper snackbar props when saving workout failed', () => {
     // Given
     const expected = {
       title: 'Error',

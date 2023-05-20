@@ -2,7 +2,7 @@ import {
   afterEach,
   describe,
   expect,
-  test,
+  it,
   beforeEach,
   beforeAll,
 } from 'vitest'
@@ -74,7 +74,7 @@ describe('WorkoutsTable', () => {
       ])
     })
 
-    test('row should contain the workout details data', async () => {
+    it('row should contain the workout details data', async () => {
       // Given
       const workoutToCheck = workouts[0]
 
@@ -85,7 +85,7 @@ describe('WorkoutsTable', () => {
       assertWorkoutInWorkoutsTable(workoutToCheck)
     })
 
-    test('should be sorted by date descending', async () => {
+    it('should be sorted by date descending', async () => {
       // Given
       const [firstWorkout, secondWorkout, thirdWorkout] =
         await getWorkoutsTableRows()
@@ -97,7 +97,7 @@ describe('WorkoutsTable', () => {
   })
 
   describe('a11y', () => {
-    test("should open the workout creation dialog when clicking 'add new workout' button", async () => {
+    it("should open the workout creation dialog when clicking 'add new workout' button", async () => {
       // When
       await userEvent.click(getAddNewWorkoutBtn())
 
@@ -105,7 +105,7 @@ describe('WorkoutsTable', () => {
       assertElementToBeInTheDocument(getCreateWorkoutDialogHeader())
     })
 
-    test('should close the workout creation dialog when clicking the close button', async () => {
+    it('should close the workout creation dialog when clicking the close button', async () => {
       // When
       await closeWorkoutDialog()
 
@@ -113,7 +113,7 @@ describe('WorkoutsTable', () => {
       assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
     })
 
-    test("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
+    it("should open the workout creation dialog when pressing [Enter]/[Space] keydown on 'add new workout' button", async () => {
       // When
       await userEvent.tab()
       await userEvent.keyboard('[Enter]')
@@ -122,7 +122,7 @@ describe('WorkoutsTable', () => {
       assertElementToBeInTheDocument(getCreateWorkoutDialogHeader())
     })
 
-    test('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
+    it('should close the workout creation dialog when pressing [Enter]/[Space] keydown on the close button', async () => {
       // When
       await userEvent.tab()
       await userEvent.keyboard('[Enter]')
@@ -131,7 +131,7 @@ describe('WorkoutsTable', () => {
       assertElementNotToBeInTheDocument(queryCreateWorkoutDialogHeader())
     })
 
-    test('should close the workout creation dialog when pressing [Escape] keydown', async () => {
+    it('should close the workout creation dialog when pressing [Escape] keydown', async () => {
       // When
       await userEvent.click(getAddNewWorkoutBtn())
       await userEvent.tab()
@@ -149,7 +149,7 @@ describe('WorkoutsTable', () => {
       await populateDatabaseWithMockedWorkout(mockedWorkout)
     })
 
-    test('should open the selected workout details and read its data', async () => {
+    it('should open the selected workout details and read its data', async () => {
       // Given
       const { name, description, totalReps, week, date, duration } =
         mockedWorkout
@@ -172,7 +172,7 @@ describe('WorkoutsTable', () => {
       assertInputValue(getExerciseSetInput(2, 1), 8)
     })
 
-    test("should not show 'add next exercise/set' buttons in 'show' state", async () => {
+    it("should not show 'add next exercise/set' buttons in 'show' state", async () => {
       // Then
       assertElementNotToBeInTheDocument(queryAddNextExerciseBtn())
       assertElementNotToBeInTheDocument(queryAddNextSetBtn())
@@ -187,7 +187,7 @@ describe('WorkoutsTable', () => {
       await populateDatabaseWithMockedWorkout(mockedWorkout)
     })
 
-    test('should edit the selected workout and its exercises', async () => {
+    it('should edit the selected workout and its exercises', async () => {
       // Given
       const fieldsToUpdate: Omit<Workout, 'exercises'> = {
         name: 'Test edit name',
@@ -222,7 +222,7 @@ describe('WorkoutsTable', () => {
   })
 
   describe('create workout', () => {
-    test('should save the newly created workout', async () => {
+    it('should save the newly created workout', async () => {
       // Close the snackbar from the previous test
       await userEvent.click(getCloseBtn())
 

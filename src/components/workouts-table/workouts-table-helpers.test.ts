@@ -1,11 +1,11 @@
-import { describe, test } from 'vitest'
+import { describe, it } from 'vitest'
 
 import { SnackbarSeverity } from '~/components/snackbar/types'
 
 import { getGetWorkoutsErrorSnackbarProps } from './workouts-table-helpers'
 
 describe('getGetWorkoutsErrorSnackbarProps', () => {
-  test('should return proper snackbar props when getting workouts data failed', () => {
+  it('should return proper snackbar props when getting workouts data failed', () => {
     // Given
     const expected = {
       title: 'Error',

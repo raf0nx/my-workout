@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { removeTrailingNonDigits } from './utils'
+
+import { convertTextToPath, removeTrailingNonDigits } from './utils'
+
+import { HOME_PATH } from '~/constants'
 
 describe('removeTrailingNonDigits', () => {
   it.each`
@@ -11,6 +14,20 @@ describe('removeTrailingNonDigits', () => {
   `('should remove trailing non-digits', ({ string, expected }) => {
     // When
     const actual = removeTrailingNonDigits(string)
+
+    // Then
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('convertTextToPath', () => {
+  it('should return the expected path when given a text', () => {
+    // Given
+    const text = 'Dummy'
+    const expected = HOME_PATH + 'dummy'
+
+    // When
+    const actual = convertTextToPath(text)
 
     // Then
     expect(actual).toBe(expected)
