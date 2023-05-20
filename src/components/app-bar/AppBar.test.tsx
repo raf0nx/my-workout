@@ -1,4 +1,4 @@
-import { Mock, afterEach, describe, it, vi } from 'vitest'
+import { afterEach, describe, it, vi, type Mock } from 'vitest'
 import { render } from '@solidjs/testing-library'
 import { useLocation } from 'solid-start'
 
