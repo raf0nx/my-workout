@@ -1,3 +1,4 @@
+/* c8 ignore start */
 export const mockMatchMedia = (matches = false) => {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
