@@ -13,9 +13,9 @@ import type { UiContextProps } from './types'
 
 const UiContext = createContext<UiContextProps>(getInitialUiContextProps())
 
-const mobileDesignQuery = window.matchMedia('(max-width: 899px)')
-
 export function UiProvider(props: { children: JSXElement }) {
+  const mobileDesignQuery = window.matchMedia('(max-width: 899px)')
+
   const [isMobileDesign, setIsMobileDesign] = createSignal(
     mobileDesignQuery.matches
   )
