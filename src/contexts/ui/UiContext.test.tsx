@@ -60,13 +60,10 @@ describe('UiContext', () => {
       ))
     }
 
-    it('toggles isNavBarOpen with openNavBar and closeNavBar', async () => {
+    it('should toggle isNavBarOpen when calling either openNavBar or closeNavBar', async () => {
       // Given
       setup()
       const toggleNavBarButton = screen.getByText(/open/i)
-
-      // Then
-      expect(toggleNavBarButton).toBeInTheDocument()
 
       // When
       await userEvent.click(toggleNavBarButton)
