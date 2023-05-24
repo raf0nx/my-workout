@@ -3,7 +3,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@solidjs/testing-library'
-import { beforeAll, describe, it } from 'vitest'
+import { describe, it } from 'vitest'
 
 import {
   assertElementNotToBeInTheDocument,
@@ -15,15 +15,10 @@ import {
   getSnackbar,
   querySnackbar,
 } from '~/utils/test-utils/snackbar'
-import { mockMatchMedia } from '~/mock-match-media'
 
 import Snackbar from './Snackbar'
 
 describe('Snackbar', () => {
-  beforeAll(() => {
-    mockMatchMedia()
-  })
-
   it('should render with a predefined title and description', () => {
     // Given
     const mockedTitle = 'Success'
