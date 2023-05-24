@@ -1,10 +1,16 @@
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
+
+import { mockMatchMedia } from '~/mock-match-media'
 
 import { UiProvider, useUi } from '.'
 
 describe('UiContext', () => {
+  beforeAll(() => {
+    mockMatchMedia()
+  })
+
   describe('isMobileDesign', () => {
     const setup = () => {
       const TestComponent = () => {
@@ -28,6 +34,15 @@ describe('UiContext', () => {
 
       // Then
       expect(screen.getByText(/desktop design/i)).toBeInTheDocument()
+    })
+
+    it('should render with Mobile design on viewports < 900px', () => {
+      // Given
+      mockMatchMedia(true)
+      setup()
+
+      // Then
+      expect(screen.getByText(/mobile design/i)).toBeInTheDocument()
     })
   })
 

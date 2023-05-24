@@ -1,4 +1,12 @@
-import { afterEach, describe, it, vi, expect, type Mock } from 'vitest'
+import {
+  afterEach,
+  describe,
+  it,
+  vi,
+  expect,
+  beforeAll,
+  type Mock,
+} from 'vitest'
 import { render } from '@solidjs/testing-library'
 import { useLocation } from 'solid-start'
 import { Router } from '@solidjs/router'
@@ -12,6 +20,7 @@ import {
   getNavBarItems,
   getWorkoutsIcon,
 } from '~/utils/test-utils/nav-bar'
+import { mockMatchMedia } from '~/mock-match-media'
 
 import NavBar from './NavBar'
 
@@ -29,6 +38,10 @@ vi.mock('~/contexts/ui', () => ({
 }))
 
 describe('NavBar', () => {
+  beforeAll(() => {
+    mockMatchMedia()
+  })
+
   afterEach(() => {
     vi.clearAllMocks()
   })

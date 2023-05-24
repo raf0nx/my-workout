@@ -1,11 +1,4 @@
-import {
-  afterEach,
-  describe,
-  expect,
-  it,
-  beforeEach,
-  beforeAll,
-} from 'vitest'
+import { afterEach, describe, expect, it, beforeEach, beforeAll } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { waitForElementToBeRemoved } from '@solidjs/testing-library'
 
@@ -44,6 +37,7 @@ import {
 } from '~/utils/test-utils/workouts-table'
 import { getWorkouts } from '~/api/workouts'
 import { workouts } from '~/mocked-data'
+import { mockMatchMedia } from '~/mock-match-media'
 
 import { WorkoutsTable } from '.'
 import type { Workout } from './types'
@@ -52,6 +46,7 @@ describe('WorkoutsTable', () => {
   let unmountComponent: () => void
 
   beforeAll(async () => {
+    mockMatchMedia()
     await flushDatabase()
   })
 
