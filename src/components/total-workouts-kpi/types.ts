@@ -1,3 +1,5 @@
+import type { Workout } from '~/components/workouts-table/types'
+
 export interface TotalWorkoutsKpiProps {
-  totalWorkoutsAmount: number
+  workoutsQueryData?: Workout[]
 }

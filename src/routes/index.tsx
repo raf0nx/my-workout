@@ -3,7 +3,6 @@ import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 
 import { getWorkouts } from '~/api/workouts'
 import { TotalWorkoutsKpi } from '~/components/total-workouts-kpi'
-import { getTotalWorkoutsAmount } from '~/components/total-workouts-kpi/total-workouts-kpi-helpers'
 import type { Workout } from '~/components/workouts-table/types'
 import {
   getGetWorkoutsErrorSnackbarProps,
@@ -30,9 +29,7 @@ export default function Dashboard() {
     <main>
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <TotalWorkoutsKpi
-            totalWorkoutsAmount={getTotalWorkoutsAmount(queryData())}
-          />
+          <TotalWorkoutsKpi workoutsQueryData={queryData()} />
         </Grid>
       </Grid>
     </main>
