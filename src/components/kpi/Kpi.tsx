@@ -1,4 +1,4 @@
-import { Box, Typography } from '@suid/material'
+import { Box, Typography, useTheme } from '@suid/material'
 import { Show } from 'solid-js'
 
 import { Card } from '~/components/card'
@@ -7,6 +7,8 @@ import type { KpiProps } from './types'
 import { getChangeValueColor } from './kpi-helpers'
 
 export default function Kpi(props: KpiProps) {
+  const { palette } = useTheme()
+
   const Icon = props.icon
 
   return (
@@ -53,7 +55,7 @@ export default function Kpi(props: KpiProps) {
               </Typography>
             </Show>
           </Box>
-          <Typography variant="body2" sx={{ opacity: 0.6 }}>
+          <Typography variant="body2" color={palette.grey[600]}>
             {props.description}
           </Typography>
         </Box>
