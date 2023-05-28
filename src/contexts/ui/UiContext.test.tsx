@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 import { mockMatchMedia } from '~/mock-match-media'
+import { assertElementToBeInTheDocument } from '~/utils/test-utils'
 
 import { UiProvider, useUi } from '.'
 
@@ -33,7 +34,7 @@ describe('UiContext', () => {
       setup()
 
       // Then
-      expect(screen.getByText(/desktop design/i)).toBeInTheDocument()
+      assertElementToBeInTheDocument(screen.getByText(/desktop design/i))
     })
 
     it('should render with Mobile design on viewports < 900px', () => {
@@ -42,7 +43,7 @@ describe('UiContext', () => {
       setup()
 
       // Then
-      expect(screen.getByText(/mobile design/i)).toBeInTheDocument()
+      assertElementToBeInTheDocument(screen.getByText(/mobile design/i))
     })
   })
 

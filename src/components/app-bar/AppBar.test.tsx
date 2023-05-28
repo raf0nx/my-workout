@@ -11,6 +11,10 @@ import {
   queryCloseNavBarIcon,
   queryHamburgerIcon,
 } from '~/utils/test-utils/app-bar'
+import {
+  assertElementToBeInTheDocument,
+  assertElementNotToBeInTheDocument,
+} from '~/utils/test-utils'
 
 import AppBar from './AppBar'
 
@@ -48,7 +52,7 @@ describe('AppBar', () => {
     setup()
 
     // Then
-    expect(getDashboardPageAppBarTitle()).toBeInTheDocument()
+    assertElementToBeInTheDocument(getDashboardPageAppBarTitle())
   })
 
   it('should have Workouts title when on workouts page', () => {
@@ -56,7 +60,7 @@ describe('AppBar', () => {
     setup(false, false, '/workouts')
 
     // Then
-    expect(getWorkoutsPageAppBarTitle()).toBeInTheDocument()
+    assertElementToBeInTheDocument(getWorkoutsPageAppBarTitle())
   })
 
   it('should call closeNavbar when clicking on the close navbar icon', async () => {
@@ -86,7 +90,7 @@ describe('AppBar', () => {
     setup(false, false)
 
     // Then
-    expect(queryCloseNavBarIcon()).not.toBeInTheDocument()
-    expect(queryHamburgerIcon()).not.toBeInTheDocument()
+    assertElementNotToBeInTheDocument(queryCloseNavBarIcon())
+    assertElementNotToBeInTheDocument(queryHamburgerIcon())
   })
 })
