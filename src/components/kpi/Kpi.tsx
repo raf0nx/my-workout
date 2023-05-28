@@ -1,8 +1,10 @@
 import { Box, Typography } from '@suid/material'
+import { Show } from 'solid-js'
 
 import { Card } from '~/components/card'
 
 import type { KpiProps } from './types'
+import { getChangeValueColor } from './kpi-helpers'
 
 export default function Kpi(props: KpiProps) {
   const Icon = props.icon
@@ -36,9 +38,21 @@ export default function Kpi(props: KpiProps) {
             justifyContent: 'center',
           }}
         >
-          <Typography variant="h6" component="h2" fontWeight={700}>
-            {props.value}
-          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Typography variant="h6" component="h2" fontWeight={700}>
+              {props.value}
+            </Typography>
+            <Show when={props.changeValue}>
+              <Typography
+                variant="subtitle2"
+                component="p"
+                marginTop={0.5}
+                color={getChangeValueColor(props.changeValue as string)}
+              >
+                {props.changeValue}
+              </Typography>
+            </Show>
+          </Box>
           <Typography variant="body2" sx={{ opacity: 0.6 }}>
             {props.description}
           </Typography>

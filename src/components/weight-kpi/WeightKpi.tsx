@@ -9,7 +9,8 @@ export default function WeightKpi() {
   return (
     <Kpi
       value={80.4}
-      description="Your weight"
+      changeValue={'-1.4%'}
+      description="Current weight"
       color={theme.palette.info.main}
       icon={MonitorWeight}
     />
