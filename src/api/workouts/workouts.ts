@@ -13,14 +13,14 @@ import type {
   Workout,
   WorkoutDateFormat,
 } from '~/components/workouts-table/types'
-import { OrderDirection, WORKOUTS_DOC_ID } from '~/constants'
+import { OrderDirection, WORKOUTS_COLLECTION_ID } from '~/constants'
 
 import {
   formatWorkoutDateToISO8601,
   transformDocsToWorkoutObjects,
 } from './workouts-helpers'
 
-const workoutsCollection = collection(db, WORKOUTS_DOC_ID)
+const workoutsCollection = collection(db, WORKOUTS_COLLECTION_ID)
 
 export const getWorkouts = async (): Promise<Workout[]> => {
   const data = await getDocs(
@@ -39,7 +39,7 @@ export const postWorkout = async (workoutData: Workout): Promise<void> => {
 }
 
 export const updateWorkout = async (workoutData: Workout): Promise<void> => {
-  const workoutDoc = doc(db, WORKOUTS_DOC_ID, workoutData.id!)
+  const workoutDoc = doc(db, WORKOUTS_COLLECTION_ID, workoutData.id!)
 
   await updateDoc(workoutDoc, {
     ...workoutData,

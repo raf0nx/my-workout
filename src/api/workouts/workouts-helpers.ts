@@ -8,7 +8,7 @@ import type {
   Workout,
   WorkoutDateFormat,
 } from '~/components/workouts-table/types'
-import { WORKOUTS_DOC_ID } from '~/constants'
+import { WORKOUTS_COLLECTION_ID } from '~/constants'
 import { keys } from '~/utils/utils'
 
 dayjs.extend(customParseFormat)
@@ -37,7 +37,7 @@ export const sortWorkoutExercises = (exercises: Exercises) =>
     .reduce<Exercises>((acc, curr) => ({ ...acc, [curr]: exercises[curr] }), {})
 
 export const invalidateGetWorkoutsQuery = (queryClient: QueryClient) => {
-  queryClient.invalidateQueries([WORKOUTS_DOC_ID])
+  queryClient.invalidateQueries([WORKOUTS_COLLECTION_ID])
 }
 
 export const formatWorkoutDateToISO8601 = (workoutDate: WorkoutDateFormat) =>

@@ -9,14 +9,14 @@ import {
   getGetWorkoutsErrorSnackbarProps,
   getWorkoutsQueryStaleTime,
 } from '~/components/workouts-table/workouts-table-helpers'
-import { WORKOUTS_DOC_ID } from '~/constants'
+import { WORKOUTS_COLLECTION_ID } from '~/constants'
 import { useSnackbar } from '~/contexts/snackbar'
 
 export default function Dashboard() {
   const { showSnackbar } = useSnackbar()
 
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
-    () => [WORKOUTS_DOC_ID],
+    () => [WORKOUTS_COLLECTION_ID],
     getWorkouts,
     {
       staleTime: getWorkoutsQueryStaleTime(),

@@ -7,7 +7,7 @@ import {
   populateDatabaseWithMockedWorkout,
 } from '~/utils/test-utils'
 import { db } from '~/config/firebase-config'
-import { WORKOUTS_DOC_ID } from '~/constants'
+import { WORKOUTS_COLLECTION_ID } from '~/constants'
 import { keys } from '~/utils/utils'
 
 import {
@@ -28,7 +28,7 @@ describe('transformDocsToWorkoutObjects', () => {
 
   it('should transform workouts docs to javascript objects', async () => {
     // Given
-    const data = await getDocs(collection(db, WORKOUTS_DOC_ID))
+    const data = await getDocs(collection(db, WORKOUTS_COLLECTION_ID))
     const expected = workouts[0]
 
     // When
