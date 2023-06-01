@@ -13,7 +13,7 @@ import { USER_DATA_COLLECTION_ID, USER_WEIGHT_DOC_ID } from '~/constants'
 import type { UserDataWeightDoc } from './types'
 import {
   createUserWeightData,
-  sortWeightInfoByNewestFirst,
+  sortWeightsInfoByNewestFirst,
 } from './user-data-helpers'
 
 const userDataCollection = collection(db, USER_DATA_COLLECTION_ID)
@@ -23,9 +23,9 @@ export const getUserWeight = async () => {
   const docData = (await getDoc(
     userDataWeightDoc
   )) as DocumentSnapshot<UserDataWeightDoc>
-  const weightInfo = docData.data()?.weightInfo ?? []
+  const weightsInfo = docData.data()?.weightsInfo ?? []
 
-  return sortWeightInfoByNewestFirst(weightInfo)
+  return sortWeightsInfoByNewestFirst(weightsInfo)
 }
 
 export const addNewUserWeight = async (weight: string) => {

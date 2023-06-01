@@ -38,7 +38,7 @@ export default function WeightKpi(props: WeightKpiProps) {
       <WeightKpiDialog
         isOpen={isDialogOpen()}
         onClose={closeDialog}
-        weightInfo={props.weightInfo}
+        weightsInfo={props.weightsInfo}
       />
     </>
   )

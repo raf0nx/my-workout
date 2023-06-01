@@ -25,7 +25,7 @@ export function WeightsTable(props: WeightsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <For each={props.weightInfo}>
+          <For each={props.weightsInfo}>
             {weightInfo => (
               <>
                 <TableRow

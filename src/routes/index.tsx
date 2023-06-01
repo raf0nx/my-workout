@@ -42,7 +42,7 @@ export default function Dashboard() {
           <TotalWorkoutsKpi workoutsQueryData={workoutsQueryData()} />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <WeightKpi weightInfo={userWeightQueryData()} />
+          <WeightKpi weightsInfo={userWeightQueryData()} />
         </Grid>
       </Grid>
     </main>

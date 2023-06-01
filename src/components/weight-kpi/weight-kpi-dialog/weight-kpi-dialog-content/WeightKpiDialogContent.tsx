@@ -13,7 +13,7 @@ export default function WeightKpiDialogContent(
         Put your current weight below:
       </DialogContentText>
       <NewWeightInput />
-      <WeightsTable weightInfo={props.weightInfo} />
+      <WeightsTable weightsInfo={props.weightsInfo} />
     </DialogContent>
   )
 }
