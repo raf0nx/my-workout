@@ -1,8 +1,24 @@
 import { Box, Button, TextField, Typography } from '@suid/material'
 import { createSignal } from 'solid-js'
 import type { ChangeEvent } from '@suid/types'
+import { createMutation, useQueryClient } from '@tanstack/solid-query'
+
+import { addNewUserWeight } from '~/api/user-data'
+import { invalidateUserWeightQuery } from '~/api/user-data/user-data-helpers'
 
 export function NewWeightInput() {
+  const queryClient = useQueryClient()
+
+  const addNewUserWeightMutation = createMutation(
+    (weight: string) => addNewUserWeight(weight),
+    {
+      onSuccess: () => {
+        invalidateUserWeightQuery(queryClient)
+        clearInput()
+      },
+    }
+  )
+
   const [newWeight, setNewWeight] = createSignal('')
 
   const handleInputChange = (
@@ -10,6 +26,14 @@ export function NewWeightInput() {
     value: string
   ) => {
     setNewWeight(value)
+  }
+
+  const handleAddButtonClick = () => {
+    addNewUserWeightMutation.mutate(newWeight())
+  }
+
+  const clearInput = () => {
+    setNewWeight('')
   }
 
   return (
@@ -33,7 +57,11 @@ export function NewWeightInput() {
         onChange={handleInputChange}
         value={newWeight()}
       />
-      <Button color="secondary" variant="contained">
+      <Button
+        color="secondary"
+        variant="contained"
+        onClick={handleAddButtonClick}
+      >
         Add
       </Button>
     </Box>

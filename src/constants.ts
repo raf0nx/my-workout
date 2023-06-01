@@ -7,6 +7,8 @@ export const USER_DATA_COLLECTION_ID = 'user-data'
 
 export const USER_WEIGHT_DOC_ID = 'weight'
 
+export const USER_DATA_WEIGHT_QUERY_KEY = `${USER_DATA_COLLECTION_ID}-${USER_WEIGHT_DOC_ID}`
+
 export const DOCUMENT_POSITION_FOLLOWING = 4
 export const QUARTER_HOUR = 900_000
 
