@@ -1,6 +1,11 @@
 import dayjs from 'dayjs'
 
-import { DEVELOPMENT_MODE, HOME_PATH, TEST_MODE } from '~/constants'
+import {
+  DEVELOPMENT_MODE,
+  HOME_PATH,
+  QUARTER_HOUR,
+  TEST_MODE,
+} from '~/constants'
 
 export const removeTrailingNonDigits = (str: string): string =>
   str.replace(/^\D+/g, '')
@@ -18,3 +23,6 @@ export const convertTextToPath = (text: string) => {
 export const getCurrentDateInDDMMYYYYFormat = () => {
   return dayjs().format('DD.MM.YYYY')
 }
+
+/* c8 ignore next */
+export const getQueryStaleTime = () => (isTestMode() ? 0 : QUARTER_HOUR)

@@ -5,12 +5,10 @@ import { getWorkouts } from '~/api/workouts'
 import { TotalWorkoutsKpi } from '~/components/total-workouts-kpi'
 import { WeightKpi } from '~/components/weight-kpi'
 import type { Workout } from '~/components/workouts-table/types'
-import {
-  getGetWorkoutsErrorSnackbarProps,
-  getWorkoutsQueryStaleTime,
-} from '~/components/workouts-table/workouts-table-helpers'
+import { getGetWorkoutsErrorSnackbarProps } from '~/components/workouts-table/workouts-table-helpers'
 import { WORKOUTS_COLLECTION_ID } from '~/constants'
 import { useSnackbar } from '~/contexts/snackbar'
+import { getQueryStaleTime } from '~/utils/utils'
 
 export default function Dashboard() {
   const { showSnackbar } = useSnackbar()
@@ -19,7 +17,7 @@ export default function Dashboard() {
     () => [WORKOUTS_COLLECTION_ID],
     getWorkouts,
     {
-      staleTime: getWorkoutsQueryStaleTime(),
+      staleTime: getQueryStaleTime(),
       onError: () => showSnackbar(getGetWorkoutsErrorSnackbarProps()),
     }
   )
