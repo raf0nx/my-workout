@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-import { convertTextToPath, removeTrailingNonDigits } from './utils'
+import {
+  convertTextToPath,
+  getCurrentDateInDDMMYYYYFormat,
+  removeTrailingNonDigits,
+} from './utils'
 
 import { HOME_PATH } from '~/constants'
 
@@ -31,5 +35,21 @@ describe('convertTextToPath', () => {
 
     // Then
     expect(actual).toBe(expected)
+  })
+})
+
+describe('getCurrentDateInDDMMYYYYFormat', () => {
+  it('should return the current date in DD.MM.YYYY format', () => {
+    // Given
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2023-05-14T12:34:56'))
+    const expected = '14.05.2023'
+
+    // When
+    const result = getCurrentDateInDDMMYYYYFormat()
+
+    // Then
+    expect(result).toBe(expected)
+    vi.useRealTimers()
   })
 })

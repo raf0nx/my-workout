@@ -6,6 +6,7 @@ import type {
   Workout,
   WorkoutDateFormat,
 } from '~/components/workouts-table/types'
+import { getCurrentDateInDDMMYYYYFormat } from '~/utils/utils'
 
 dayjs.extend(weekOfYear)
 
@@ -20,7 +21,7 @@ export const getWorkoutDetailsInitialState = (): Workout => ({
 })
 
 export const getCurrentDateInWorkoutDateFormat = (): WorkoutDateFormat =>
-  dayjs().format('DD.MM.YYYY') as WorkoutDateFormat
+  getCurrentDateInDDMMYYYYFormat() as WorkoutDateFormat
 
 export const getCurrentWeekOfYear = () => dayjs().week().toString()
 
