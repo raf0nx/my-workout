@@ -5,8 +5,9 @@ import { createSignal } from 'solid-js'
 import { Kpi } from '~/components/kpi'
 
 import { WeightKpiDialog } from './weight-kpi-dialog'
+import type { WeightKpiProps } from './types'
 
-export default function WeightKpi() {
+export default function WeightKpi(props: WeightKpiProps) {
   const theme = useTheme()
 
   const [isDialogOpen, setIsDialogOpen] = createSignal(false)
@@ -34,7 +35,11 @@ export default function WeightKpi() {
           <MoreHoriz />
         </IconButton>
       </Box>
-      <WeightKpiDialog isOpen={isDialogOpen()} onClose={closeDialog} />
+      <WeightKpiDialog
+        isOpen={isDialogOpen()}
+        onClose={closeDialog}
+        weightInfo={props.weightInfo}
+      />
     </>
   )
 }

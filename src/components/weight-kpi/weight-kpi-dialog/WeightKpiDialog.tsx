@@ -31,7 +31,7 @@ export default function WeightKpiDialog(props: WeightKpiDialogProps) {
       >
         Your weight history
       </DialogTitle>
-      <WeightKpiDialogContent />
+      <WeightKpiDialogContent weightInfo={props.weightInfo} />
       <DialogActions>
         <Button onClick={props.onClose}>Close</Button>
       </DialogActions>

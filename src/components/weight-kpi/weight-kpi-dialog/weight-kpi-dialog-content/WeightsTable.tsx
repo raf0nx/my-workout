@@ -9,9 +9,10 @@ import {
 import { For } from 'solid-js'
 
 import { TableHeaderCell } from '~/components/table-header-cell'
-import { weightsInfo } from '~/mocked-data'
 
-export function WeightsTable() {
+import type { WeightsTableProps } from './types'
+
+export function WeightsTable(props: WeightsTableProps) {
   return (
     <TableContainer
       sx={{ mt: 4, borderRadius: 1, maxHeight: 'calc(100vh - 326.5px)' }}
@@ -24,7 +25,7 @@ export function WeightsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          <For each={weightsInfo}>
+          <For each={props.weightInfo}>
             {weightInfo => (
               <>
                 <TableRow
