@@ -16,13 +16,10 @@ export const isDevMode = () => import.meta.env.MODE === DEVELOPMENT_MODE
 
 export const isTestMode = () => import.meta.env.MODE === TEST_MODE
 
-export const convertTextToPath = (text: string) => {
-  return HOME_PATH + text.toLowerCase()
-}
+export const convertTextToPath = (text: string) =>
+  HOME_PATH + text.toLowerCase()
 
-export const getCurrentDateInDDMMYYYYFormat = () => {
-  return dayjs().format('DD.MM.YYYY')
-}
+export const getCurrentDateInDDMMYYYYFormat = () => dayjs().format('DD.MM.YYYY')
 
 export const parseDateInDDMMYYYYFormat = (dateString: string) => {
   const [day, month, year] = dateString.split('.')
