@@ -65,6 +65,7 @@ export function NewWeightInput() {
         color="secondary"
         variant="contained"
         onClick={handleAddButtonClick}
+        disabled={!newWeight()}
       >
         Add
       </Button>
