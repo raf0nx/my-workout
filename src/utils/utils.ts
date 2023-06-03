@@ -24,5 +24,12 @@ export const getCurrentDateInDDMMYYYYFormat = () => {
   return dayjs().format('DD.MM.YYYY')
 }
 
+export const parseDateInDDMMYYYYFormat = (dateString: string) => {
+  const [day, month, year] = dateString.split('.')
+  const isoDateString = `${year}-${month}-${day}`
+
+  return new Date(isoDateString)
+}
+
 /* c8 ignore next */
 export const getQueryStaleTime = () => (isTestMode() ? 0 : QUARTER_HOUR)
