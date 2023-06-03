@@ -12,15 +12,13 @@ import { createQuery, type CreateQueryResult } from '@tanstack/solid-query'
 import { Card } from '~/components/card'
 import { TableHeaderCell } from '~/components/table-header-cell'
 import { getWorkouts } from '~/api/workouts'
-import { WORKOUTS_DOC_ID } from '~/constants'
+import { WORKOUTS_COLLECTION_ID } from '~/constants'
 import { useSnackbar } from '~/contexts/snackbar'
+import { getQueryStaleTime } from '~/utils/utils'
 
 import { WorkoutsTableDialog, WorkoutsTableToolbar } from '.'
 import type { Workout } from './types'
-import {
-  getGetWorkoutsErrorSnackbarProps,
-  getWorkoutsQueryStaleTime,
-} from './workouts-table-helpers'
+import { getGetWorkoutsErrorSnackbarProps } from './workouts-table-helpers'
 import { WorkoutsTableSpinner } from './workouts-table-spinner'
 
 const WORKOUTS_TABLE_HEADERS = [
@@ -37,10 +35,10 @@ export default function WorkoutsTable() {
   const { showSnackbar } = useSnackbar()
 
   const workoutsQuery: CreateQueryResult<Workout[]> = createQuery(
-    () => [WORKOUTS_DOC_ID],
+    () => [WORKOUTS_COLLECTION_ID],
     getWorkouts,
     {
-      staleTime: getWorkoutsQueryStaleTime(),
+      staleTime: getQueryStaleTime(),
       onError: () => showSnackbar(getGetWorkoutsErrorSnackbarProps()),
     }
   )
