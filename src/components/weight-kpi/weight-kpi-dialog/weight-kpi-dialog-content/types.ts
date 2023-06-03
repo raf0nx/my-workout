@@ -1,6 +1,6 @@
 export interface WeightInfo {
-  weight: 'string'
-  date: 'string'
+  weight: string
+  date: string
 }
 
 export interface WeightKpiDialogContentProps {
