@@ -1,6 +1,8 @@
+import type { DDMMYYYDateFormat } from '~/utils/types'
+
 export interface WeightInfo {
   weight: string
-  date: string
+  date: DDMMYYYDateFormat
 }
 
 export interface WeightKpiDialogContentProps {

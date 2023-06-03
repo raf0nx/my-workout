@@ -2,10 +2,8 @@ import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 import { SnackbarSeverity } from '~/components/snackbar/types'
-import type {
-  Workout,
-  WorkoutDateFormat,
-} from '~/components/workouts-table/types'
+import type { Workout } from '~/components/workouts-table/types'
+import type { DDMMYYYDateFormat } from '~/utils/types'
 import { getCurrentDateInDDMMYYYYFormat } from '~/utils/utils'
 
 dayjs.extend(weekOfYear)
@@ -20,8 +18,8 @@ export const getWorkoutDetailsInitialState = (): Workout => ({
   exercises: { exercise1: { name: '', sets: [0] } },
 })
 
-export const getCurrentDateInWorkoutDateFormat = (): WorkoutDateFormat =>
-  getCurrentDateInDDMMYYYYFormat() as WorkoutDateFormat
+export const getCurrentDateInWorkoutDateFormat = (): DDMMYYYDateFormat =>
+  getCurrentDateInDDMMYYYYFormat() as DDMMYYYDateFormat
 
 export const getCurrentWeekOfYear = () => dayjs().week().toString()
 

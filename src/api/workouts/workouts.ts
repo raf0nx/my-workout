@@ -9,11 +9,9 @@ import {
 } from 'firebase/firestore'
 
 import { db } from '~/config/firebase-config'
-import type {
-  Workout,
-  WorkoutDateFormat,
-} from '~/components/workouts-table/types'
+import type { Workout } from '~/components/workouts-table/types'
 import { OrderDirection, WORKOUTS_COLLECTION_ID } from '~/constants'
+import type { DDMMYYYDateFormat } from '~/utils/types'
 
 import {
   formatWorkoutDateToISO8601,
@@ -34,7 +32,7 @@ export const postWorkout = async (workoutData: Workout): Promise<void> => {
   await addDoc(workoutsCollection, {
     ...workoutData,
     // TODO: validation needed to ensure the type
-    date: formatWorkoutDateToISO8601(workoutData.date as WorkoutDateFormat),
+    date: formatWorkoutDateToISO8601(workoutData.date as DDMMYYYDateFormat),
   })
 }
 
@@ -44,6 +42,6 @@ export const updateWorkout = async (workoutData: Workout): Promise<void> => {
   await updateDoc(workoutDoc, {
     ...workoutData,
     // TODO: validation needed to ensure the type
-    date: formatWorkoutDateToISO8601(workoutData.date as WorkoutDateFormat),
+    date: formatWorkoutDateToISO8601(workoutData.date as DDMMYYYDateFormat),
   })
 }

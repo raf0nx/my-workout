@@ -40,7 +40,7 @@ describe('createUserWeightData', () => {
 describe('sortWeightsInfoByNewestFirst', () => {
   it('should sort weights info array by newest first', () => {
     // Given
-    const weightsInfo = [
+    const weightsInfo: WeightInfo[] = [
       { weight: '75', date: '12.05.2023' },
       { weight: '80', date: '14.05.2023' },
       { weight: '78', date: '13.05.2023' },
@@ -71,7 +71,7 @@ describe('sortWeightsInfoByNewestFirst', () => {
 
   it('should return the same array if weights info array has only one item', () => {
     // Given
-    const weightsInfo = [{ weight: '80', date: '14.05.2023' }]
+    const weightsInfo: WeightInfo[] = [{ weight: '80', date: '14.05.2023' }]
 
     // When
     const result = sortWeightsInfoByNewestFirst(weightsInfo)
