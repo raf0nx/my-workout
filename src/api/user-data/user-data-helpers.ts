@@ -8,7 +8,7 @@ import {
 } from '~/utils/utils'
 import type { WeightInfo } from '~/components/weight-kpi/weight-kpi-dialog/weight-kpi-dialog-content/types'
 
-export const createUserWeightData = (weight: string) => ({
+export const createUserWeightData = (weight: number) => ({
   weightsInfo: arrayUnion({ weight, date: getCurrentDateInDDMMYYYYFormat() }),
 })
 

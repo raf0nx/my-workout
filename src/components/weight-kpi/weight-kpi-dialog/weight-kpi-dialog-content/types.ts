@@ -1,7 +1,7 @@
 import type { DDMMYYYDateFormat } from '~/utils/types'
 
 export interface WeightInfo {
-  weight: string
+  weight: number
   date: DDMMYYYDateFormat
 }
 

@@ -28,7 +28,7 @@ export const getUserWeight = async () => {
   return sortWeightsInfoByNewestFirst(weightsInfo)
 }
 
-export const addNewUserWeight = async (weight: string) => {
+export const addNewUserWeight = async (weight: number) => {
   const userWeightData = createUserWeightData(weight)
   const doesUserDataWeightDocExist = (await getDoc(userDataWeightDoc)).exists()
 

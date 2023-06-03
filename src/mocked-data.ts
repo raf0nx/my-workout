@@ -1,3 +1,4 @@
+import type { WeightInfo } from './components/weight-kpi/weight-kpi-dialog/weight-kpi-dialog-content/types'
 import type { Exercises, Workout } from './components/workouts-table/types'
 
 export const exercises: Exercises = {
@@ -95,7 +96,7 @@ export const workouts: Workout[] = [
   },
 ]
 
-export const weightsInfo = [
+export const weightsInfo: WeightInfo[] = [
   { weight: 68.2, date: '01.01.2022' },
   { weight: 71.8, date: '07.02.2022' },
   { weight: 70.5, date: '15.03.2022' },
