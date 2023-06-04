@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import {
+  calculatePercentageChange,
   convertTextToPath,
   getCurrentDateInDDMMYYYYFormat,
   parseDateInDDMMYYYYFormat,
@@ -91,4 +92,22 @@ describe('parseDateInDDMMYYYYFormat', () => {
     // Then
     expect(actual).toEqual(expected)
   })
+})
+
+describe('calculatePercentageChange', () => {
+  it.each`
+    previousValue | currentValue | expectedPercentageChange
+    ${10}         | ${20}        | ${100}
+    ${10}         | ${10}        | ${0}
+    ${50}         | ${30}        | ${-40}
+  `(
+    'should calculate the correct percentage change for previousValue: $previousValue, currentValue: $currentValue',
+    ({ previousValue, currentValue, expectedPercentageChange }) => {
+      // When
+      const result = calculatePercentageChange(previousValue, currentValue)
+
+      // Then
+      expect(result).toBe(expectedPercentageChange)
+    }
+  )
 })

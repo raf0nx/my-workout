@@ -28,5 +28,15 @@ export const parseDateInDDMMYYYYFormat = (dateString: string) => {
   return new Date(isoDateString)
 }
 
+export const calculatePercentageChange = (
+  previousValue: number,
+  currentValue: number
+): number => {
+  const changeValue = currentValue - previousValue
+  const changePercentage = (changeValue / previousValue) * 100
+
+  return changePercentage
+}
+
 /* c8 ignore next */
 export const getQueryStaleTime = () => (isTestMode() ? 0 : QUARTER_HOUR)
