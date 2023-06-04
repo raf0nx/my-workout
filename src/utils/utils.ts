@@ -31,11 +31,18 @@ export const parseDateInDDMMYYYYFormat = (dateString: string) => {
 export const calculatePercentageChange = (
   previousValue: number,
   currentValue: number
-): number => {
+) => {
   const changeValue = currentValue - previousValue
   const changePercentage = (changeValue / previousValue) * 100
 
   return changePercentage
+}
+
+export const formatPercentageChange = (percentageChange: number) => {
+  const formattedPercentageChange = percentageChange.toFixed(2)
+  const prefix = percentageChange > 0 ? '+' : ''
+
+  return `${prefix}${formattedPercentageChange}%`
 }
 
 /* c8 ignore next */

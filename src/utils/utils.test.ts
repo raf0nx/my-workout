@@ -1,14 +1,15 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { HOME_PATH } from '~/constants'
+
 import {
   calculatePercentageChange,
   convertTextToPath,
+  formatPercentageChange,
   getCurrentDateInDDMMYYYYFormat,
   parseDateInDDMMYYYYFormat,
   removeTrailingNonDigits,
 } from './utils'
-
-import { HOME_PATH } from '~/constants'
 
 describe('removeTrailingNonDigits', () => {
   it.each`
@@ -96,18 +97,36 @@ describe('parseDateInDDMMYYYYFormat', () => {
 
 describe('calculatePercentageChange', () => {
   it.each`
-    previousValue | currentValue | expectedPercentageChange
+    previousValue | currentValue | expected
     ${10}         | ${20}        | ${100}
     ${10}         | ${10}        | ${0}
     ${50}         | ${30}        | ${-40}
   `(
     'should calculate the correct percentage change for previousValue: $previousValue, currentValue: $currentValue',
-    ({ previousValue, currentValue, expectedPercentageChange }) => {
+    ({ previousValue, currentValue, expected }) => {
       // When
-      const result = calculatePercentageChange(previousValue, currentValue)
+      const actual = calculatePercentageChange(previousValue, currentValue)
 
       // Then
-      expect(result).toBe(expectedPercentageChange)
+      expect(actual).toBe(expected)
+    }
+  )
+})
+
+describe('formatPercentageChange', () => {
+  it.each`
+    percentageChange | expected
+    ${12.345}        | ${'+12.35%'}
+    ${-9.876}        | ${'-9.88%'}
+    ${0}             | ${'0.00%'}
+  `(
+    'should format $percentageChange as $expected',
+    ({ percentageChange, expected }) => {
+      // When
+      const actual = formatPercentageChange(percentageChange)
+
+      // Then
+      expect(actual).toBe(expected)
     }
   )
 })
