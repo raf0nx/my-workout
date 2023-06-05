@@ -9,26 +9,29 @@ import type { WeightInfo } from './weight-kpi-dialog/weight-kpi-dialog-content/t
 describe('getWeightKpiValue', () => {
   it('should return the weight value of the latest entry if available', () => {
     // When
-    const result = getWeightKpiValue(weightsInfo)
+    const actual = getWeightKpiValue(weightsInfo)
 
     // Then
-    expect(result).toBe(weightsInfo[0].weight)
+    expect(actual).toBe(weightsInfo[0].weight)
   })
 
   it('should return KPI_NO_VALUE_INDICATOR if weightsInfo is empty', () => {
+    // Given
+    const weightsInfo: WeightInfo[] = []
+
     // When
-    const result = getWeightKpiValue([])
+    const actual = getWeightKpiValue(weightsInfo)
 
     // Then
-    expect(result).toBe(KPI_NO_VALUE_INDICATOR)
+    expect(actual).toBe(KPI_NO_VALUE_INDICATOR)
   })
 
   it('should return KPI_NO_VALUE_INDICATOR if weightsInfo is undefined', () => {
     // When
-    const result = getWeightKpiValue(undefined)
+    const actual = getWeightKpiValue(undefined)
 
     // Then
-    expect(result).toBe(KPI_NO_VALUE_INDICATOR)
+    expect(actual).toBe(KPI_NO_VALUE_INDICATOR)
   })
 })
 
