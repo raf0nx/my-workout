@@ -6,12 +6,6 @@ import {
 
 import type { WeightInfo } from './weight-kpi-dialog/weight-kpi-dialog-content/types'
 
-export const getLatestWeightValue = (weightsInfo?: WeightInfo[]) =>
-  weightsInfo?.at(0)?.weight
-
-export const getPreviousWeightValue = (weightsInfo?: WeightInfo[]) =>
-  weightsInfo?.at(1)?.weight
-
 export const getWeightKpiValue = (weightsInfo?: WeightInfo[]) =>
   getLatestWeightValue(weightsInfo) || KPI_NO_VALUE_INDICATOR
 
@@ -27,3 +21,9 @@ export const getWeightKpiChangeValue = (weightsInfo?: WeightInfo[]) => {
     calculatePercentageChange(previousWeight, currentWeight)
   )
 }
+
+const getLatestWeightValue = (weightsInfo?: WeightInfo[]) =>
+  weightsInfo?.at(0)?.weight
+
+const getPreviousWeightValue = (weightsInfo?: WeightInfo[]) =>
+  weightsInfo?.at(1)?.weight
