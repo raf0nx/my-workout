@@ -3,33 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { weightsInfo } from '~/mocked-data'
 import { KPI_NO_VALUE_INDICATOR } from '~/constants'
 
-import { getLatestWeightValue, getWeightKpiValue } from './weight-kpi-helper'
-
-describe('getLatestWeightValue', () => {
-  it('should return the weight value of the latest entry', () => {
-    // When
-    const actual = getLatestWeightValue(weightsInfo)
-
-    // Then
-    expect(actual).toBe(weightsInfo[0].weight)
-  })
-
-  it('should return undefined if weightsInfo is empty', () => {
-    // When
-    const actual = getLatestWeightValue([])
-
-    // Then
-    expect(actual).toBeUndefined()
-  })
-
-  it('should return undefined if weightsInfo is undefined', () => {
-    // When
-    const actual = getLatestWeightValue(undefined)
-
-    // Then
-    expect(actual).toBeUndefined()
-  })
-})
+import { getWeightKpiValue } from './weight-kpi-helper'
 
 describe('getWeightKpiValue', () => {
   it('should return the weight value of the latest entry if available', () => {
