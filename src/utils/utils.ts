@@ -33,9 +33,8 @@ export const calculatePercentageChange = (
   currentValue: number
 ) => {
   const changeValue = currentValue - previousValue
-  const changePercentage = (changeValue / previousValue) * 100
 
-  return changePercentage
+  return (changeValue / previousValue) * 100
 }
 
 export const formatPercentageChange = (percentageChange: number) => {
