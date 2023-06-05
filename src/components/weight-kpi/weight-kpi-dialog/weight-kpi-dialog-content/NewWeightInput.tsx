@@ -10,7 +10,7 @@ export function NewWeightInput() {
   const queryClient = useQueryClient()
 
   const addNewUserWeightMutation = createMutation(
-    (weight: string) => addNewUserWeight(weight),
+    (weight: number) => addNewUserWeight(weight),
     {
       onSuccess: () => {
         invalidateUserWeightQuery(queryClient)
@@ -29,7 +29,11 @@ export function NewWeightInput() {
   }
 
   const handleAddButtonClick = () => {
-    addNewUserWeightMutation.mutate(newWeight())
+    const currentNewWeight = newWeight()
+
+    if (!currentNewWeight.trim()) return
+
+    addNewUserWeightMutation.mutate(parseFloat(newWeight()))
   }
 
   const clearInput = () => {
@@ -61,6 +65,7 @@ export function NewWeightInput() {
         color="secondary"
         variant="contained"
         onClick={handleAddButtonClick}
+        disabled={!newWeight()}
       >
         Add
       </Button>

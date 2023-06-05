@@ -5,6 +5,7 @@ import { createSignal } from 'solid-js'
 import { Kpi } from '~/components/kpi'
 
 import { WeightKpiDialog } from './weight-kpi-dialog'
+import { getWeightKpiChangeValue, getWeightKpiValue } from './weight-kpi-helper'
 import type { WeightKpiProps } from './types'
 
 export default function WeightKpi(props: WeightKpiProps) {
@@ -20,8 +21,8 @@ export default function WeightKpi(props: WeightKpiProps) {
     <>
       <Box sx={{ position: 'relative' }}>
         <Kpi
-          value={80.4}
-          changeValue={'-1.4%'}
+          value={getWeightKpiValue(props.weightsInfo)}
+          changeValue={getWeightKpiChangeValue(props.weightsInfo)}
           description="Current weight"
           color={theme.palette.info.main}
           icon={MonitorWeight}
