@@ -11,9 +11,9 @@ import { For, Suspense } from 'solid-js'
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WeightsTableProps } from './types'
-import { WeightsTableSpinner } from './WeightsTableSpinner'
+import { WeightsTableSpinner } from '.'
 
-export function WeightsTable(props: WeightsTableProps) {
+export default function WeightsTable(props: WeightsTableProps) {
   return (
     <TableContainer
       sx={{ mt: 4, borderRadius: 1, maxHeight: 'calc(100vh - 326.5px)' }}

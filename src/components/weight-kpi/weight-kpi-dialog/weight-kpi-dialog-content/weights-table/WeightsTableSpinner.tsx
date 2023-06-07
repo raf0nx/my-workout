@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from '@suid/material'
 
-export function WeightsTableSpinner() {
+export default function WeightsTableSpinner() {
   return (
     <Box
       sx={{
