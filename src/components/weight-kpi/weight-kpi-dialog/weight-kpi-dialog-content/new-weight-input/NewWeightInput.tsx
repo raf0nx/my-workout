@@ -6,7 +6,7 @@ import { createMutation, useQueryClient } from '@tanstack/solid-query'
 import { addNewUserWeight } from '~/api/user-data'
 import { invalidateUserWeightQuery } from '~/api/user-data/user-data-helpers'
 
-export function NewWeightInput() {
+export default function NewWeightInput() {
   const queryClient = useQueryClient()
 
   const addNewUserWeightMutation = createMutation(

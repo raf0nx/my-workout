@@ -1,6 +1,6 @@
 import { DialogContent, DialogContentText } from '@suid/material'
 
-import { NewWeightInput } from './NewWeightInput'
+import { NewWeightInput } from './new-weight-input'
 import { WeightsTable } from './weights-table'
 import type { WeightKpiDialogContentProps } from './types'
 
