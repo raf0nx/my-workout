@@ -1,5 +1,11 @@
-import { Box, Button, TextField, Typography } from '@suid/material'
-import { createSignal } from 'solid-js'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from '@suid/material'
+import { Show, createSignal } from 'solid-js'
 import type { ChangeEvent } from '@suid/types'
 import { createMutation, useQueryClient } from '@tanstack/solid-query'
 
@@ -20,6 +26,8 @@ export default function NewWeightInput() {
   )
 
   const [newWeight, setNewWeight] = createSignal('')
+
+  const isNewWeightBeingAdded = () => addNewUserWeightMutation.isLoading
 
   const handleInputChange = (
     _: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -65,9 +73,11 @@ export default function NewWeightInput() {
         color="secondary"
         variant="contained"
         onClick={handleAddButtonClick}
-        disabled={!newWeight()}
+        disabled={!newWeight() || isNewWeightBeingAdded()}
       >
-        Add
+        <Show when={isNewWeightBeingAdded()} fallback="Add">
+          <CircularProgress size={24.5} />
+        </Show>
       </Button>
     </Box>
   )
