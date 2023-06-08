@@ -95,16 +95,19 @@ describe('getWeightKpiChangeValue', () => {
 })
 
 describe('getGetUserWeightErrorSnackbarProps', () => {
-  it('should return the correct snackbar props for error', () => {
-    // When
-    const result = getGetUserWeightErrorSnackbarProps()
-
-    // Then
-    expect(result).toEqual({
+  it('should return the correct snackbar props when getting user weight info failed', () => {
+    // Given
+    const expected = {
       title: 'Error',
       description: 'Failed to fetch user weight info. Please try again.',
       dissmissable: true,
       severity: SnackbarSeverity.ERROR,
-    })
+    }
+
+    // When
+    const actual = getGetUserWeightErrorSnackbarProps()
+
+    // Then
+    expect(actual).toEqual(expected)
   })
 })
