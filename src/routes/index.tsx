@@ -5,6 +5,7 @@ import { getUserWeight } from '~/api/user-data'
 import { getWorkouts } from '~/api/workouts'
 import { TotalWorkoutsKpi } from '~/components/total-workouts-kpi'
 import { WeightKpi } from '~/components/weight-kpi'
+import { getGetUserWeightErrorSnackbarProps } from '~/components/weight-kpi/weight-kpi-helper'
 import type { Workout } from '~/components/workouts-table/types'
 import { getGetWorkoutsErrorSnackbarProps } from '~/components/workouts-table/workouts-table-helpers'
 import { USER_DATA_WEIGHT_QUERY_KEY, WORKOUTS_COLLECTION_ID } from '~/constants'
@@ -28,6 +29,7 @@ export default function Dashboard() {
     getUserWeight,
     {
       staleTime: getQueryStaleTime(),
+      onError: () => showSnackbar(getGetUserWeightErrorSnackbarProps()),
     }
   )
 
