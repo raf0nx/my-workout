@@ -8,5 +8,3 @@ export interface WeightInfo {
 export interface WeightKpiDialogContentProps {
   weightsInfo?: WeightInfo[]
 }
-
-export interface WeightsTableProps extends WeightKpiDialogContentProps {}

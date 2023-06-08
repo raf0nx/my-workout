@@ -1,4 +1,5 @@
 import { KPI_NO_VALUE_INDICATOR } from '~/constants'
+import { SnackbarSeverity } from '~/components/snackbar/types'
 import {
   calculatePercentageChange,
   formatPercentageChange,
@@ -21,6 +22,13 @@ export const getWeightKpiChangeValue = (weightsInfo?: WeightInfo[]) => {
     calculatePercentageChange(previousWeight, currentWeight)
   )
 }
+
+export const getGetUserWeightErrorSnackbarProps = () => ({
+  title: 'Error',
+  description: 'Failed to fetch user weight info. Please try again.',
+  dissmissable: true,
+  severity: SnackbarSeverity.ERROR,
+})
 
 const getLatestWeightValue = (weightsInfo?: WeightInfo[]) =>
   weightsInfo?.at(0)?.weight

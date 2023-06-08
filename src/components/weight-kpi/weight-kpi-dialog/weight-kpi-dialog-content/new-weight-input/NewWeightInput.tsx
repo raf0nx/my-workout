@@ -1,25 +1,42 @@
-import { Box, Button, TextField, Typography } from '@suid/material'
-import { createSignal } from 'solid-js'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from '@suid/material'
+import { Show, createSignal } from 'solid-js'
 import type { ChangeEvent } from '@suid/types'
 import { createMutation, useQueryClient } from '@tanstack/solid-query'
 
 import { addNewUserWeight } from '~/api/user-data'
 import { invalidateUserWeightQuery } from '~/api/user-data/user-data-helpers'
+import { useSnackbar } from '~/contexts/snackbar'
 
-export function NewWeightInput() {
+import {
+  getAddNewUserWeightErrorSnackbarProps,
+  getAddNewUserWeightSuccessSnackbarProps,
+} from './new-weight-input-helpers'
+
+export default function NewWeightInput() {
   const queryClient = useQueryClient()
+  const { showSnackbar } = useSnackbar()
 
   const addNewUserWeightMutation = createMutation(
     (weight: number) => addNewUserWeight(weight),
     {
       onSuccess: () => {
         invalidateUserWeightQuery(queryClient)
+        showSnackbar(getAddNewUserWeightSuccessSnackbarProps())
         clearInput()
       },
+      onError: () => showSnackbar(getAddNewUserWeightErrorSnackbarProps()),
     }
   )
 
   const [newWeight, setNewWeight] = createSignal('')
+
+  const isNewWeightBeingAdded = () => addNewUserWeightMutation.isLoading
 
   const handleInputChange = (
     _: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -65,9 +82,11 @@ export function NewWeightInput() {
         color="secondary"
         variant="contained"
         onClick={handleAddButtonClick}
-        disabled={!newWeight()}
+        disabled={!newWeight() || isNewWeightBeingAdded()}
       >
-        Add
+        <Show when={isNewWeightBeingAdded()} fallback="Add">
+          <CircularProgress size={24.5} />
+        </Show>
       </Button>
     </Box>
   )

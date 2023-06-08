@@ -2,8 +2,13 @@ import { describe, expect, it } from 'vitest'
 
 import { weightsInfo } from '~/mocked-data'
 import { KPI_NO_VALUE_INDICATOR } from '~/constants'
+import { SnackbarSeverity } from '~/components/snackbar/types'
 
-import { getWeightKpiChangeValue, getWeightKpiValue } from './weight-kpi-helper'
+import {
+  getGetUserWeightErrorSnackbarProps,
+  getWeightKpiChangeValue,
+  getWeightKpiValue,
+} from './weight-kpi-helper'
 import type { WeightInfo } from './weight-kpi-dialog/weight-kpi-dialog-content/types'
 
 describe('getWeightKpiValue', () => {
@@ -86,5 +91,23 @@ describe('getWeightKpiChangeValue', () => {
 
     // Then
     expect(actual).toBe(expected)
+  })
+})
+
+describe('getGetUserWeightErrorSnackbarProps', () => {
+  it('should return the correct snackbar props when getting user weight info failed', () => {
+    // Given
+    const expected = {
+      title: 'Error',
+      description: 'Failed to fetch user weight info. Please try again.',
+      dissmissable: true,
+      severity: SnackbarSeverity.ERROR,
+    }
+
+    // When
+    const actual = getGetUserWeightErrorSnackbarProps()
+
+    // Then
+    expect(actual).toEqual(expected)
   })
 })
