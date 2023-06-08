@@ -1,6 +1,8 @@
-import { Box, CircularProgress, Typography } from '@suid/material'
+import { Box, CircularProgress, Typography, useTheme } from '@suid/material'
 
 export default function WeightsTableSpinner() {
+  const { palette } = useTheme()
+
   return (
     <Box
       sx={{
@@ -11,7 +13,11 @@ export default function WeightsTableSpinner() {
       }}
     >
       <CircularProgress size={32} />
-      <Typography textContent={'Loading weights history'} variant="caption" />
+      <Typography
+        textContent={'Loading weights history'}
+        variant="caption"
+        color={palette.grey[600]}
+      />
     </Box>
   )
 }
