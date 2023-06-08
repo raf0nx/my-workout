@@ -11,17 +11,26 @@ import { createMutation, useQueryClient } from '@tanstack/solid-query'
 
 import { addNewUserWeight } from '~/api/user-data'
 import { invalidateUserWeightQuery } from '~/api/user-data/user-data-helpers'
+import { useSnackbar } from '~/contexts/snackbar'
+
+import {
+  getAddNewUserWeightErrorSnackbarProps,
+  getAddNewUserWeightSuccessSnackbarProps,
+} from './new-weight-input-helpers'
 
 export default function NewWeightInput() {
   const queryClient = useQueryClient()
+  const { showSnackbar } = useSnackbar()
 
   const addNewUserWeightMutation = createMutation(
     (weight: number) => addNewUserWeight(weight),
     {
       onSuccess: () => {
         invalidateUserWeightQuery(queryClient)
+        showSnackbar(getAddNewUserWeightSuccessSnackbarProps())
         clearInput()
       },
+      onError: () => showSnackbar(getAddNewUserWeightErrorSnackbarProps()),
     }
   )
 
