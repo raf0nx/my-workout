@@ -6,14 +6,16 @@ import {
   TableHead,
   TableRow,
 } from '@suid/material'
-import { For, Suspense } from 'solid-js'
+import { For, Show, Suspense } from 'solid-js'
 
 import { TableHeaderCell } from '~/components/table-header-cell'
 
 import type { WeightsTableProps } from './types'
-import { WeightsTableSpinner } from '.'
+import { WeightsTableNoData, WeightsTableSpinner } from '.'
 
 export default function WeightsTable(props: WeightsTableProps) {
+  const isWeightInfoPresent = () => props.weightsInfo?.length
+
   return (
     <TableContainer
       sx={{ mt: 4, borderRadius: 1, maxHeight: 'calc(100vh - 326.5px)' }}
@@ -45,6 +47,9 @@ export default function WeightsTable(props: WeightsTableProps) {
             </For>
           </TableBody>
         </Table>
+        <Show when={!isWeightInfoPresent()}>
+          <WeightsTableNoData />
+        </Show>
       </Suspense>
     </TableContainer>
   )
