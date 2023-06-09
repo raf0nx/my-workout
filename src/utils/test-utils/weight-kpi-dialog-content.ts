@@ -1,4 +1,5 @@
-import { screen } from '@solidjs/testing-library';
+/* c8 ignore start */
+import { screen } from '@solidjs/testing-library'
 
 // Getters
 export const getDialogContentText = () =>

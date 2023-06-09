@@ -36,6 +36,7 @@ export default function WeightsTable(props: WeightsTableProps) {
                     sx={{
                       '&:last-child td, &:last-child th': { border: 0 },
                     }}
+                    data-testid="weights-table-row"
                   >
                     <TableCell component="th" scope="row">
                       {weightInfo.weight}
