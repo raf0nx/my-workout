@@ -1,6 +1,7 @@
 import { render, screen } from '@solidjs/testing-library'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, it, vi } from 'vitest'
 
+import { assertElementToBeInTheDocument } from '~/utils/test-utils'
 import { weightsInfo } from '~/mocked-data'
 
 import WeightKpi from './WeightKpi'
@@ -18,8 +19,8 @@ describe('WeightKpi', () => {
     const changeElement = screen.getByText('-5.01%')
 
     // Then
-    expect(valueElement).toBeInTheDocument()
-    expect(changeElement).toBeInTheDocument()
+    assertElementToBeInTheDocument(valueElement)
+    assertElementToBeInTheDocument(changeElement)
   })
 
   it('should render the weight KPI with placeholder for a value when weightsInfo is empty', () => {
@@ -29,7 +30,7 @@ describe('WeightKpi', () => {
     const valueElement = screen.getByText('--')
 
     // Then
-    expect(valueElement).toBeInTheDocument()
+    assertElementToBeInTheDocument(valueElement)
   })
 
   it('should render the weight KPI with correct value and placeholder for a change value when weightsInfo has 1 item', () => {
@@ -40,7 +41,7 @@ describe('WeightKpi', () => {
     const changeElement = screen.getByText('--')
 
     // Then
-    expect(valueElement).toBeInTheDocument()
-    expect(changeElement).toBeInTheDocument()
+    assertElementToBeInTheDocument(valueElement)
+    assertElementToBeInTheDocument(changeElement)
   })
 })

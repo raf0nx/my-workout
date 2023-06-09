@@ -1,6 +1,7 @@
 /* c8 ignore start */
 import userEvent from '@testing-library/user-event'
 import { screen } from '@solidjs/testing-library'
+import { expect } from 'vitest'
 
 import { postWorkout } from '~/api/workouts'
 import { firebaseConfig } from '~/config/firebase-config'
