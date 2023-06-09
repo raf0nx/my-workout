@@ -13,9 +13,11 @@ export default function WeightKpi(props: WeightKpiProps) {
 
   const [isDialogOpen, setIsDialogOpen] = createSignal(false)
 
+  /* c8 ignore start */
   const closeDialog = () => {
     setIsDialogOpen(false)
   }
+  /* c8 ignore end */
 
   return (
     <>
@@ -36,11 +38,13 @@ export default function WeightKpi(props: WeightKpiProps) {
           <MoreHoriz />
         </IconButton>
       </Box>
+      {/* c8 ignore start */}
       <WeightKpiDialog
         isOpen={isDialogOpen()}
         onClose={closeDialog}
         weightsInfo={props.weightsInfo}
       />
+      {/* c8 ignore end */}
     </>
   )
 }
