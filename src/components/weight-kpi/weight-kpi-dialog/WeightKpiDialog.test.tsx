@@ -5,6 +5,7 @@ import { render } from '@solidjs/testing-library'
 import {
   clickCloseBtn,
   getCloseBtn,
+  getWeightKpiDialogContent,
   getWeightKpiDialogHeader,
 } from '~/utils/test-utils/weight-kpi-dialog'
 import { assertElementToBeInTheDocument } from '~/utils/test-utils'
@@ -12,7 +13,7 @@ import { assertElementToBeInTheDocument } from '~/utils/test-utils'
 import WeightKpiDialog from './WeightKpiDialog'
 
 vi.mock('./weight-kpi-dialog-content', () => ({
-  WeightKpiDialogContent: () => <div />,
+  WeightKpiDialogContent: () => <div data-testid="weight-kpi-dialog-content" />,
 }))
 
 vi.mock('@suid/material', async () => {
@@ -35,6 +36,11 @@ describe('WeightKpiDialog', () => {
 
   afterEach(() => {
     vi.resetAllMocks()
+  })
+
+  it('should render with the dialog content', () => {
+    // Then
+    assertElementToBeInTheDocument(getWeightKpiDialogContent())
   })
 
   it('should render dialog with correct title and close button', () => {

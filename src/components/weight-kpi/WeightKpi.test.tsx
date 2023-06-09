@@ -2,15 +2,24 @@ import { render, screen } from '@solidjs/testing-library'
 import { describe, it, vi } from 'vitest'
 
 import { assertElementToBeInTheDocument } from '~/utils/test-utils'
+import { getWeightKpiDialog } from '~/utils/test-utils/weight-kpi'
 import { weightsInfo } from '~/mocked-data'
 
 import WeightKpi from './WeightKpi'
 
 vi.mock('./weight-kpi-dialog', () => ({
-  WeightKpiDialog: () => <div />,
+  WeightKpiDialog: () => <div data-testid="weight-kpi-dialog" />,
 }))
 
 describe('WeightKpi', () => {
+  it('should render with the weight kpi dialog', () => {
+    // Given
+    render(() => <WeightKpi weightsInfo={weightsInfo} />)
+
+    // Then
+    assertElementToBeInTheDocument(getWeightKpiDialog())
+  })
+
   it('should render the weight KPI with correct value and change value', () => {
     // Given
     render(() => <WeightKpi weightsInfo={weightsInfo} />)
