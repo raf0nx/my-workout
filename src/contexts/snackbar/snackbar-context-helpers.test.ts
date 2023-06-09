@@ -11,7 +11,7 @@ describe('getInitialSnackbarProps', () => {
       title: '',
       description: '',
       severity: SnackbarSeverity.SUCCESS,
-      dissmissable: false,
+      dismissable: false,
       timeout: 5000,
     }
 

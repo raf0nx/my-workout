@@ -10,7 +10,7 @@ describe('getGetWorkoutsErrorSnackbarProps', () => {
     const expected = {
       title: 'Error',
       description: 'Failed to fetch workouts. Please try again.',
-      dissmissable: true,
+      dismissable: true,
       severity: SnackbarSeverity.ERROR,
     }
 

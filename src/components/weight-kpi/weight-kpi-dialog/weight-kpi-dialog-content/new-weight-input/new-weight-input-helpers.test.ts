@@ -11,7 +11,7 @@ describe('getAddNewUserWeightSuccessSnackbarProps', () => {
     const expected = {
       title: 'Success',
       description: 'Your weight has been saved successfully',
-      dissmissable: true,
+      dismissable: true,
     }
 
     // When
@@ -29,7 +29,7 @@ describe('getAddNewUserWeightErrorSnackbarProps', () => {
       title: 'Error',
       description:
         'Something went wrong while trying to save your weight. Please try again.',
-      dissmissable: true,
+      dismissable: true,
       severity: SnackbarSeverity.ERROR,
     }
 

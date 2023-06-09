@@ -2,7 +2,7 @@ export interface SnackbarProps {
   title?: string
   description: string
   severity?: SnackbarSeverity
-  dissmissable?: boolean
+  dismissable?: boolean
   timeout?: number
   onClose?: () => void
 }
