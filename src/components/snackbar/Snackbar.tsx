@@ -11,7 +11,7 @@ export default function Snackbar(props: SnackbarProps) {
     {
       severity: SnackbarSeverity.SUCCESS,
       title: '',
-      dissmissable: false,
+      dismissable: false,
       timeout: 5000,
       onClose: () => null,
     },
@@ -39,7 +39,7 @@ export default function Snackbar(props: SnackbarProps) {
         >
           <Alert
             severity={merged.severity}
-            onClose={merged.dissmissable ? () => setIsOpen(false) : undefined}
+            onClose={merged.dismissable ? () => setIsOpen(false) : undefined}
             sx={{ position: 'fixed', zIndex: 9999, bottom: 20, left: 20 }}
           >
             <Show when={merged.title}>

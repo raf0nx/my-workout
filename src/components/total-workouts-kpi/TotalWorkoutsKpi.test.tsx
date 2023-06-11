@@ -22,6 +22,9 @@ vi.mock('@suid/material', async () => {
         secondary: {
           main: '#ff0000',
         },
+        grey: {
+          600: '#666666',
+        },
       },
     }),
   }

@@ -40,7 +40,7 @@ describe('getSaveWorkoutSuccessSnackbarProps', () => {
     const expected = {
       title: 'Success',
       description: 'Workout saved successfully.',
-      dissmissable: true,
+      dismissable: true,
     }
 
     // When
@@ -57,7 +57,7 @@ describe('getSaveWorkoutErrorSnackbarProps', () => {
     const expected = {
       title: 'Error',
       description: 'Something went wrong. Please try again later.',
-      dissmissable: true,
+      dismissable: true,
       severity: SnackbarSeverity.ERROR,
     }
 
