@@ -26,12 +26,12 @@ export const getCurrentWeekOfYear = () => dayjs().week().toString()
 export const getSaveWorkoutSuccessSnackbarProps = () => ({
   title: 'Success',
   description: 'Workout saved successfully.',
-  dissmissable: true,
+  dismissable: true,
 })
 
 export const getSaveWorkoutErrorSnackbarProps = () => ({
   title: 'Error',
   description: 'Something went wrong. Please try again later.',
-  dissmissable: true,
+  dismissable: true,
   severity: SnackbarSeverity.ERROR,
 })

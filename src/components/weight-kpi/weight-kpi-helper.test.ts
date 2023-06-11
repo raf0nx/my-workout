@@ -100,7 +100,7 @@ describe('getGetUserWeightErrorSnackbarProps', () => {
     const expected = {
       title: 'Error',
       description: 'Failed to fetch user weight info. Please try again.',
-      dissmissable: true,
+      dismissable: true,
       severity: SnackbarSeverity.ERROR,
     }
 

@@ -28,7 +28,7 @@ describe('Snackbar', () => {
       <Snackbar
         title={mockedTitle}
         description={mockedDescription}
-        dissmissable
+        dismissable
       />
     ))
 
