@@ -14,7 +14,7 @@ Created using the latest technologies, `my-workout` takes advantage of:
 
 ## Live application
 
-Access the deployed application [here](#placeholder-link). Start tracking your workouts effortlessly!
+Access the deployed application [here](https://my-workout-e69c5.web.app/). Start tracking your workouts effortlessly!
 
 ## Local Development
 
