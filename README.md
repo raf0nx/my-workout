@@ -1,40 +1,57 @@
-# SolidStart
+# MY-WORKOUT
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+Welcome to `my-workout` – your personal workout progress tracker! This app is designed to help you keep tabs on your fitness journey, allowing you to log and monitor your workouts seamlessly.
 
-## Creating a project
+## Technologies Used
+
+Created using the latest technologies, `my-workout` takes advantage of:
+
+- [SolidJS](https://solidjs.com/): A declarative, efficient and flexible JavaScript library for building user interfaces.
+- [TypeScript](https://www.typescriptlang.org/): Enhancing code quality and maintainability.
+- [SolidJS UI](https://suid.io/): A UI library tailored for SolidJS applications.
+- [Firebase](https://firebase.google.com/): For database functionality.
+- [TanStack Query](https://tanstack.com/): A powerful data fetching library.
+
+## Live application
+
+Access the deployed application [here](#placeholder-link). Start tracking your workouts effortlessly!
+
+## Local Development
+
+To run `my-workout` locally, follow these steps:
+
+1. Clone the repo:
 
 ```bash
-# create a new project in the current directory
-npm init solid@latest
-
-# create a new project in my-workout
-npm init solid@latest my-workout
+git clone git@github.com:raf0nx/my-workout.git
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+2. Install dependencies:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+yarn install
 ```
 
-## Building
+3. Launch the development server:
 
-Solid apps are built with _adapters_, which optimise your project for deployment to different environments.
-
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different adapter, add it to the `devDependencies` in `package.json` and specify in your `vite.config.js`.
-
-## Testing
-
-Tests are written with `vitest`, `@solidjs/testing-library` and `@testing-library/jest-dom` to extend expect with some helpful custom matchers.
-
-To run them, simply start:
-
-```sh
-npm test
+```bash
+yarn dev
 ```
+
+4. Launch the Firestore emulator:
+
+```bash
+firebase emulators:start
+```
+
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/light-theme/info.svg">
+>   <img alt="Info" src="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/dark-theme/info.svg">
+> </picture><br>
+> For a complete local experience, ensure you have the Firestore emulator set up.
+
+Now you're ready to embark on your fitness journey with `my-workout`! 💪
+
+## Useful links
+
+- [Configure Firestore emulator](https://firebase.google.com/docs/emulator-suite/connect_and_prototype?database=Firestore)
