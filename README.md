@@ -2,6 +2,24 @@
 
 Welcome to `my-workout` – your personal workout progress tracker! This app is designed to help you keep tabs on your fitness journey, allowing you to log and monitor your workouts seamlessly.
 
+## Features
+
+#### 1. Addition of New Workout
+
+Easily add a new workout to your routine with `my-workout`. Log details such as exercise types, sets, and reps.
+
+#### 2. Modifying Existing Workout
+
+Edit and update your existing workouts as your fitness routine evolves. Adapt to new goals seamlessly.
+
+#### 3. Addition and Modification of Workout Exercises
+
+Customize each workout by adding or modifying exercises. Specify the number of sets for each exercise and the number of reps in each set.
+
+#### 4. Keeping Track of Body Weight
+
+Monitor your body weight progress over time. `my-workout` helps you stay informed about changes in your physical fitness journey.
+
 ## Technologies Used
 
 Created using the latest technologies, `my-workout` takes advantage of:
